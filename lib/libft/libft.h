@@ -26,7 +26,8 @@ typedef struct s_list
 typedef struct s_deque			t_deque;
 typedef struct s_deque_node		t_deque_node;
 
-typedef int						t_deque_type;
+// typedef int						t_deque_type;
+typedef void *					t_deque_type;
 
 struct							s_deque_node
 {
@@ -51,6 +52,12 @@ t_deque_node	*deque_pop_back(t_deque *deque);
 t_deque_node	*deque_pop_front(t_deque *deque);
 
 /* DEQUE */
+
+/* MEMORY */
+
+void			*ft_malloc(t_deque *allocated, size_t size);
+
+/* MEMORY */
 
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);
