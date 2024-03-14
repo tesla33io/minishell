@@ -118,8 +118,12 @@ Shell wildcards, also known as _globbing_ patterns, are special characters used 
 [Chapter5-WritingYourOwnShell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 
 **Pipe and redirection execution flow example**:
+
 ![pipes_redirection_example](/github_data/pipes_redirection_example.png)
+
 **Lexer and parser flow example**:
+
 ![lexer_and_parser_flow_example](/github_data/lexer_and_parser_flow_example.png)
+
 [`> file` vs `>& file`](https://g.co/gemini/share/18247f4d0570)
 
