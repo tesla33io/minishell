@@ -1,2 +1,3 @@
 # minishell
-This project is about creating a simple shell.
+
+Allowed functions and usage examples: [Functions.md](Functions.md)
