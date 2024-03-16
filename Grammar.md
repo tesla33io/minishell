@@ -71,41 +71,44 @@ BNF is a **notation technique** used to describe the syntax of programming langu
 **&rarr; We can use `|` ro represent or**
 
 Simple example:
+
 `<digit> : : = 0 |1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9`
 
 `<integer> : : = <digit> | <digit><integer>`
 
 `<floating point> : : = <integer>.<integer>`
 
+
+
 (Incomplete) example based on bash:
 
 
 `<command_line> ::= <command> | <pipeline>`
 
+> &rarr;   `<command_line>` represents a single command or pipeline of commands.
+
 `<command> ::= <simple_command> | <compound_command>`
+
+> &rarr;  `<command>` can be either a simple command (e.g., `ls -l`) or a compound command (e.g., `if`, `while`, `for`).
 
 `<simple_command> ::= <command_name> [<arguments>]`
 
+> &rarr;   `<simple_command>` consists of a command name followed by optional arguments.
+
 `<compound_command> ::= <if_statement> | <while_loop> | <for_loop> | ...`
+
+> &rarr;   `<compound_command>` represents more complex command constructs like `if` statements, `while` loops, `for` loops, etc.
 
 `<arguments> ::= <argument> [<arguments>]`
 
+> &rarr;   `<arguments>` represents a list of command arguments.
+
 `<argument> ::= <string_literal> | <variable_expansion> | ...`
+
+> &rarr;   `<argument>` can be a string literal, a variable expansion, or other possible types of arguments.
 
 `<pipeline> ::= <command> "|" <command> ...`
 
-
-&rarr;   `<command_line>` represents a single command or pipeline of commands.
-
-&rarr;  `<command>` can be either a simple command (e.g., `ls -l`) or a compound command (e.g., `if`, `while`, `for`).
-
-&rarr;   `<simple_command>` consists of a command name followed by optional arguments.
-
-&rarr;   `<compound_command>` represents more complex command constructs like `if` statements, `while` loops, `for` loops, etc.
-
-&rarr;   `<arguments>` represents a list of command arguments.
-
-&rarr;   `<argument>` can be a string literal, a variable expansion, or other possible types of arguments.
 
 Grammars in general tend to be inherently recursive. This is true about our natural language as well as programming languages. 
 [Bash Grammar](https://cmdse.github.io/pages/appendix/bash-grammar.html)
