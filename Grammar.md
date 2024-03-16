@@ -19,13 +19,13 @@
 > 
 > &rarr; **Keywords**, such as: `if`, `else`, `elif`, `fi`, `for`, `while`, `do`, `done`, `case`, `esac`, `function`
 > 
- &rarr; **Arithmetic operators**: `+`, `-`, `*`, `/`, `%`
- 
- &rarr; **Comparison operators**: `==`, `!=`, `-eq`, `-ne`, `-lt`, `-le`, `-gt`, `-ge` (equality, inequality, numeric equality, numeric inequality, less than, less than or equal, greater than, greater than or equal)
- 
- &rarr; **Literals**: numeric literals `123`, `-5`, `3.14`, string literals `"hello"`, `'world'` and special literals `true`, `false`, `null`
- 
- &rarr; **Special characters**: `$` (variable expansion), `#` (comment), `;` (command separator), `,` (list separator), `(` and `)` (grouping), `[` and `]` (test command), `{` and `}` (command grouping), `"` and `'` (quoting)
+> &rarr; **Arithmetic operators**: `+`, `-`, `*`, `/`, `%`
+>
+> &rarr; **Comparison operators**: `==`, `!=`, `-eq`, `-ne`, `-lt`, `-le`, `-gt`, `-ge` (equality, inequality, numeric equality, numeric inequality, less than, less than or equal, greater than, greater than or equal)
+>
+> &rarr; **Literals**: numeric literals `123`, `-5`, `3.14`, string literals `"hello"`, `'world'` and special literals `true`, `false`, `null`
+>
+> &rarr; **Special characters**: `$` (variable expansion), `#` (comment), `;` (command separator), `,` (list separator), `(` and `)` (grouping), `[` and `]` (test command), `{` and `}` (command grouping), `"` and `'` (quoting)
  
 
  2. **Variables/Nonterminals/Nonterminal Symbols**
@@ -46,7 +46,7 @@
 > 
 >**Command Substitution**: Represents the substitution of command output into a command line. This could include constructs like `$(command)` or `` `command` `` used to execute a command and replace it with its output.
 > 
- >**Quoting**: Represents the quoting of characters to prevent their special interpretation by the shell. This could include single quotes (`'`) or double quotes (`"`) used to enclose strings.
+>**Quoting**: Represents the quoting of characters to prevent their special interpretation by the shell. This could include single quotes (`'`) or double quotes (`"`) used to enclose strings.
 
 3. **Production/Production Rules**
 > These are the rules that make up the grammar. They connect the nonterminals and terminals. Each rule is going to translate a nonterminal into a sequence of one or more nonterminals or terminals. Example with the english language:
@@ -70,6 +70,7 @@ BNF is a **notation technique** used to describe the syntax of programming langu
 
 **&rarr; We can use `|` ro represent or**
 
+---
 Simple example:
 
 `<digit> : : = 0 |1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9`
@@ -78,8 +79,10 @@ Simple example:
 
 `<floating point> : : = <integer>.<integer>`
 
+---
 
 
+---
 (Incomplete) example based on bash:
 
 
@@ -108,6 +111,8 @@ Simple example:
 > &rarr;   `<argument>` can be a string literal, a variable expansion, or other possible types of arguments.
 
 `<pipeline> ::= <command> "|" <command> ...`
+
+---
 
 
 Grammars in general tend to be inherently recursive. This is true about our natural language as well as programming languages. 
