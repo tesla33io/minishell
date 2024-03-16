@@ -43,32 +43,35 @@
 BNF is a **notation technique** used to describe the syntax of programming languages and other formal languages. It consists of a set of production rules that **define how valid language constructs can be formed**. 
 
  How its done:
-> 
+
 **&rarr; Nonterminals are enclosed in angle brackets ( `<command>`).**
+
 **&rarr; Terminals are simply written out (`"hello world"`)**
+
 **&rarr; Productions are in the form: `<nonterminal> : : = <sequence of terminals or nonterminals>`**
+
 **&rarr; We can use `|` ro represent or**
-> 
+
 Simple example:
-> <digit> : : = 0 |1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-> <integer> : : = <digit> | <digit><integer>
-> <floating point> : : = <integer>.<integer>
+`<digit> : : = 0 |1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9`
+`<integer> : : = <digit> | <digit><integer>`
+`<floating point> : : = <integer>.<integer>`
 
 (Incomplete) example based on bash:
-> `<command_line> ::= <command> | <pipeline>`
->`<command> ::= <simple_command> | <compound_command>`
->`<simple_command> ::= <command_name> [<arguments>]`
->`<compound_command> ::= <if_statement> | <while_loop> | <for_loop> | ...`
->`<arguments> ::= <argument> [<arguments>]`
->`<argument> ::= <string_literal> | <variable_expansion> | ...`
->`<pipeline> ::= <command> "|" <command> ...`
->
->&rarr;   `<command_line>` represents a single command or pipeline of commands.
-> &rarr;  `<command>` can be either a simple command (e.g., `ls -l`) or a compound command (e.g., `if`, `while`, `for`).
-> &rarr;   `<simple_command>` consists of a command name followed by optional arguments.
-> &rarr;   `<compound_command>` represents more complex command constructs like `if` statements, `while` loops, `for` loops, etc.
-> &rarr;   `<arguments>` represents a list of command arguments.
-> &rarr;   `<argument>` can be a string literal, a variable expansion, or other possible types of arguments.
+`<command_line> ::= <command> | <pipeline>`
+`<command> ::= <simple_command> | <compound_command>`
+`<simple_command> ::= <command_name> [<arguments>]`
+`<compound_command> ::= <if_statement> | <while_loop> | <for_loop> | ...`
+`<arguments> ::= <argument> [<arguments>]`
+`<argument> ::= <string_literal> | <variable_expansion> | ...`
+`<pipeline> ::= <command> "|" <command> ...`
+
+&rarr;   `<command_line>` represents a single command or pipeline of commands.
+&rarr;  `<command>` can be either a simple command (e.g., `ls -l`) or a compound command (e.g., `if`, `while`, `for`).
+&rarr;   `<simple_command>` consists of a command name followed by optional arguments.
+&rarr;   `<compound_command>` represents more complex command constructs like `if` statements, `while` loops, `for` loops, etc.
+&rarr;   `<arguments>` represents a list of command arguments.
+&rarr;   `<argument>` can be a string literal, a variable expansion, or other possible types of arguments.
 
 Grammars in general tend to be inherently recursive. This is true about our natural language as well as programming languages. 
 [Bash Grammar](https://cmdse.github.io/pages/appendix/bash-grammar.html)
@@ -78,5 +81,7 @@ Grammars in general tend to be inherently recursive. This is true about our natu
 2.  **Phrase Grammar (Syntactic Grammar)**: This defines the structure of valid statements or commands in the language. It describes how these tokens from the lexical grammar can be combined to form meaningful statements. For a shell, this would involve rules for constructing commands, handling arguments, managing redirections, and piping.
     
 Separating lexical and phrase grammars allows for a more modular approach to parsing, they are commonly seperated because grammars for both get very complex. 
+
 &rarr; The lexical analysis phase breaks down the input into tokens, and the phrase analysis phase constructs the hierarchical structure of the input based on those tokens. 
+
 &rarr; For minishell, defining both lexical and phrase grammars will be crucial for implementing the parser that interprets user commands.
