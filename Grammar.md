@@ -79,7 +79,7 @@ Simple example:
 
 `<floating point> : : = <integer>.<integer>`
 
----
+
 
 
 ---
