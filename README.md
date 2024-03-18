@@ -1,6 +1,6 @@
 # mini~~s~~hell
 
-Allowed functions and usage examples: [Functions.md](Functions.md)
+Allowed functions and usage examples: [Functions.md](/docs/Functions.md)
 
 A shell implementation is divided into two main parts: **The parser** and **the executor**.
 
