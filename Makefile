@@ -19,7 +19,8 @@ TARGET			:= minishell
 SRC_DIR			:= src/
 
 # Source files
-SRC_FILES		+= main.c		# Main
+SRC_FILES		+= main.c						# Main
+SRC_FILES		+= holy_executor/execute.c		# Executor
 
 # Object files directory
 OBJ_DIR			:= obj/
