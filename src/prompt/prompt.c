@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/14 13:20:50 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:43:19 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	render_prompt(void)
 	getcwd(cwd, sizeof(cwd));
 	if (cwd[0] == 0)
 		return (-1);
-	printf("$minihell [%s]> ", cwd);
+	ft_printf("$🔥🔥minihell🔥🔥 [%s]> ", cwd);
 	input = readline("");
 	printf("%s\n", input);
 	return (0);
