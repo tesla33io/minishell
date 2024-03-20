@@ -42,5 +42,10 @@ typedef struct s_CommandNode
 /* HOLY EXECUTOR Functions */
 
 void	print_command(t_SimpleCommand	*cmd);
+void	find_bin(t_SimpleCommand *cmd);
+
+/* Util functions */
+
+void	free_str_list(char	**lst);
 
 #endif

@@ -21,6 +21,7 @@ SRC_DIR			:= src/
 # Source files
 SRC_FILES		+= main.c						# Main
 SRC_FILES		+= holy_executor/execute.c		# Executor
+SRC_FILES		+= utils/free_utils.c			# Utils
 
 # Object files directory
 OBJ_DIR			:= obj/

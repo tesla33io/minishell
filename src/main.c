@@ -23,11 +23,12 @@ int	main(int ac, char **av)
 
 	(void)ac;
 	(void)av;
-	cmd.bin = "executor";
+	cmd.bin = "ls";
 	cmd.args = malloc(3 * sizeof(char *));
-	cmd.args[0] = "executor";
+	cmd.args[0] = "ls";
 	cmd.args[1] = "-a1";
 	cmd.args[2] = NULL;
+	find_bin(&cmd);
 	print_command(&cmd);
 	return (0);
 }
