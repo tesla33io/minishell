@@ -44,6 +44,7 @@ struct s_SimpleCommand
 {
 	char    *bin;      /* Binary file name (or path) */
 	char    **args;    /* List of arguments for command */
+	char    **envp;    /* Environmental variables */
 	char    **in_fs;   /* List of IN-redirections */
 	char    **out_fs;  /* List of OUT-redirections */
 	int     pipefd[2]; /* FD's in case of pipe */
@@ -57,7 +58,7 @@ struct s_SimpleCommand
 /* If no arguments specified */
 **args = {<bin_name>, NULL};
 ```
-
+- _envp_ - An array of pointers to strings that define the environment for the program.
 - _in\_fs_ - List of file names (_NULL terminated_) for IN-redirection in the following format:
 ```C
 **in_fs = {<in_file_1>, ..., <in_file_n>, NULL};
