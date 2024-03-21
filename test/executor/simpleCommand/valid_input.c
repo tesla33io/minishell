@@ -10,13 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Unity/src/unity.h"
 #include "../../../include/executor.h"
-#include "../tests.h"
+#include "../../../lib/libft/libft.h"
 
 #include <stdlib.h>
 
-void	test_find_bin_test(void)
+#define AUDIT_IMPLEMENTATION
+#include "../../audit.h"
+audit("SimpleCommnd test [find_bin]")
 {
 	t_SimpleCommand	*ls;
 	char			*envp;
@@ -24,8 +25,8 @@ void	test_find_bin_test(void)
 	envp = getenv("PATH");
 	ls = cmd_gen("ls", (char *[]){"ls", NULL}, &envp, 
 			(char **){NULL}, (char **){NULL}, (int [2]){-1, -1});
-	TEST_ASSERT(ls != NULL);
-	TEST_ASSERT_EQUAL_STRING("ls", ls->bin);
+	check(ls != NULL, "lorem", "ipsum");
+	check_eq(ft_strncmp(ls->bin, "ls", 2), 0, "%i", "str lorem");
 	find_bin(ls);
-	TEST_ASSERT_EQUAL_STRING("/bin/ls", ls->bin);
+	check_eq(ft_strncmp(ls->bin, "/bin/ls", 7), 0, "%i", "str2 lorem");
 }

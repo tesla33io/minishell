@@ -10,19 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Unity/src/unity.h"
+#include "../utest.h"
 #include "../../include/executor.h"
-#include "tests.h"
 
+UTEST_MAIN()
+
+/*
 int	main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
 
-	UNITY_BEGIN();
 
-	RUN_TEST(test_find_bin_test);
-
-	UNITY_END();
 	return (0);
 }
+*/

@@ -4,25 +4,29 @@
 CC				:= clang
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
+CFLAGS			:= -Wall -Wextra -pedantic -O3
 
 # Libraries to be linked (if any)
-LIBS			:= -L./lib/libft/ -lft
+LIBS			:= -L../lib/libft/ -lft
 
 # Include directories
-INCLUDES		:= -Iinclude/
+INCLUDES		:= -I./ -I../include/
 
 # Target executable
-TARGET			:= minishell
+TARGET			:= mini_test_hell
 
 # Source files directory
-SRC_DIR			:= src/
+SRC_DIR			:= ../
 
 # Source files
-SRC_FILES		+= main.c						# Main
-SRC_FILES		+= holy_executor/execute.c		# Executor
-SRC_FILES		+= utils/free_utils.c			# Utils
-SRC_FILES		+= utils/free_utils.c			# TODO: Delete
+SRC_FILES		+= src/holy_executor/execute.c		# Executor
+SRC_FILES		+= src/utils/free_utils.c			# Utils
+SRC_FILES		+= src/utils/free_utils.c			# TODO: Delete
+
+
+# Test source files
+# SRC_FILES		+= test/executor/main.c							# Main
+SRC_FILES		+= test/executor/simpleCommand/valid_input.c		# find_bin tests
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -48,7 +52,7 @@ TOUCH			:= /bin/touch
 ## FT_PRINTF_PATH	:= ft_printf/
 ## FT_PRINTF_LIB	:= $(FT_PRINTF_PATH)libftprintf.a
 
-LIBFT_PATH		:= lib/libft/
+LIBFT_PATH		:= ../lib/libft/
 LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 
 #### DEBUG SETTINGS ####
