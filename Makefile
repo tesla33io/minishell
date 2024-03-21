@@ -22,6 +22,7 @@ SRC_DIR			:= src/
 SRC_FILES		+= main.c						# Main
 SRC_FILES		+= holy_executor/execute.c		# Executor
 SRC_FILES		+= utils/free_utils.c			# Utils
+SRC_FILES		+= utils/debug_utils.c			# TODO: Delete
 
 # Object files directory
 OBJ_DIR			:= obj/
