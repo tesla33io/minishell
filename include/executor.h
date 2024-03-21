@@ -17,6 +17,7 @@ typedef struct s_SimpleCommand
 {
 	char	*bin;
 	char	**args;
+	char	**envp;
 	char	**in_fs;
 	char	**out_fs;
 	int		pipefd[2];
@@ -43,9 +44,12 @@ typedef struct s_CommandNode
 
 void	print_command(t_SimpleCommand	*cmd);
 void	find_bin(t_SimpleCommand *cmd);
+int		cmd_exe(t_SimpleCommand *cmd);
 
 /* Util functions */
 
 void	free_str_list(char	**lst);
+t_SimpleCommand	*cmd_gen(char *bin, char **args, char **envp, char **in_fs,
+		char **out_fs, int pipefd[2]);
 
 #endif

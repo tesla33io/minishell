@@ -54,7 +54,6 @@ void	find_bin(t_SimpleCommand *cmd)
 	return ;
 }
 
-/*
 static int	cmd_check(t_SimpleCommand *cmd)
 {
 	if (!cmd->bin)
@@ -65,9 +64,7 @@ static int	cmd_check(t_SimpleCommand *cmd)
 		return (-1);
 	return (0);
 }
-*/
 
-/*
 int	cmd_exe(t_SimpleCommand *cmd)
 {
 	pid_t	pid;
@@ -79,14 +76,15 @@ int	cmd_exe(t_SimpleCommand *cmd)
 	{
 		if (cmd_check(cmd) != 0)
 			exit(printf("Command execution failed.\n"));
-
+		find_bin(cmd);
+		execve(cmd->bin, cmd->args, cmd->envp);
 	}
 	else
 	{
-
+		printf("Message from parent.\n");
 	}
+	return (0);
 }
-*/
 
 void	print_command(t_SimpleCommand	*cmd)
 {
