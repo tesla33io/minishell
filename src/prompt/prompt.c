@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/20 16:43:19 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/03/20 17:36:53 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	render_prompt(void)
 		return (-1);
 	ft_printf("$🔥🔥minihell🔥🔥 [%s]> ", cwd);
 	input = readline("");
+	// if input == exit -> clear history, free_all, exit
 	printf("%s\n", input);
+	rl_replace_line(input, 0);
+	rl_redisplay();
 	return (0);
 }
