@@ -4,33 +4,27 @@
 CC				:= cc
 
 # Compiler flags
-CFLAGS			:= -Wall -Wextra -Werror -pedantic -O3
+CFLAGS			:= -Wall -Werror -Wextra -pedantic
 
 # Libraries to be linked (if any)
-LIBS			+= -Llibunit/framework/ -lunit
-LIBS			+= -L../lib/libft/ -lft
-LIBS			+= -L../lib/ft_printf/ -lftprintf
+LIBS			:= -L../../../lib/libft/ -lft
+LIBS			+= -L../../../lib/ft_printf/ -lftprintf
 
 # Include directories
-INCLDUES		+= -Ilibunit/framework/includes/
-INCLUDES		+= -I../lib/libft/ -I../include/
-INCLUDES		+= -I../lib/ft_printf/includes/
+INCLUDES		:= -Iincludes/ -I../../../lib/libft/
+INCLUDES		+= -I../../../lib/ft_printf/includes/
 
 # Target executable
-TARGET			:= mini_test_hell
+TARGET			:= libunit.a
 
 # Source files directory
-SRC_DIR			:= ../
+SRC_DIR			:= src/
 
 # Source files
-SRC_FILES		+= src/holy_executor/execute.c		# Executor
-SRC_FILES		+= src/utils/free_utils.c			# Utils
-SRC_FILES		+= src/utils/debug_utils.c			# TODO: Delete
-
-
-# Test source files
-SRC_FILES		+= test/executor/main.c								# Main
-SRC_FILES		+= test/executor/simpleCommand/valid_input.c		# find_bin tests
+SRC_FILES		+= libunit.c		# Main
+SRC_FILES		+= free.c			# Free
+SRC_FILES		+= log.c			# Logging
+SRC_FILES		+= utils.c			# Utils
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -53,13 +47,10 @@ TOUCH			:= /bin/touch
 
 #### LOCAL LIBRARIES ####
 
-FT_PRINTF_PATH	:= ../lib/ft_printf/
+FT_PRINTF_PATH	:= ../../../lib/ft_printf/
 FT_PRINTF_LIB	:= $(FT_PRINTF_PATH)libftprintf.a
 
-LIBUNIT_PATH	:= libunit/framework/
-UNIT_LIB		:= $(LIBUNIT_PATH)libunit.a
-
-LIBFT_PATH		:= ../lib/libft/
+LIBFT_PATH		:= ../../../lib/libft/
 LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 
 #### DEBUG SETTINGS ####
@@ -83,11 +74,11 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
-$(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(UNIT_LIB)
+$(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB)
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo -n "build]: $(GREEN)"
-	@echo "$(BOLD)Link$(RESET)$(GREEN) $(TARGET) $(RESET)"
-	@$(CC) $(CFLAGS) -o $(TARGET) $(OBJ_FILES) $(INCLUDES) $(LIBS)
+	@echo "$(BOLD)Archive$(RESET)$(GREEN) $(TARGET) $(RESET)"
+	@ar -rcs $(TARGET) $(OBJ_FILES)
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo "info]: $(GREEN)$(BOLD)Build finished!$(RESET)"
 	-@echo -n "$(MAGENTA)" && ls -lah $(TARGET) && echo -n "$(RESET)"
@@ -95,10 +86,7 @@ $(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(UNIT_LIB)
 #### LOCAL LIBS COMPILATION ####
 
 $(FT_PRINTF_LIB):
-	@$(MAKE) -C $(FT_PRINTF_PATH)
-
-$(UNIT_LIB):
-	@$(MAKE) -C $(LIBUNIT_PATH)
+	@$(MAKE) -sC $(FT_PRINTF_PATH)
 
 $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_PATH)
@@ -116,7 +104,6 @@ clean: ## Clean objects and dependencies
 	@echo "clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
-	@(test -s $(UNIT_LIB) && $(MAKE) -C $(LIBUNIT_PATH) clean) ||:
 
 fclean: clean ## Restore project to initial state
 	@$(RM) $(TARGET)
@@ -125,7 +112,6 @@ fclean: clean ## Restore project to initial state
 	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
-	@(test -s $(UNIT_LIB) && $(MAKE) -C $(LIBUNIT_PATH) fclean) ||:
 
 re: fclean all ## Rebuild project
 

@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tests.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 20:50:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/21 20:50:33 by astavrop         ###   ########.fr       */
+/*   Created: 2024/03/22 18:43:33 by astavrop          #+#    #+#             */
+/*   Updated: 2024/03/22 18:43:33 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
+#ifndef TESTS_H
+# define TESTS_H
 
-#include "../../include/executor.h"
+# include "../libunit/framework/includes/libunit.h"
 
-int	simple_cmd_launcher(void)
-{
-	t_unit_test	*tlst;
+int			test_find_bin_ls(void);
 
-	tlst = NULL;
-	load_test(&tlst, "SimpleCommand", "find_bin ls", test_find_bin_ls);
-	return (launch_test(&tlst));
-}
-
-int	main(void)
-{
-	return (simple_cmd_launcher());
-}
+#endif

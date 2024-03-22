@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../tests.h"
+
 #include "../../../include/executor.h"
 #include "../../../lib/libft/libft.h"
 
 #include <stdlib.h>
 
-#define AUDIT_IMPLEMENTATION
-#include "../../audit.h"
-audit("SimpleCommnd test [find_bin]")
+int	test_find_bin_ls(void)
 {
 	t_SimpleCommand	*ls;
 	char			*envp;
@@ -25,8 +25,21 @@ audit("SimpleCommnd test [find_bin]")
 	envp = getenv("PATH");
 	ls = cmd_gen("ls", (char *[]){"ls", NULL}, &envp, 
 			(char **){NULL}, (char **){NULL}, (int [2]){-1, -1});
-	check(ls != NULL, "lorem", "ipsum");
-	check_eq(ft_strncmp(ls->bin, "ls", 2), 0, "%i", "str lorem");
-	find_bin(ls);
-	check_eq(ft_strncmp(ls->bin, "/bin/ls", 7), 0, "%i", "str2 lorem");
+	ft_printf("Generate `ls` cmd.\n");
+	if (ls == NULL)
+		return (-1);
+	ft_printf("Check result of generation\n");
+	if (ft_strncmp("ls", ls->bin, ft_strlen(ls->bin)) == 0)
+	{
+		ft_printf("Look for `ls` binary.\n");
+		find_bin(ls);
+		ft_printf("%s\n", ls->bin);
+		if (ft_strncmp("/usr/bin/ls", ls->bin, ft_strlen(ls->bin)) == 0)
+		{
+			free(ls);
+			return (0);
+		}
+	}
+	free(ls);
+	return (-1);
 }

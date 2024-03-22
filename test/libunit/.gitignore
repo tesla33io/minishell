@@ -1,0 +1,8 @@
+.vscode/
+*/*.o
+*/obj/*.o
+.vscode/
+*.test
+*.a
+a.out
+*.log
