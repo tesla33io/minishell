@@ -17,7 +17,7 @@
 
 #include <stdlib.h>
 
-int	test_find_bin_ls(void)
+int	test_find_bin_ls_ok(void)
 {
 	t_SimpleCommand	*ls;
 	char			*envp;
@@ -25,15 +25,11 @@ int	test_find_bin_ls(void)
 	envp = getenv("PATH");
 	ls = cmd_gen("ls", (char *[]){"ls", NULL}, &envp, 
 			(char **){NULL}, (char **){NULL}, (int [2]){-1, -1});
-	ft_printf("Generate `ls` cmd.\n");
 	if (ls == NULL)
 		return (-1);
-	ft_printf("Check result of generation\n");
 	if (ft_strncmp("ls", ls->bin, ft_strlen(ls->bin)) == 0)
 	{
-		ft_printf("Look for `ls` binary.\n");
 		find_bin(ls);
-		ft_printf("%s\n", ls->bin);
 		if (ft_strncmp("/usr/bin/ls", ls->bin, ft_strlen(ls->bin)) == 0)
 		{
 			free(ls);
@@ -42,4 +38,44 @@ int	test_find_bin_ls(void)
 	}
 	free(ls);
 	return (-1);
+}
+
+int	test_find_bin_args_ok(void)
+{
+	t_SimpleCommand	*ls;
+	char			*envp;
+
+	envp = getenv("PATH");
+	ls = cmd_gen("ls", (char *[]){"ls", NULL}, &envp, 
+			(char **){NULL}, (char **){NULL}, (int [2]){-1, -1});
+	if (ls == NULL)
+		return (-1);
+	if (ft_strncmp("ls", ls->args[0], ft_strlen(ls->bin)) == 0)
+	{
+		find_bin(ls);
+		if (ft_strncmp("/usr/bin/ls", ls->args[0], ft_strlen(ls->args[0]))
+				== 0)
+		{
+			free(ls);
+			return (0);
+		}
+	}
+	free(ls);
+	return (-1);
+}
+
+int	test_find_bin_null(void)
+{
+	t_SimpleCommand	*cmd;
+	char			*envp;
+
+	envp = getenv("PATH");
+	cmd = cmd_gen("lorem_ipsum", (char *[]){"lorem_ipsum", NULL}, &envp, 
+			(char **){NULL}, (char **){NULL}, (int [2]){-1, -1});
+	if (cmd == NULL)
+		return (-1);
+	find_bin(cmd);
+	if (ft_strncmp("lorem_ipsum", cmd->bin, ft_strlen(cmd->bin) != 0))
+		return (-1);
+	return (0);
 }

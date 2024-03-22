@@ -15,6 +15,8 @@
 
 # include "../libunit/framework/includes/libunit.h"
 
-int			test_find_bin_ls(void);
+int			test_find_bin_ls_ok(void);
+int			test_find_bin_args_ok(void);
+int			test_find_bin_null(void);
 
 #endif

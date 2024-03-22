@@ -30,7 +30,7 @@ SRC_FILES		+= src/utils/debug_utils.c			# TODO: Delete
 
 # Test source files
 SRC_FILES		+= test/executor/main.c								# Main
-SRC_FILES		+= test/executor/simpleCommand/valid_input.c		# find_bin tests
+SRC_FILES		+= test/executor/simpleCommand/test_find_bin.c		# find_bin tests
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -73,6 +73,7 @@ endif
 .DEFAULT_GOAL	:= all
 
 all: $(TARGET) ## Build this project
+	@-./$(TARGET)
 
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
