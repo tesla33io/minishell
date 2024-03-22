@@ -48,7 +48,6 @@ void	find_bin(t_SimpleCommand *cmd)
 		}
 		free(bin_path);
 	}
-	free(bin_path);
 	free_str_list(path_list);
 	printf("Error [11]: `%s` is not on $PATH.\n", cmd->bin);
 	return ;
