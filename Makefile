@@ -108,14 +108,19 @@ fclean: clean ## Restore project to initial state
 	@echo -n "fclean]: $(YELLOW)"
 	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
+	@(test -d test/ && $(MAKE) -C test/ fclean) ||:
 
 re: fclean all ## Rebuild project
+
+test: ## Run tests
+	@(test ! -d test/ && echo "$(RED)There were no tests that I could find.$(RESET)") ||:
+	@$(MAKE) -C test/
 
 help: ## Show help info
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "$(CYAN)%-30s$(RESET) %s\n", $$1, $$2}'
 
-.PHONY: all re clean fclean help
+.PHONY: all re clean fclean help test
 
 #### COLORS ####
 # Color codes
