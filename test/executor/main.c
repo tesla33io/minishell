@@ -26,7 +26,21 @@ int	simple_cmd_launcher(void)
 	return (launch_test(&tlst));
 }
 
+int	echo_cmd_launcher(void)
+{
+	t_unit_test	*tlst;
+
+	tlst = NULL;
+	load_test(&tlst, "echo", "string w/o \\n", test_echo_basic);
+	return (launch_test(&tlst));
+}
+
 int	main(void)
 {
-	return (simple_cmd_launcher());
+	int	res;
+
+	res = 0;
+	res += simple_cmd_launcher();
+	res += echo_cmd_launcher();
+	return (res);
 }

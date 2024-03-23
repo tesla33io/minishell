@@ -10,11 +10,13 @@ CFLAGS			:= -Wall -Wextra -Werror -pedantic -O3
 LIBS			+= -Llibunit/framework/ -lunit
 LIBS			+= -L../lib/libft/ -lft
 LIBS			+= -L../lib/ft_printf/ -lftprintf
+LIBS			+= -L../lib/gnl/ -lgnl
 
 # Include directories
 INCLDUES		+= -Ilibunit/framework/includes/
 INCLUDES		+= -I../lib/libft/ -I../include/
 INCLUDES		+= -I../lib/ft_printf/includes/
+INCLUDES		+= -I../lib/gnl/inc/
 
 # Target executable
 TARGET			:= mini_test_hell
@@ -24,6 +26,7 @@ SRC_DIR			:= ../
 
 # Source files
 SRC_FILES		+= src/holy_executor/execute.c		# Executor
+SRC_FILES		+= src/builtins/echo.c				# Echo
 SRC_FILES		+= src/utils/free_utils.c			# Utils
 SRC_FILES		+= src/utils/debug_utils.c			# TODO: Delete
 
@@ -31,6 +34,7 @@ SRC_FILES		+= src/utils/debug_utils.c			# TODO: Delete
 # Test source files
 SRC_FILES		+= test/executor/main.c								# Main
 SRC_FILES		+= test/executor/simpleCommand/test_find_bin.c		# find_bin tests
+SRC_FILES		+= test/executor/builtins/test_echo.c				# ft_echo tests
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -62,6 +66,9 @@ UNIT_LIB		:= $(LIBUNIT_PATH)libunit.a
 LIBFT_PATH		:= ../lib/libft/
 LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 
+GNL_PATH		:= ../lib/gnl/
+GNL_LIB			:= $(GNL_PATH)libgnl.a
+
 #### DEBUG SETTINGS ####
 
 ifeq ($(DEBUG), 1)
@@ -84,7 +91,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
-$(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(UNIT_LIB)
+$(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(UNIT_LIB) $(GNL_LIB)
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo -n "build]: $(GREEN)"
 	@echo "$(BOLD)Link$(RESET)$(GREEN) $(TARGET) $(RESET)"
@@ -104,6 +111,9 @@ $(UNIT_LIB):
 $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_PATH)
 
+$(GNL_LIB):
+	@$(MAKE) -C $(GNL_PATH)
+
 #### ADDITIONAL RULES ####
 
 clean: ## Clean objects and dependencies
@@ -117,6 +127,7 @@ clean: ## Clean objects and dependencies
 	@echo "clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
+	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) clean) ||:
 	@(test -s $(UNIT_LIB) && $(MAKE) -C $(LIBUNIT_PATH) clean) ||:
 	@$(RM) *.log
 
@@ -127,6 +138,7 @@ fclean: clean ## Restore project to initial state
 	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
+	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) fclean) ||:
 	@(test -s $(UNIT_LIB) && $(MAKE) -C $(LIBUNIT_PATH) fclean) ||:
 
 re: fclean all ## Rebuild project

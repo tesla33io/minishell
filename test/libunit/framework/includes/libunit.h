@@ -15,6 +15,7 @@
 
 # include "../../../../lib/libft/libft.h"
 # include "../../../../lib/ft_printf/includes/ft_printf.h"
+# include "../../../../lib/gnl/inc/get_next_line.h"
 # include <unistd.h>
 # include <sys/wait.h>
 # include <stdio.h>
@@ -49,6 +50,8 @@ void	load_test(t_unit_test **list, char *test_fun,
 			char *test_name, t_test_function f);
 int		launch_test(t_unit_test **list);
 void	free_list(t_unit_test *head);
+
+int		check_output(int fd, char **expected, size_t len);
 
 /* Utils */
 

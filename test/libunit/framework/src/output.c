@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.h                                            :+:      :+:    :+:   */
+/*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 18:43:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/22 18:43:33 by astavrop         ###   ########.fr       */
+/*   Created: 2024/03/23 21:39:00 by astavrop          #+#    #+#             */
+/*   Updated: 2024/03/23 21:39:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TESTS_H
-# define TESTS_H
+#include "../includes/libunit.h"
 
-# include "../libunit/framework/includes/libunit.h"
+int	check_output(int fd, char **expected, size_t len)
+{
+	size_t	i;
+	char	*fline;
+	int		ret;
 
-/* Tests for `find_bin` */
-
-int		test_find_bin_ls_ok(void);
-int		test_find_bin_args_ok(void);
-int		test_find_bin_null(void);
-
-/* Tests for `ft_echo` */
-
-int		test_echo_basic(void);
-
-#endif
+	i = 0;
+	fline = get_next_line(fd);
+	ret = 0;
+	while (fline && i < len)
+	{
+		if (ft_strncmp(fline, expected[i], ft_strlen(expected[i])) != 0)
+			ret = -1;
+		free(fline);
+		fline = get_next_line(fd);
+	}
+	return (ret);
+}

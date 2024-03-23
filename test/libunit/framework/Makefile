@@ -9,10 +9,12 @@ CFLAGS			:= -Wall -Werror -Wextra -pedantic
 # Libraries to be linked (if any)
 LIBS			:= -L../../../lib/libft/ -lft
 LIBS			+= -L../../../lib/ft_printf/ -lftprintf
+LIBS			+= -L../../../lib/gnl/ -lfgnl
 
 # Include directories
 INCLUDES		:= -Iincludes/ -I../../../lib/libft/
 INCLUDES		+= -I../../../lib/ft_printf/includes/
+INCLUDES		+= -I../../../lib/gnl/inc/
 
 # Target executable
 TARGET			:= libunit.a
@@ -22,6 +24,7 @@ SRC_DIR			:= src/
 
 # Source files
 SRC_FILES		+= libunit.c		# Main
+SRC_FILES		+= output.c			# Output testing
 SRC_FILES		+= free.c			# Free
 SRC_FILES		+= log.c			# Logging
 SRC_FILES		+= utils.c			# Utils
@@ -53,6 +56,9 @@ FT_PRINTF_LIB	:= $(FT_PRINTF_PATH)libftprintf.a
 LIBFT_PATH		:= ../../../lib/libft/
 LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 
+GNL_PATH		:= ../../../lib/gnl/
+GNL_LIB			:= $(GNL_PATH)libgnl.a
+
 #### DEBUG SETTINGS ####
 
 ifeq ($(DEBUG), 1)
@@ -74,7 +80,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
-$(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB)
+$(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(GNL_LIB)
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo -n "build]: $(GREEN)"
 	@echo "$(BOLD)Archive$(RESET)$(GREEN) $(TARGET) $(RESET)"
@@ -91,6 +97,9 @@ $(FT_PRINTF_LIB):
 $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_PATH)
 
+$(GNL_LIB):
+	@$(MAKE) -C $(GNL_PATH)
+
 #### ADDITIONAL RULES ####
 
 clean: ## Clean objects and dependencies
@@ -104,6 +113,7 @@ clean: ## Clean objects and dependencies
 	@echo "clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
+	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) clean) ||:
 
 fclean: clean ## Restore project to initial state
 	@$(RM) $(TARGET)
@@ -112,6 +122,7 @@ fclean: clean ## Restore project to initial state
 	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
+	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) fclean) ||:
 
 re: fclean all ## Rebuild project
 
