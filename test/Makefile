@@ -118,6 +118,7 @@ clean: ## Clean objects and dependencies
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
 	@(test -s $(UNIT_LIB) && $(MAKE) -C $(LIBUNIT_PATH) clean) ||:
+	@$(RM) *.log
 
 fclean: clean ## Restore project to initial state
 	@$(RM) $(TARGET)
