@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/19 23:05:59 by astavrop         ###   ########.fr       */
+/*   Created: 2024/03/23 20:59:52 by astavrop          #+#    #+#             */
+/*   Updated: 2024/03/23 20:59:52 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
-#include "../include/builtins.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-#include "../lib/libft/libft.h"
+void	ft_echo(int fd, int ac, char **av);
 
-#include <stdlib.h>
-#include <stdio.h>
-
-/* Test code */
-int	main(int ac, char **av, char **envp)
-{
-	(void)ac;
-	(void)av;
-	(void)envp;
-	ft_echo(1, 1, (char *[]){"This is just a string", NULL});
-	return (0);
-}
+#endif
