@@ -27,7 +27,8 @@ A shell implementation is divided into two main parts: **The parser** and **the 
  The parser will put all information about what should be executed along with some instructions about how command should be executed.
 
 > [!NOTE]
- > Each command should be executed in separate child process and exit status should be handled appropriately 
+ > Each command should be executed in separate child process and exit status should be handled appropriately.
+ > Exception: some built-ins (e.g. `cd`, `export`, `unset` etc.)
 
 1. Get a command from _Command Table_.
 2. Check if it's a built-in command (execute appropriate function if `true`).
