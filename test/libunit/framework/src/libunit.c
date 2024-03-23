@@ -21,7 +21,7 @@ void	load_test(t_unit_test **list, char *test_fun,
 	new_test = malloc(sizeof(t_unit_test));
 	if (!new_test)
 	{
-		ft_printf("Cannot load new test\n\n");
+		ft_printf(2, "Cannot load new test\n\n");
 		free_exit(*list, 1);
 	}
 	new_test->fun = f;
@@ -47,7 +47,7 @@ int	tester(t_unit_test *test, t_unit_test *head)
 	pid = fork();
 	if (pid < 0)
 	{
-		ft_printf("fork error\n");
+		ft_printf(2, "fork error\n");
 		free_exit(head, 1);
 	}
 	if (pid == 0)
@@ -70,27 +70,27 @@ int	output(int test_result, char *fun, char *name)
 {
 	if (test_result == 0)
 	{
-		ft_printf("%s : %s : [%s]\n", fun, name, GREEN"OK"RESET);
+		ft_printf(1, "%s : %s : [%s]\n", fun, name, GREEN"OK"RESET);
 		return (1);
 	}
 	if (test_result == 255)
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"KO"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"KO"RESET);
 	else if (test_result == SIGSEGV)
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"SIGSEGV"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"SIGSEGV"RESET);
 	else if (test_result == SIGBUS)
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"SIGBUS"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"SIGBUS"RESET);
 	else if (test_result == SIGABRT)
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"SIGABRT"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"SIGABRT"RESET);
 	else if (test_result == SIGFPE)
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"SIGFPE"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"SIGFPE"RESET);
 	else if (test_result == SIGPIPE)
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"SIGPIPE"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"SIGPIPE"RESET);
 	else if (test_result == SIGILL)
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"SIGILL"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"SIGILL"RESET);
 	else if (test_result == SIGALRM)
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"TIMEOUT"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"TIMEOUT"RESET);
 	else
-		ft_printf("%s : %s : [%s]\n", fun, name, RED"UNKNOWN"RESET);
+		ft_printf(2, "%s : %s : [%s]\n", fun, name, RED"UNKNOWN"RESET);
 	return (0);
 }
 
@@ -112,7 +112,7 @@ int	launch_test(t_unit_test **list)
 		parent_logger(test, test_result);
 		test = test->next;
 	}
-	ft_printf("%d/%d tests checked\n", passed_test, total_test);
+	ft_printf(1, "%d/%d tests checked\n", passed_test, total_test);
 	free_list(*list);
 	if (passed_test == total_test)
 		return (0);
