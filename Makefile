@@ -8,9 +8,11 @@ CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
 
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
+LIBS			+= -L./lib/ft_printf/ -lftprintf
 
 # Include directories
-INCLUDES		:= -Iinclude/
+INCLUDES		:= -Iinclude/ -Ilib/libft/
+INCLUDES		+= -Ilib/ft_printf/includes/
 
 # Target executable
 TARGET			:= minishell
@@ -21,6 +23,7 @@ SRC_DIR			:= src/
 # Source files
 SRC_FILES		+= main.c						# Main
 SRC_FILES		+= holy_executor/execute.c		# Executor
+SRC_FILES		+= builtins/echo.c				# Echo
 SRC_FILES		+= utils/free_utils.c			# Utils
 SRC_FILES		+= utils/debug_utils.c			# TODO: Delete
 
@@ -45,8 +48,8 @@ TOUCH			:= /bin/touch
 
 #### LOCAL LIBRARIES ####
 
-## FT_PRINTF_PATH	:= ft_printf/
-## FT_PRINTF_LIB	:= $(FT_PRINTF_PATH)libftprintf.a
+FT_PRINTF_PATH	:= lib/ft_printf/
+FT_PRINTF_LIB	:= $(FT_PRINTF_PATH)libftprintf.a
 
 LIBFT_PATH		:= lib/libft/
 LIBFT_LIB		:= $(LIBFT_PATH)libft.a
@@ -72,7 +75,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
-$(TARGET): $(OBJ_FILES) $(LIBFT_LIB)
+$(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB)
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo -n "build]: $(GREEN)"
 	@echo "$(BOLD)Link$(RESET)$(GREEN) $(TARGET) $(RESET)"
@@ -83,8 +86,8 @@ $(TARGET): $(OBJ_FILES) $(LIBFT_LIB)
 
 #### LOCAL LIBS COMPILATION ####
 
-## $(FT_PRINTF_LIB):
-## 	@$(MAKE) -sC $(FT_PRINTF_PATH)
+$(FT_PRINTF_LIB):
+	@$(MAKE) -C $(FT_PRINTF_PATH)
 
 $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_PATH)
@@ -101,6 +104,7 @@ clean: ## Clean objects and dependencies
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo "clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
+	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
 
 fclean: clean ## Restore project to initial state
 	@$(RM) $(TARGET)
@@ -108,6 +112,7 @@ fclean: clean ## Restore project to initial state
 	@echo -n "fclean]: $(YELLOW)"
 	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
+	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
 	@(test -d test/ && $(MAKE) -C test/ fclean) ||:
 
 re: fclean all ## Rebuild project
