@@ -17,18 +17,22 @@
 #include <stdio.h>
 
 /* Test code */
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
-	t_SimpleCommand	cmd;
+	t_SimpleCommand	*cmd;
 
-	(void)ac;
-	(void)av;
-	cmd.bin = "ls";
-	cmd.args = malloc(3 * sizeof(char *));
-	cmd.args[0] = "ls";
-	cmd.args[1] = "-a1";
-	cmd.args[2] = NULL;
-	find_bin(&cmd);
-	print_command(&cmd);
+	if (ac == 3)
+	{
+		cmd = cmd_gen(av[1], (char *[]){av[1], av[2], NULL},
+				envp, (char **){NULL}, (char **){NULL}, (int [2]) {-1, -1});
+		cmd_exe(cmd);
+	}
+	else
+	{
+		printf("WTF\n");
+		exit (1);
+	}
+//	find_bin(&cmd);
+//	print_command(&cmd);
 	return (0);
 }

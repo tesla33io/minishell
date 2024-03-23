@@ -73,9 +73,11 @@ int	cmd_exe(t_SimpleCommand *cmd)
 		printf("Fork failure!\n");
 	if (pid == 0)
 	{
+		printf("Message from child.\n");
 		if (cmd_check(cmd) != 0)
 			exit(printf("Command execution failed.\n"));
 		find_bin(cmd);
+		print_command(cmd);
 		execve(cmd->bin, cmd->args, cmd->envp);
 	}
 	else
