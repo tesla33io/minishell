@@ -25,6 +25,7 @@ SRC_FILES		+= memory/ft_memmove.c			# Memory
 SRC_FILES		+= memory/ft_memchr.c			# Memory
 SRC_FILES		+= memory/ft_memcmp.c			# Memory
 SRC_FILES		+= memory/ft_calloc.c			# Memory
+SRC_FILES		+= memory/ft_malloc.c			# Memory
 
 SRC_FILES		+= string/ft_strlen.c			### String ###
 SRC_FILES		+= string/ft_strlcpy.c			# String

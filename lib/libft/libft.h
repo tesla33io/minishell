@@ -51,13 +51,11 @@ void			deque_push_front(t_deque *deque, t_deque_node *node);
 t_deque_node	*deque_pop_back(t_deque *deque);
 t_deque_node	*deque_pop_front(t_deque *deque);
 
-/* DEQUE */
-
 /* MEMORY */
 
-void			*ft_malloc(t_deque *allocated, size_t size);
-
-/* MEMORY */
+void			*ft_malloc(t_deque *gc, size_t size);
+void			ft_free_gc(t_deque *gc);
+void			ft_free_ptr(void **ptr);
 
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);

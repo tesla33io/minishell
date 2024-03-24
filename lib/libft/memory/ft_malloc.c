@@ -13,15 +13,37 @@
 #include "../libft.h"
 #include <stdlib.h>
 
-void	*ft_malloc(t_deque *allocated, size_t size)
+void	*ft_malloc(t_deque *gc, size_t size)
 {
 	void	*ret;
 
 	ret = malloc(size);
 	if (!ret)
-		ft_putstr_fd("Error: memory allocation failed.", 2);
-	deque_emplace_back(allocated, ret);
+		ft_putstr_fd("Error (ft_malloc): memory allocation failed.\n", 2);
+	if (gc)
+		deque_emplace_back(gc, ret);
 	return (ret);
 }
 
-void	free
+void	ft_free_ptr(void **ptr)
+{
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
+
+void	ft_free_gc(t_deque *gc)
+{
+	t_deque_node	*node;
+
+	while (gc->size > 0)
+	{
+		node = deque_pop_front(gc);
+		if (node->data)
+			free(node->data);
+		free(node);
+	}
+	free(gc);
+}
