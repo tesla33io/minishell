@@ -35,6 +35,15 @@ int	echo_cmd_launcher(void)
 	return (launch_test(&tlst));
 }
 
+int	cd_cmd_launcher(void)
+{
+	t_unit_test	*tlst;
+
+	tlst = NULL;
+	load_test(&tlst, "cd", "go to home", test_cd_basic);
+	return (launch_test(&tlst));
+}
+
 int	main(void)
 {
 	int	res;
@@ -42,5 +51,6 @@ int	main(void)
 	res = 0;
 	res += simple_cmd_launcher();
 	res += echo_cmd_launcher();
+	res += cd_cmd_launcher();
 	return (res);
 }

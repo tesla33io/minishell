@@ -14,5 +14,6 @@
 # define BUILTINS_H
 
 void	ft_echo(int fd, int ac, char **av);
+void	ft_cd(const char *path);
 
 #endif
