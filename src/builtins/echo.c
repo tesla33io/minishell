@@ -25,11 +25,17 @@ void	ft_echo(int fd, int ac, char **av)
 	if (!av[0])
 		return ;
 	new_line = true;
+	i = 0;
 	if (ft_strncmp(av[0], "-n", 2) == 0)
+	{
 		new_line = false;
-	i = -1;
-	while (++i < ac)
+		i++;
+	}
+	while (i < ac)
+	{
 		ft_printf(fd, "%s", av[i]);
+		i++;
+	}
 	if (new_line)
 		ft_putstr_fd("\n", fd);
 }
