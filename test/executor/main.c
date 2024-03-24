@@ -13,6 +13,8 @@
 #include "tests.h"
 
 #include "../../include/executor.h"
+#include <fcntl.h>
+#include <stdio.h>
 
 int	simple_cmd_launcher(void)
 {
@@ -42,6 +44,7 @@ int	cd_cmd_launcher(void)
 
 	tlst = NULL;
 	load_test(&tlst, "cd", "go to home", test_cd_basic);
+	load_test(&tlst, "cd", "invalid path", test_cd_invalid_path);
 	return (launch_test(&tlst));
 }
 

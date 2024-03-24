@@ -29,5 +29,6 @@ int		test_echo_no_nl(void);
 /* Tests for `ft_cd` */
 
 int		test_cd_basic(void);
+int		test_cd_invalid_path(void);
 
 #endif

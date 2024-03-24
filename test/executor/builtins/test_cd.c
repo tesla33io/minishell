@@ -16,19 +16,41 @@
 #include "../../../include/builtins.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 int	test_cd_basic(void)
 {
-	int	fd;
-	int	res;
+	char	cwd_before[100];
+	char	cwd_after[100];
 
-	fd = open("test_cd_basic.test", O_RDWR | O_CREAT, 777);
-	dup2(fd, 1);
-	ft_cd("/home/astavrop");
+	getcwd(cwd_before, 100);
+	ft_cd(getenv("HOME"));
+	getcwd(cwd_after, 100);
+	if (ft_strncmp(cwd_before, cwd_after, 100) == 0)
+		return (-1);
+	if (ft_strncmp(cwd_before, cwd_after, ft_strlen(cwd_after)) != 0)
+		return (-1);
+	return (0);
+}
+
+int	test_cd_invalid_path(void)
+{
+	char	cwd_before[100];
+	char	cwd_after[100];
+	int		fd;
+	int		res;
+
+	fd = open("test_cd.test", O_RDWR | O_CREAT, 777);
+	dup2(fd, 2);
+	getcwd(cwd_before, 100);
+	ft_cd("/home/astavrop_invalid_path");
+	getcwd(cwd_after, 100);
 	res = check_output(fd, (char *[]){
-			"Dir: /home/astavrop/projects/github/minishell/test\n",
-			"Dir: /home/astavrop\n", NULL}, 2);
-	dup2(1, fd);
-	unlink("/home/astavrop/projects/github/minishell/test/test_cd_basic.test");
+			"cd: No such file or directory: /home/astavrop_invalid_path\n",
+			NULL}, 1);
+	close(fd);
+	unlink("test_cd.test");
+	if (ft_strncmp(cwd_before, cwd_after, 100) != 0)
+		return (-1);
 	return (res);
 }

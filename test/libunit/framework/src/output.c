@@ -27,6 +27,12 @@ int	check_output(int fd, char **expected, size_t len)
 			ret = -1;
 		free(fline);
 		fline = get_next_line(fd);
+		i++;
+	}
+	while (fline)
+	{
+		free(fline);
+		fline = get_next_line(fd);
 	}
 	return (ret);
 }
