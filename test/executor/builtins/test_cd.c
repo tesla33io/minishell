@@ -23,12 +23,12 @@ int	test_cd_basic(void)
 	int	res;
 
 	fd = open("test_cd_basic.test", O_RDWR | O_CREAT, 777);
-	dup2(1, fd);
-	ft_cd("~");
+	dup2(fd, 1);
+	ft_cd("/home/astavrop");
 	res = check_output(fd, (char *[]){
-			"/home/astavrop/projects/github/minishell/test\n",
-			"/home/astavrop\n", NULL}, 2);
-	close(fd);
+			"Dir: /home/astavrop/projects/github/minishell/test\n",
+			"Dir: /home/astavrop\n", NULL}, 2);
+	dup2(1, fd);
 	unlink("/home/astavrop/projects/github/minishell/test/test_cd_basic.test");
 	return (res);
 }

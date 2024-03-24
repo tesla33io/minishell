@@ -31,7 +31,8 @@ int	echo_cmd_launcher(void)
 	t_unit_test	*tlst;
 
 	tlst = NULL;
-	load_test(&tlst, "echo", "string w/o \\n", test_echo_basic);
+	load_test(&tlst, "echo", "string w/ \\n", test_echo_basic);
+	load_test(&tlst, "echo", "string w/o \\n", test_echo_no_nl);
 	return (launch_test(&tlst));
 }
 

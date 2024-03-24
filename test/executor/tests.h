@@ -24,6 +24,7 @@ int		test_find_bin_null(void);
 /* Tests for `ft_echo` */
 
 int		test_echo_basic(void);
+int		test_echo_no_nl(void);
 
 /* Tests for `ft_cd` */
 

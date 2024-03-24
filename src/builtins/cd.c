@@ -18,7 +18,9 @@
 
 void	ft_cd(const char *path)
 {
-	printf("Dir: %s\n", getenv("PWD"));
+	char	cwd[100];
+
+	printf("Dir: %s\n", getcwd(cwd, 100));
 	chdir(path);
-	printf("Dir: %s\n", getenv("PWD"));
+	printf("Dir: %s\n", getcwd(cwd, 100));
 }

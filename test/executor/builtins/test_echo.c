@@ -29,3 +29,16 @@ int	test_echo_basic(void)
 	unlink("test_echo_basic.test");
 	return (res);
 }
+
+int	test_echo_no_nl(void)
+{
+	int	check_fd;
+	int	res;
+
+	check_fd = open("test_echo_no_nl.test", O_RDWR | O_CREAT, 777);
+	ft_echo(check_fd, 2, (char *[]){"-n", "This is simple string"});
+	res = check_output(check_fd, (char *[]){"This is simple string"}, 1);
+	close(check_fd);
+	unlink("test_echo_no_nl.test");
+	return (res);
+}
