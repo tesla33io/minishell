@@ -32,11 +32,11 @@ int	test_find_bin_ls_ok(void)
 		find_bin(ls);
 		if (ft_strncmp("/usr/bin/ls", ls->bin, ft_strlen(ls->bin)) == 0)
 		{
-			free(ls);
+			free_cmd(ls);
 			return (0);
 		}
 	}
-	free(ls);
+	free_cmd(ls);
 	return (-1);
 }
 
@@ -56,11 +56,11 @@ int	test_find_bin_args_ok(void)
 		if (ft_strncmp("/usr/bin/ls", ls->args[0], ft_strlen(ls->args[0]))
 				== 0)
 		{
-			free(ls);
+			free_cmd(ls);
 			return (0);
 		}
 	}
-	free(ls);
+	free_cmd(ls);
 	return (-1);
 }
 
@@ -76,6 +76,10 @@ int	test_find_bin_null(void)
 		return (-1);
 	find_bin(cmd);
 	if (ft_strncmp("lorem_ipsum", cmd->bin, ft_strlen(cmd->bin) != 0))
+	{
+		free_cmd(cmd);
 		return (-1);
+	}
+	free_cmd(cmd);
 	return (0);
 }
