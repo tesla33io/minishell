@@ -49,6 +49,7 @@ int		cmd_exe(t_SimpleCommand *cmd);
 /* Util functions */
 
 void	free_str_list(char	**lst);
+void	free_cmd(t_SimpleCommand *cmd);
 t_SimpleCommand	*cmd_gen(char *bin, char **args, char **envp, char **in_fs,
 		char **out_fs, int pipefd[2]);
 
