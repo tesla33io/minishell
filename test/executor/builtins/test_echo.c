@@ -42,3 +42,31 @@ int	test_echo_no_nl(void)
 	unlink("test_echo_no_nl.test");
 	return (res);
 }
+
+int	test_echo_two_args(void)
+{
+	int	check_fd;
+	char	*test_name = "test_echo_two_args.test";
+	int	res;
+
+	check_fd = open(test_name, O_RDWR | O_CREAT, 777);
+	ft_echo(check_fd, 2, (char *[]){"arg1", "arg2"});
+	res = check_output(check_fd, (char *[]){"arg1 arg2\n"}, 1);
+	close(check_fd);
+	unlink(test_name);
+	return (res);
+}
+
+int	test_echo_many_args(void)
+{
+	int	check_fd;
+	char	*test_name = "test_echo_many_args.test";
+	int	res;
+
+	check_fd = open(test_name, O_RDWR | O_CREAT, 777);
+	ft_echo(check_fd, 5, (char *[]){"arg1", "arg2", "arg3", "arg4   ", "   arg5", NULL});
+	res = check_output(check_fd, (char *[]){"arg1 arg2 arg3 arg4       arg5\n"}, 1);
+	close(check_fd);
+	unlink(test_name);
+	return (res);
+}

@@ -25,6 +25,8 @@ int		test_find_bin_null(void);
 
 int		test_echo_basic(void);
 int		test_echo_no_nl(void);
+int		test_echo_two_args(void);
+int		test_echo_many_args(void);
 
 /* Tests for `ft_cd` */
 

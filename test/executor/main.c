@@ -35,6 +35,8 @@ int	echo_cmd_launcher(void)
 	tlst = NULL;
 	load_test(&tlst, "echo", "string w/ \\n", test_echo_basic);
 	load_test(&tlst, "echo", "string w/o \\n", test_echo_no_nl);
+	load_test(&tlst, "echo", "two args", test_echo_two_args);
+	load_test(&tlst, "echo", "many args", test_echo_many_args);
 	return (launch_test(&tlst));
 }
 
