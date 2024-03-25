@@ -77,12 +77,22 @@ ifeq ($(DEBUG), 1)
 	CFLAGS		+= -g3 -O0
 endif
 
+VG				:= /usr/bin/valgrind
+REPORT_FILE		:= test_vg_report.txt
+
+VG_OPTS			+= --leak-check=full
+VG_OPTS			+= --show-leak-kinds=all
+VG_OPTS			+= --track-origins=yes
+VG_OPTS			+= --track-fds=yes
+VG_OPTS			+= --log-file="$(REPORT_FILE)"
+
 #### TARGET COMPILATION ####
 
 .DEFAULT_GOAL	:= all
 
 all: $(TARGET) ## Build this project
-	@-./$(TARGET)
+	@-$(VG) $(VG_OPTS) ./$(TARGET)
+	@-ls -lah $(REPORT_FILE)
 
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
