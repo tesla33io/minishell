@@ -34,6 +34,8 @@ void	ft_echo(int fd, int ac, char **av)
 	while (i < ac)
 	{
 		ft_printf(fd, "%s", av[i]);
+		if (i < ac - 1)
+			ft_printf(1, " ");
 		i++;
 	}
 	if (new_line)
