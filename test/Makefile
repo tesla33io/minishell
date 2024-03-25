@@ -88,7 +88,10 @@ VG_OPTS			+= --log-file="$(REPORT_FILE)"
 
 #### TARGET COMPILATION ####
 
-.DEFAULT_GOAL	:= all
+.DEFAULT_GOAL	:= quick
+
+quick:  ## Run recipes simultaneously
+	@$(MAKE) -j all
 
 all: $(TARGET) ## Build this project
 	@-$(VG) $(VG_OPTS) ./$(TARGET)
@@ -97,19 +100,19 @@ all: $(TARGET) ## Build this project
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(MKDIR) $(@D)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo -n "build]: $(CYAN)"
-	@echo "$(BOLD)compile$(RESET)$(CYAN) $@ $(RESET)"
+	@echo "$(BLUE)[$(TARGET) -" \
+	"build]:$(CYAN)" \
+	"$(BOLD)compile$(RESET)$(CYAN) $@ $(RESET)"
 	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
 $(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(UNIT_LIB) $(GNL_LIB)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo -n "build]: $(GREEN)"
-	@echo "$(BOLD)Link$(RESET)$(GREEN) $(TARGET) $(RESET)"
+	@echo "$(BLUE)[$(TARGET) -" \
+	"build]:$(GREEN)" \
+	"$(BOLD)Link$(RESET)$(GREEN) $(TARGET) $(RESET)"
 	@$(CC) $(CFLAGS) -o $(TARGET) $(OBJ_FILES) $(INCLUDES) $(LIBS)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "info]: $(GREEN)$(BOLD)Build finished!$(RESET)"
+	@echo "$(BLUE)[$(TARGET) -" \
+	"info]: $(GREEN)$(BOLD)Build finished!$(RESET)"
 	-@echo -n "$(MAGENTA)" && ls -lah $(TARGET) && echo -n "$(RESET)"
 
 #### LOCAL LIBS COMPILATION ####
