@@ -13,6 +13,21 @@
 #include "../libft.h"
 #include <stdlib.h>
 
+/***************************************/
+/* Primitive Garbage Collection System */
+/***************************************/
+
+/* 
+ * Custom memory allocation function that saves a pointer to the allocated
+ * memory and handles allocation failures gracefully.
+ *
+ * Parameters:
+ * - gc: Pointer to the deque structure where allocated pointers are stored.
+ * - size: Size of memory to allocate.
+ *
+ * Returns:
+ * - A pointer to the allocated memory.
+ */
 void	*ft_malloc(t_deque *gc, size_t size)
 {
 	void	*ret;
@@ -25,6 +40,14 @@ void	*ft_malloc(t_deque *gc, size_t size)
 	return (ret);
 }
 
+/* 
+ * Wrapper function for freeing a pointer and setting it to NULL
+ * to avoid double freeing.
+ * Additionally, it handles NULL pointers gracefully.
+ *
+ * Parameters:
+ * - ptr: Address of the pointer to be freed.
+ */
 void	ft_free_ptr(void **ptr)
 {
 	if (ptr && *ptr)
@@ -34,10 +57,21 @@ void	ft_free_ptr(void **ptr)
 	}
 }
 
+/* 
+ * Frees every pointer stored in the given deque structure
+ * along with the deque itself.
+ * This function assumes that the data stored in the deque are pointers
+ * to dynamically allocated memory.
+ *
+ * Parameters:
+ * - gc: Pointer to the deque structure containing pointers to be freed.
+ */
 void	ft_free_gc(t_deque *gc)
 {
 	t_deque_node	*node;
 
+	if (!gc)
+		return ;
 	while (gc->size > 0)
 	{
 		node = deque_pop_front(gc);
