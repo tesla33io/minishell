@@ -48,12 +48,17 @@ void	*ft_malloc(t_deque *gc, size_t size)
  * Parameters:
  * - ptr: Address of the pointer to be freed.
  */
-void	ft_free_ptr(void **ptr)
+void	ft_free_ptr(void *ptr)
 {
-	if (ptr && *ptr)
+	void	**ref;
+
+	if (!ptr)
+		return ;
+	ref = (void **)&ptr;
+	if (*ref)
 	{
-		free(*ptr);
-		*ptr = NULL;
+		free(ptr);
+		*ref = NULL;
 	}
 }
 
