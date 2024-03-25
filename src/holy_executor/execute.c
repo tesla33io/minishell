@@ -16,12 +16,31 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+static int	bin_check(t_SimpleCommand *cmd, char *path)
+{
+	char	*bin_path;
+	char	*tmp_path;
+
+	tmp_path = ft_strjoin(path, "/");
+	bin_path = ft_strjoin(tmp_path, cmd->bin);
+	free(tmp_path);
+	if (access(bin_path, F_OK) == 0)
+	{
+		if (access(bin_path, X_OK) == 0)
+		{
+			cmd->bin = bin_path;
+			cmd->args[0] = bin_path;
+			return (0);
+		}
+	}
+	free(bin_path);
+	return (-1);
+}
+
 void	find_bin(t_SimpleCommand *cmd)
 {
 	char	*env_path;
 	char	**path_list;
-	char	*bin_path;
-	char	*tmp_path;
 	int		i;
 
 	env_path = getenv("PATH");
@@ -33,23 +52,14 @@ void	find_bin(t_SimpleCommand *cmd)
 	i = -1;
 	while (path_list[++i])
 	{
-		tmp_path = ft_strjoin(path_list[i], "/");
-		bin_path = ft_strjoin(tmp_path, cmd->bin);
-		free(tmp_path);
-		if (access(bin_path, F_OK) == 0)
+		if (bin_check(cmd, path_list[i]) == 0)
 		{
-			if (access(bin_path, X_OK) == 0)
-			{
-				cmd->bin = bin_path;
-				cmd->args[0] = bin_path;
-				free_str_list(path_list);
-				return ;
-			}
+			free_str_list(path_list);
+			return ;
 		}
-		free(bin_path);
 	}
 	free_str_list(path_list);
-	printf("Error [11]: `%s` is not on $PATH.\n", cmd->bin);
+	printf("%s: command not found\n", cmd->bin);
 	return ;
 }
 
