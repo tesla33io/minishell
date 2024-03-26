@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/03/12 20:55:01 by astavrop         ###   ########.fr        #
+#    Updated: 2024/03/25 19:05:30 by ltreser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ NAME				:= minishell
 
 CFILES				+= main.c						# Main
 CFILES				+= prompt/prompt.c				# Main
+CFILES				+= init.c						# Main
+CFILES				+= lexer/lexer.c				# Lexer
 
 
 OBJ_DIR				:= ./obj/

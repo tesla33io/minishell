@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/25 22:49:07 by ltreser          ###   ########.fr       */
+/*   Created: 2024/03/22 23:14:35 by ltreser           #+#    #+#             */
+/*   Updated: 2024/03/25 22:51:04 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(void)
+void	init_lexer(t_shell_data *shell_data)
 {
-	t_shell_data *shell_data;
+	shell_data->lexer = malloc(sizeof(t_lex));
+	shell_data->lexer->head = NULL;
+	shell_data->lexer->start = 0;
+	shell_data->lexer->end = 0;
+	shell_data->lexer->tkn_count = 0;
+	
+}
 
-	shell_data = malloc(sizeof(t_shell_data));
-	while (1)
-	{
-		init(shell_data);
-		render_prompt(shell_data);
-		//takeout_trash(shell_data);
-	}
-	return (0);
+void	init(t_shell_data *shell_data)
+{
+	init_lexer(shell_data);
 }
