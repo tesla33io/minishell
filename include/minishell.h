@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/25 23:36:07 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:46:21 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int							render_prompt(t_shell_data *shell_data);
 void						init(t_shell_data *shell_data);
 void						init_lexer(t_shell_data *shell_data);
 void						lexer(t_lex *lexer);
-void						append_token(t_lex *l, char *str, int len);
+void						append_token(t_lex *lexer, char *str, int len);
 enum e_tkntype				get_token(char c);
 int							special_char(char c);
 

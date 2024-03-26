@@ -38,42 +38,56 @@ t_tkntype	get_token(char c)
 	return (STR);
 }
 
-void	append_token(t_lex *l, char *str, int len)
+void	append_token(t_lex *lexer, char *str, int len)
 {
-	if (l->head)
+	if (lexer->head)
 	{
-		l->tail = malloc(sizeof(*l->tail));
-		if (!l->tail)
+		lexer->tail = malloc(sizeof(*lexer->tail));
+		if (!lexer->tail)
 			return ;
-		ft_strlcpy(l->head->lexeme, str, len + 1);
-        l->head->token = get_token(str[0]);
-		l->tail->next = l->head;
-		l->tail->prev = l->head->prev;
-		l->head->prev->next = l->tail;
-		l->head->prev = l->tail;
+		lexer->tail->lexeme = malloc((len + 1) * sizeof(char));
+		ft_strlcpy(lexer->tail->lexeme, str, len + 1);
+        lexer->tail->token = get_token(str[0]);
+		lexer->tail->next = lexer->head;
+		lexer->tail->prev = lexer->head->prev;
+		lexer->head->prev->next = lexer->tail;
+		lexer->head->prev = lexer->tail;
 	}
 	else
 	{
-		l->head = malloc(sizeof(*l->head));
-		if (!l->head)
+		lexer->head = malloc(sizeof(*lexer->head)); //here segfault
+		if (!lexer->head)
 			return ;
-		ft_strlcpy(l->head->lexeme, str, len + 1);
-		l->head->token = get_token(str[0]);
-		l->head->next = l->head;
-		l->head->prev = l->head;
+		lexer->head->lexeme = malloc((len + 1) * sizeof(char));
+		ft_strlcpy(lexer->head->lexeme, str, len + 1);
+		lexer->head->token = get_token(str[0]);
+		lexer->head->next = lexer->head;
+		lexer->head->prev = lexer->head;
 	}
 }
 
 void	lexer(t_lex *lexer)
 {
+	//int i;
+	//t_token *travel;
+
+	//i = 0;
 	while (lexer->cmd_line[lexer->end])
 	{
 		lexer->start = lexer->end;
-		while (lexer->cmd_line && !(special_char(lexer->cmd_line[lexer->end])))
+		while (lexer->cmd_line[lexer->end] && !(special_char(lexer->cmd_line[lexer->end])))
 			lexer->end++;
 		if (!(lexer->end - lexer->start))
 			lexer->end++;
-		append_token(lexer, lexer->cmd_line + lexer->start, lexer->end - lexer->start);
+		append_token(lexer, (lexer->cmd_line + lexer->start), (lexer->end - lexer->start));
 		lexer->tkn_count++;
 	}
+	//travel = lexer->head;
+	/*while (i < lexer->tkn_count)
+	{
+		printf("token %d = %c : %s\n", i, travel->token, travel->lexeme);
+		travel = travel->next;
+		i++;
+	}*/
+
 }
