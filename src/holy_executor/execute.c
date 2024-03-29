@@ -6,15 +6,19 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:58:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/19 22:58:12 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:11:40 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/executor.h"
 #include "../../lib/libft/libft.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
+
+#define INVALID_CMD_ERR_MSG "Invalid command"
 
 static int	bin_check(t_SimpleCommand *cmd, char *path)
 {
@@ -59,8 +63,6 @@ void	find_bin(t_SimpleCommand *cmd)
 		}
 	}
 	free_str_list(path_list);
-	printf("%s: command not found\n", cmd->bin);
-	return ;
 }
 
 static int	cmd_check(t_SimpleCommand *cmd)
@@ -80,33 +82,14 @@ int	cmd_exe(t_SimpleCommand *cmd)
 
 	pid = fork();
 	if (pid < 0)
-		printf("Fork failure!\n");
+		fork_fail();
 	if (pid == 0)
 	{
-		printf("Message from child.\n");
 		if (cmd_check(cmd) != 0)
-			exit(printf("Command execution failed.\n"));
+			(perror(INVALID_CMD_ERR_MSG), exit(FAIL));
 		find_bin(cmd);
-		print_command(cmd);
-		execve(cmd->bin, cmd->args, cmd->envp);
+		if (execve(cmd->bin, cmd->args, cmd->envp) == -1)
+			exit(execution_fail(cmd->bin));
 	}
-	else
-	{
-		printf("Message from parent.\n");
-	}
-	return (0);
-}
-
-void	print_command(t_SimpleCommand	*cmd)
-{
-	int	i;
-
-	if (cmd->bin)
-		printf("Binary: %s\n", cmd->bin);
-	if (cmd->args)
-	{
-		i = -1;
-		while (cmd->args[++i])
-			printf("Arg: %s\n", cmd->args[i]);
-	}
+	return (pid);
 }
