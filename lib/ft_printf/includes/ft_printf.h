@@ -16,7 +16,7 @@
 # include <stdarg.h>
 
 // General
-int			ft_printf(const char *format, ...);
+int			ft_printf(int fd, const char *format, ...);
 int			print(int fd, const char *s, va_list arg);
 
 // Formaters

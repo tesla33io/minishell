@@ -1,5 +1,7 @@
 # My own
 minishell
+mini_test_hell
+*.txt
 .obsidian/
 
 # Prerequisites
@@ -45,6 +47,7 @@ minishell
 *.su
 *.idb
 *.pdb
+*.log
 
 # Kernel Module Compile Results
 *.mod*

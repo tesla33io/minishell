@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/26 15:58:15 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/03/30 23:22:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int	render_prompt(t_shell_data *shell_data)
+int	render_prompt(void)
 {
 	char	cwd[256];
+	char	*input;
 
 	getcwd(cwd, sizeof(cwd));
 	if (cwd[0] == 0)
 		return (-1);
-	ft_printf("$🔱 minihell 🔥 [%s]> ", cwd);
-	shell_data->lexer->cmd_line = readline("");
-	// if command_line == exit -> clear history, free_all, exit
-	printf("%s\n", shell_data->lexer->cmd_line);
-	//rl_replace_line(shell_data->lexer->cmd_line, 0);
-	//rl_redisplay();
+	printf("$minihell [%s]> ", cwd);
+	input = readline("");
+	printf("%s\n", input);
 	return (0);
 }

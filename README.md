@@ -1,6 +1,6 @@
 # mini~~s~~hell
 
-Allowed functions and usage examples: [Functions.md](Functions.md)
+Allowed functions and usage examples: [Functions.md](/docs/Functions.md)
 
 A shell implementation is divided into two main parts: **The parser** and **the executor**.
 
@@ -27,7 +27,8 @@ A shell implementation is divided into two main parts: **The parser** and **the 
  The parser will put all information about what should be executed along with some instructions about how command should be executed.
 
 > [!NOTE]
- > Each command should be executed in separate child process and exit status should be handled appropriately 
+ > Each command should be executed in separate child process and exit status should be handled appropriately.
+ > Exception: some built-ins (e.g. `cd`, `export`, `unset` etc.)
 
 1. Get a command from _Command Table_.
 2. Check if it's a built-in command (execute appropriate function if `true`).
@@ -116,14 +117,6 @@ Shell wildcards, also known as _globbing_ patterns, are special characters used 
 ## Useful resources
 
 [Chapter5-WritingYourOwnShell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
-
-**Pipe and redirection execution flow example**:
-
-![pipes_redirection_example](/github_data/pipes_redirection_example.png)
-
-**Lexer and parser flow example**:
-
-![lexer_and_parser_flow_example](/github_data/lexer_and_parser_flow_example.png)
 
 [`> file` vs `>& file`](https://g.co/gemini/share/18247f4d0570)
 
