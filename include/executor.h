@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:50:05 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/29 22:11:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:39:22 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,28 @@ typedef struct s_CommandNode
 # define SUCCESS 0
 # define FATAL_ERROR -1
 
+# define CNFOUND 127
+# define NOXPERM 126
+
+#define WREND 1
+#define RDEND 0
+
 /* HOLY EXECUTOR Functions */
 
 void	find_bin(t_SimpleCommand *cmd);
 int		cmd_exe(t_SimpleCommand *cmd);
 int		process_pipe(t_CommandNode *pipen);
 
+/* Executor utils */
+
+int		bin_check(t_SimpleCommand *cmd, char *path);
+int		cmd_check(t_SimpleCommand *cmd);
+
 /* Util functions */
 
 void	free_str_list(char	**lst);
 void	free_cmd(t_SimpleCommand *cmd);
+int		w_check(int status);
 
 /* OnError functions */
 

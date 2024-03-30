@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:58:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/29 22:11:40 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:48:30 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,6 @@
 #include <sys/wait.h>
 
 #define INVALID_CMD_ERR_MSG "Invalid command"
-
-static int	bin_check(t_SimpleCommand *cmd, char *path)
-{
-	char	*bin_path;
-	char	*tmp_path;
-
-	tmp_path = ft_strjoin(path, "/");
-	bin_path = ft_strjoin(tmp_path, cmd->bin);
-	free(tmp_path);
-	if (access(bin_path, F_OK) == 0)
-	{
-		if (access(bin_path, X_OK) == 0)
-		{
-			cmd->bin = bin_path;
-			cmd->args[0] = bin_path;
-			return (0);
-		}
-	}
-	free(bin_path);
-	return (-1);
-}
 
 void	find_bin(t_SimpleCommand *cmd)
 {
@@ -65,15 +44,20 @@ void	find_bin(t_SimpleCommand *cmd)
 	free_str_list(path_list);
 }
 
-static int	cmd_check(t_SimpleCommand *cmd)
+
+/*******************************************************************************
+ * Modes:                                                                      *
+ * `l` - indicates that current pipe is for left command of the pipeline       *
+ * `r` - indicates that current pipe is for right command of the pipeline      *
+ ******************************************************************************/
+void	set_pipes(t_SimpleCommand *cmd, int mode)
 {
-	if (!cmd->bin)
-		return (-1);
-	if (!cmd->args)
-		return (-1);
-	if (ft_strncmp(cmd->bin, cmd->args[0], ft_strlen(cmd->bin)) != 0)
-		return (-1);
-	return (0);
+	if (mode == 'l')
+	{
+		dprintf(2, "Setting pipes...\n");
+		dup2(cmd->pipefd[WREND], STDOUT_FILENO);
+		dup2(cmd->pipefd[RDEND], STDIN_FILENO);
+	}
 }
 
 int	cmd_exe(t_SimpleCommand *cmd)
@@ -85,6 +69,7 @@ int	cmd_exe(t_SimpleCommand *cmd)
 		fork_fail();
 	if (pid == 0)
 	{
+		set_pipes(cmd, 'l');
 		if (cmd_check(cmd) != 0)
 			(perror(INVALID_CMD_ERR_MSG), exit(FAIL));
 		find_bin(cmd);

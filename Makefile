@@ -28,6 +28,8 @@ SRC_FILES		+= builtins/echo.c				# Echo
 SRC_FILES		+= builtins/cd.c				# CD
 SRC_FILES		+= utils/free_utils.c			# Utils
 SRC_FILES		+= utils/error_utils.c			# Utils
+SRC_FILES		+= utils/wait_utils.c			# Utils
+SRC_FILES		+= utils/execution_utils.c		# Utils
 SRC_FILES		+= utils/debug_utils.c			# TODO: Delete
 
 # Object files directory
