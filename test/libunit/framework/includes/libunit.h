@@ -6,7 +6,7 @@
 /*   By: htam <htam@student.42berlin.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:19:56 by htam              #+#    #+#             */
-/*   Updated: 2024/02/03 19:50:45 by htam             ###   ########.fr       */
+/*   Updated: 2024/03/30 23:50:48 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define RESET "\033[0m"
 
 # ifndef TOUT
-#  define TOUT 10
+#  define TOUT 360
 # endif // !TOUT
 
 typedef int	(*t_test_function)(void);

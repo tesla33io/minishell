@@ -4,30 +4,23 @@
 CC				:= cc
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra -pedantic
+CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
 
 # Libraries to be linked (if any)
-LIBS			:= -L../../../lib/gnl/ -lfgnl
-LIBS			+= -L../../../lib/libft/ -lft
-LIBS			+= -L../../../lib/ft_printf/ -lftprintf
+LIBS			:=
 
 # Include directories
-INCLUDES		:= -Iincludes/ -I../../../lib/libft/
-INCLUDES		+= -I../../../lib/ft_printf/includes/
-INCLUDES		+= -I../../../lib/gnl/inc/
+INCLUDES		:= -Iinc/
 
 # Target executable
-TARGET			:= libunit.a
+TARGET			:= libgnl.a
 
 # Source files directory
 SRC_DIR			:= src/
 
 # Source files
-SRC_FILES		+= libunit.c		# Main
-SRC_FILES		+= output.c			# Output testing
-SRC_FILES		+= free.c			# Free
-SRC_FILES		+= log.c			# Logging
-SRC_FILES		+= utils.c			# Utils
+SRC_FILES		+= get_next_line.c			# Main
+SRC_FILES		+= get_next_line_utils.c	# Utils
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -50,14 +43,11 @@ TOUCH			:= /bin/touch
 
 #### LOCAL LIBRARIES ####
 
-FT_PRINTF_PATH	:= ../../../lib/ft_printf/
-FT_PRINTF_LIB	:= $(FT_PRINTF_PATH)libftprintf.a
+## FT_PRINTF_PATH	:= ft_printf/
+## FT_PRINTF_LIB	:= $(FT_PRINTF_PATH)libftprintf.a
 
-LIBFT_PATH		:= ../../../lib/libft/
-LIBFT_LIB		:= $(LIBFT_PATH)libft.a
-
-GNL_PATH		:= ../../../lib/gnl/
-GNL_LIB			:= $(GNL_PATH)libgnl.a
+## LIBFT_PATH		:= lib/libft/
+## LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 
 #### DEBUG SETTINGS ####
 
@@ -80,7 +70,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
-$(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(GNL_LIB)
+$(TARGET): $(OBJ_FILES) $(LIBFT_LIB)
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo -n "build]: $(GREEN)"
 	@echo "$(BOLD)Archive$(RESET)$(GREEN) $(TARGET) $(RESET)"
@@ -91,14 +81,11 @@ $(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(GNL_LIB)
 
 #### LOCAL LIBS COMPILATION ####
 
-$(FT_PRINTF_LIB):
-	@$(MAKE) -sC $(FT_PRINTF_PATH)
+## $(FT_PRINTF_LIB):
+## 	@$(MAKE) -sC $(FT_PRINTF_PATH)
 
-$(LIBFT_LIB):
-	@$(MAKE) -C $(LIBFT_PATH)
-
-$(GNL_LIB):
-	@$(MAKE) -C $(GNL_PATH)
+## $(LIBFT_LIB):
+## 	@$(MAKE) -C $(LIBFT_PATH)
 
 #### ADDITIONAL RULES ####
 
@@ -111,18 +98,14 @@ clean: ## Clean objects and dependencies
 	@$(RM) -r $(DEP_DIR)
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo "clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
-	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
-	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
-	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) clean) ||:
+## 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 
 fclean: clean ## Restore project to initial state
 	@$(RM) $(TARGET)
 	@echo -n "$(BLUE)[$(TARGET) - "
 	@echo -n "fclean]: $(YELLOW)"
 	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
-	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
-	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
-	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) fclean) ||:
+## 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 
 re: fclean all ## Rebuild project
 

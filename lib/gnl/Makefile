@@ -7,7 +7,7 @@ CC				:= cc
 CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
 
 # Libraries to be linked (if any)
-LIBS			:=
+LIBS			:= -L../libft/ -lft
 
 # Include directories
 INCLUDES		:= -Iinc/
@@ -20,7 +20,7 @@ SRC_DIR			:= src/
 
 # Source files
 SRC_FILES		+= get_next_line.c			# Main
-SRC_FILES		+= get_next_line_utils.c	# Utils
+# SRC_FILES		+= get_next_line_utils.c	# Utils
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -46,8 +46,8 @@ TOUCH			:= /bin/touch
 ## FT_PRINTF_PATH	:= ft_printf/
 ## FT_PRINTF_LIB	:= $(FT_PRINTF_PATH)libftprintf.a
 
-## LIBFT_PATH		:= lib/libft/
-## LIBFT_LIB		:= $(LIBFT_PATH)libft.a
+LIBFT_PATH		:= ../libft/
+LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 
 #### DEBUG SETTINGS ####
 
@@ -84,8 +84,8 @@ $(TARGET): $(OBJ_FILES) $(LIBFT_LIB)
 ## $(FT_PRINTF_LIB):
 ## 	@$(MAKE) -sC $(FT_PRINTF_PATH)
 
-## $(LIBFT_LIB):
-## 	@$(MAKE) -C $(LIBFT_PATH)
+$(LIBFT_LIB):
+	@$(MAKE) -C $(LIBFT_PATH)
 
 #### ADDITIONAL RULES ####
 

@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 19:00:39 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/31 00:04:35 by astavrop         ###   ########.fr       */
+/*   Created: 2023/08/03 23:14:19 by ltreser           #+#    #+#             */
+/*   Updated: 2023/10/29 01:51:07 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <stddef.h>
+# include <unistd.h>
+# include <stdlib.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
-# endif // !BUFFER_SIZE
+# endif
 
-# include "../../libft/libft.h"
-
-char		*get_next_line(int fd);
+char	*get_next_line(int fd);
+char	*str_cutter(int *start, int *end, char **longstr, int free_me);
+char	*ft_realloc(char **ptr, int size, int i);
 
 #endif
