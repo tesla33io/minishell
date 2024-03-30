@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:58:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 14:48:30 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/30 20:09:19 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,29 @@ void	set_pipes(t_SimpleCommand *cmd, int mode)
 {
 	if (mode == 'l')
 	{
-		dprintf(2, "Setting pipes...\n");
-		dup2(cmd->pipefd[WREND], STDOUT_FILENO);
-		dup2(cmd->pipefd[RDEND], STDIN_FILENO);
+		if (cmd->pipefd[RDEND] >= 0)
+			close(cmd->pipefd[RDEND]);
+		if (cmd->in_fd != -1)
+			dup2(cmd->in_fd, STDIN_FILENO);
+		if (cmd->out_fd != -1)
+			dup2(cmd->out_fd, STDOUT_FILENO);
+		else if (cmd->out_fd == -1 && cmd->pipefd[WREND] >= 0)
+			dup2(cmd->pipefd[WREND], STDOUT_FILENO);
+	}
+	else if (mode == 'r')
+	{
+		if (cmd->pipefd[WREND] >= 0)
+			close(cmd->pipefd[WREND]);
+		if (cmd->in_fd != -1)
+			dup2(cmd->in_fd, STDIN_FILENO);
+		else if (cmd->in_fd == -1 && cmd->pipefd[RDEND] >= 0)
+			dup2(cmd->pipefd[RDEND], STDIN_FILENO);
+		if (cmd->out_fd != -1)
+			dup2(cmd->out_fd, STDOUT_FILENO);
 	}
 }
 
-int	cmd_exe(t_SimpleCommand *cmd)
+int	cmd_exe(t_SimpleCommand *cmd, int mode)
 {
 	pid_t	pid;
 
@@ -69,7 +85,7 @@ int	cmd_exe(t_SimpleCommand *cmd)
 		fork_fail();
 	if (pid == 0)
 	{
-		set_pipes(cmd, 'l');
+		set_pipes(cmd, mode);
 		if (cmd_check(cmd) != 0)
 			(perror(INVALID_CMD_ERR_MSG), exit(FAIL));
 		find_bin(cmd);

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 20:50:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/21 20:50:33 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/30 22:02:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	simple_cmd_launcher(void)
 	t_unit_test	*tlst;
 
 	tlst = NULL;
-	load_test(&tlst, "SimpleCommand", "find_bin ls", test_find_bin_ls_ok);
-	load_test(&tlst, "SimpleCommand", "find_bin args", test_find_bin_args_ok);
-	load_test(&tlst, "SimpleCommand", "find_bin invalid cmd",
+	load_test(&tlst, "find_bin", "ls", test_find_bin_ls_ok);
+	load_test(&tlst, "find_bin", "args", test_find_bin_args_ok);
+	load_test(&tlst, "find_bin", "invalid cmd",
 			test_find_bin_null);
 	return (launch_test(&tlst));
 }
@@ -50,6 +50,15 @@ int	cd_cmd_launcher(void)
 	return (launch_test(&tlst));
 }
 
+int	cmd_exe_launcher(void)
+{
+	t_unit_test	*tlst;
+
+	tlst = NULL;
+	load_test(&tlst, "Command execution", "ls test_ls_dir/", test_ls_spec_path);
+	return (launch_test(&tlst));
+}
+
 int	main(void)
 {
 	int	res;
@@ -58,5 +67,6 @@ int	main(void)
 	res += simple_cmd_launcher();
 	res += echo_cmd_launcher();
 	res += cd_cmd_launcher();
+	res += cmd_exe_launcher();
 	return (res);
 }

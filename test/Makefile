@@ -26,15 +26,20 @@ SRC_DIR			:= ../
 
 # Source files
 SRC_FILES		+= src/holy_executor/execute.c		# Executor
+SRC_FILES		+= src/holy_executor/pipe.c			# Pipeline
 SRC_FILES		+= src/builtins/echo.c				# Echo
 SRC_FILES		+= src/builtins/cd.c				# CD
 SRC_FILES		+= src/utils/free_utils.c			# Utils
+SRC_FILES		+= src/utils/execution_utils.c		# Utils
+SRC_FILES		+= src/utils/error_utils.c			# Utils
+SRC_FILES		+= src/utils/wait_utils.c			# Utils
 SRC_FILES		+= src/utils/debug_utils.c			# TODO: Delete
 
 
 # Test source files
 SRC_FILES		+= test/executor/main.c								# Main
 SRC_FILES		+= test/executor/simpleCommand/test_find_bin.c		# find_bin tests
+SRC_FILES		+= test/executor/simpleCommand/test_execution.c		# execution tests
 SRC_FILES		+= test/executor/builtins/test_echo.c				# ft_echo tests
 SRC_FILES		+= test/executor/builtins/test_cd.c					# ft_cd tests
 

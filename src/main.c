@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 14:45:52 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/30 20:39:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ int	main(int ac, char **av, char **envp)
 	rnode = malloc(sizeof(t_CommandNode));
 	if (!pipen)
 		return (-1);
-	l = cmd_gen("ls", (char *[]){"ls", NULL}, envp,
-			NULL, NULL, (int [2]){-1, -1});
-	r = cmd_gen("grep", (char *[]){"grep", "d", NULL}, envp,
-			NULL, NULL, (int [2]){-1, -1});
+	l = cmd_gen("ls", (char *[]){"ls", "-lah", NULL}, envp,
+			-1, -1, (int [2]){-1, -1});
+	r = cmd_gen("greps", (char *[]){"greps", "30", NULL}, envp,
+			-1, -1, (int [2]){-1, -1});
 
-	printf("COMMANDS:\n");
 	print_command(l);
 	print_command(r);
 

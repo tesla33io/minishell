@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:50:05 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 14:39:22 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:53:32 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ typedef struct s_SimpleCommand
 	char	*bin;
 	char	**args;
 	char	**envp;
-	char	**in_fs;
-	char	**out_fs;
+	int		in_fd;
+	int		out_fd;
 	int		pipefd[2];
 }	t_SimpleCommand;
 
@@ -47,13 +47,13 @@ typedef struct s_CommandNode
 # define CNFOUND 127
 # define NOXPERM 126
 
-#define WREND 1
-#define RDEND 0
+# define WREND 1
+# define RDEND 0
 
 /* HOLY EXECUTOR Functions */
 
 void	find_bin(t_SimpleCommand *cmd);
-int		cmd_exe(t_SimpleCommand *cmd);
+int		cmd_exe(t_SimpleCommand *cmd, int mode);
 int		process_pipe(t_CommandNode *pipen);
 
 /* Executor utils */
@@ -73,8 +73,9 @@ int		pipe_fail(int pipefd[2]);
 int		execution_fail(char *cmd_bin);
 int		fork_fail(void);
 
-t_SimpleCommand	*cmd_gen(char *bin, char **args, char **envp, char **in_fs,
-		char **out_fs, int pipefd[2]); /* TODO: DELETE */
+t_SimpleCommand	*cmd_gen(char *bin, char **args, char **envp, int in_fd,
+		int out_fd, int pipefd[2]); /* TODO: DELETE*/
+
 void	print_command(t_SimpleCommand	*cmd);
 
 #endif

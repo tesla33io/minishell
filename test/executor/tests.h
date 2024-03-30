@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 18:43:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/22 18:43:33 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/30 22:00:11 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,9 @@ int		test_echo_many_args(void);
 
 int		test_cd_basic(void);
 int		test_cd_invalid_path(void);
+
+/* Command execution tests */
+
+int		test_ls_spec_path(void);
 
 #endif
