@@ -6,12 +6,12 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/03/12 20:55:01 by astavrop         ###   ########.fr        #
+#    Updated: 2024/03/26 15:56:43 by ltreser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC					:= cc
-CFLAGS				:= -Wall -Werror -Wextra -O3
+CFLAGS				:= -Wall -Werror -Wextra -O3 -g3
 LIBS				:= -Llib/ft_printf/ -lftprintf -Llib/libft/ -lft
 LIBS				+= -lreadline
 INCLUDES			:= -I./include/ -Ilib/ft_printf/includes -Ilib/libft/ -I.
@@ -20,6 +20,8 @@ NAME				:= minishell
 
 CFILES				+= main.c						# Main
 CFILES				+= prompt/prompt.c				# Main
+CFILES				+= init.c						# Main
+CFILES				+= lexer/lexer.c				# Lexer
 
 
 OBJ_DIR				:= ./obj/

@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: htam <htam@student.42berlin.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/26 15:36:14 by ltreser          ###   ########.fr       */
+/*   Created: 2024/02/03 18:13:07 by htam              #+#    #+#             */
+/*   Updated: 2024/02/03 18:21:03 by htam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../includes/libunit.h"
 
-int	main(void)
+void	free_list(t_unit_test *head)
 {
-	t_shell_data *shell_data;
+	t_unit_test	*temp;
 
-	shell_data = malloc(sizeof(t_shell_data));
-	while (1)
+	while (head)
 	{
-		init(shell_data);
-		render_prompt(shell_data);
-		lexer(shell_data->lexer);
-		//takeout_trash(shell_data);
+		temp = head;
+		head = head->next;
+		free(temp);
 	}
-	return (0);
+}
+
+void	free_exit(t_unit_test *head, int status)
+{
+	free_list(head);
+	exit(status);
 }
