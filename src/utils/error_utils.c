@@ -5,28 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 23:22:00 by astavrop         ###   ########.fr       */
+/*   Created: 2024/03/29 17:51:39 by astavrop          #+#    #+#             */
+/*   Updated: 2024/03/30 23:35:25 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/executor.h"
 
+#include <asm-generic/errno-base.h>
+#include <stdio.h>
 #include <unistd.h>
-#include <stdio.h> /* TODO: remove; for printf() */
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <errno.h>
 
-int	render_prompt(void)
+int	pipe_fail(int pipefd[2])
 {
-	char	cwd[256];
-	char	*input;
+	perror("pipe: ");
+	pipefd = (int [2]){-1, -1};
+	return (EPIPE);
+}
 
-	getcwd(cwd, sizeof(cwd));
-	if (cwd[0] == 0)
-		return (-1);
-	printf("$minihell [%s]> ", cwd);
-	input = readline("");
-	printf("%s\n", input);
-	return (0);
+int	execution_fail(char *cmd_bin)
+{
+	perror(cmd_bin);
+	return (CNFOUND);
+}
+
+int	fork_fail(void)
+{
+	perror("fork: ");
+	return (EAGAIN);
 }

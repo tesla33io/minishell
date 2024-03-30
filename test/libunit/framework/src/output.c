@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:39:00 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 23:16:29 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/03/30 23:37:49 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_output(int fd, char **expected, size_t len)
 	i = 0;
 	dprintf(2, "---debug---\n");
 	fline = get_next_line(fd);
-	ret = 11;
+	ret = 2;
 	dprintf(2, "fline: %s\n", fline);
 	while (fline && i < len)
 	{
