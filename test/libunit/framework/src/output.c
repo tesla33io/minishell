@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc_test.c                                   :+:      :+:    :+:   */
+/*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 15:54:24 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/14 15:55:37 by astavrop         ###   ########.fr       */
+/*   Created: 2024/03/23 21:39:00 by astavrop          #+#    #+#             */
+/*   Updated: 2024/03/23 21:39:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/libft/libft.h"
-#include <stdlib.h>
+#include "../includes/libunit.h"
 
-int	test_ft_malloc(void)
+int	check_output(int fd, char **expected, size_t len)
 {
-	char		*str1;
-	char		*str2;
-	t_deque		*allocated;
+	size_t	i;
+	char	*fline;
+	int		ret;
 
-	allocated = malloc(sizeof(t_deque));
-	allocated->head = NULL;
-	allocated->size = 0;
-	str1 = ft_malloc(allocated, sizeof(char) * 10);
-	str2 = ft_malloc(allocated, sizeof(char) * 10);
-	str1[10] = 0;
-	str2[10] = 0;
+	i = 0;
+	fline = get_next_line(fd);
+	ret = 0;
+	while (fline && i < len)
+	{
+		if (ft_strncmp(fline, expected[i], ft_strlen(expected[i])) != 0)
+			ret = -1;
+		free(fline);
+		fline = get_next_line(fd);
+		i++;
+	}
+	while (fline)
+	{
+		free(fline);
+		fline = get_next_line(fd);
+	}
+	return (ret);
 }
-
