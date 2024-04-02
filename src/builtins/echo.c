@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 20:59:23 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/23 20:59:23 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:59:47 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_echo(int fd, int ac, char **av)
 	{
 		ft_printf(fd, "%s", av[i]);
 		if (i < ac - 1)
-			ft_printf(1, " ");
+			ft_printf(fd, " ");
 		i++;
 	}
 	if (new_line)
