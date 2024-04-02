@@ -99,6 +99,7 @@ quick:  ## Run recipes simultaneously
 	@$(MAKE) -j all
 
 all: $(TARGET) ## Build this project
+	@-$(RM) *.test
 	@-$(VG) $(VG_OPTS) ./$(TARGET)
 	@-ls -lah $(REPORT_FILE)
 
