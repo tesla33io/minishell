@@ -7,9 +7,9 @@ CC				:= cc
 CFLAGS			:= -Wall -Werror -Wextra -pedantic
 
 # Libraries to be linked (if any)
-LIBS			:= -L../../../lib/libft/ -lft
+LIBS			:= -L../../../lib/gnl/ -lfgnl
+LIBS			+= -L../../../lib/libft/ -lft
 LIBS			+= -L../../../lib/ft_printf/ -lftprintf
-LIBS			+= -L../../../lib/gnl/ -lfgnl
 
 # Include directories
 INCLUDES		:= -Iincludes/ -I../../../lib/libft/

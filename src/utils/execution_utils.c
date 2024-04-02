@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 13:48:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 13:51:40 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/02 20:00:50 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	bin_check(t_SimpleCommand *cmd, char *path)
 		if (access(bin_path, X_OK) == 0)
 		{
 			cmd->bin = bin_path;
-			cmd->args[0] = bin_path;
+			// cmd->args[0] = bin_path;
 			return (0);
 		}
 	}
