@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:56:12 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/24 17:56:12 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:56:41 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,18 @@ int	test_cd_invalid_path(void)
 	char	cwd_after[100];
 	int		fd;
 	int		res;
+	char	*tfname = "test_cd.test";
 
-	fd = open("test_cd.test", O_RDWR | O_CREAT, 777);
+	fd = open(tfname, O_RDWR | O_CREAT, 777);
 	dup2(fd, 2);
 	getcwd(cwd_before, 100);
 	ft_cd("/home/astavrop_invalid_path");
 	getcwd(cwd_after, 100);
-	res = check_output(fd, (char *[]){
+	res = check_output(tfname, (char *[]){
 			"cd: No such file or directory: /home/astavrop_invalid_path\n",
 			NULL}, 1);
 	close(fd);
-	unlink("test_cd.test");
+	unlink(tfname);
 	if (ft_strncmp(cwd_before, cwd_after, 100) != 0)
 		return (-1);
 	return (res);

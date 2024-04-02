@@ -6,24 +6,25 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:39:00 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 23:55:46 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:15:06 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libunit.h"
 
 #include <limits.h>
-#include <stdio.h> /* WARN: DELETE */
+#include <unistd.h>
 
-int	check_output(int fd, char **expected, size_t len)
+int	check_output(char *fname, char **expected, size_t len)
 {
 	size_t	i;
 	char	*fline;
 	int		ret;
+	int		fd;
 
 	i = 0;
+	fd = open(fname, O_RDONLY);
 	fline = get_next_line(fd);
-	dprintf(2, "[%d]line: %s\n", fd, fline);
 	ret = 0;
 	while (fline && i < len)
 	{
@@ -38,7 +39,8 @@ int	check_output(int fd, char **expected, size_t len)
 		free(fline);
 		fline = get_next_line(fd);
 	}
-	if (i != len)
+	if (i < len)
 		ret = -1;
+	close(fd);
 	return (ret);
 }

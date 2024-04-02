@@ -6,7 +6,7 @@
 /*   By: htam <htam@student.42berlin.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:19:56 by htam              #+#    #+#             */
-/*   Updated: 2024/03/30 23:50:48 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:16:50 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	load_test(t_unit_test **list, char *test_fun,
 int		launch_test(t_unit_test **list);
 void	free_list(t_unit_test *head);
 
-int		check_output(int fd, char **expected, size_t len);
+// int		check_output(int fd, char **expected, size_t len);
+int			check_output(char *fname, char **expected, size_t len);
 
 /* Utils */
 

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 21:28:23 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 23:46:38 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:17:45 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ int	test_ls_spec_path(void)
 	int				res;
 	char			*tfname = "test_ls_spec_path.test";
 
-	out_fd = open(tfname, O_RDWR | O_CREAT, 776);
+	out_fd = open(tfname, O_WRONLY | O_CREAT, 777);
 	dup2(out_fd, 1);
-	dup2(out_fd, 2);
 	envp = getenv("PATH");
 	ls = cmd_gen("ls", (char *[]){"ls", "executor/simpleCommand/test_ls_dir/", NULL}, &envp,
 			-1, -1, (int []){-1, -1});
 	cmd_exe(ls, 0);
-	res = check_output(out_fd, (char *[]){"file1.txt  file2.txt  file3.txt\n"}, 1);
+	close(out_fd);
+	res = check_output(tfname, (char *[]){"file1.txt file2.txt file3.txt\n", NULL}, 1);
+	// res = check_output(out_fd, (char *[]){"file1.txt  file2.txt  file3.txt\n"}, 1);
 	unlink(tfname);
 	return (res);
 }

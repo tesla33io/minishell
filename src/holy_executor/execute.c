@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:58:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 20:09:19 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:19:21 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	cmd_exe(t_SimpleCommand *cmd, int mode)
 		if (cmd_check(cmd) != 0)
 			(perror(INVALID_CMD_ERR_MSG), exit(FAIL));
 		find_bin(cmd);
+		print_command(cmd);
 		if (execve(cmd->bin, cmd->args, cmd->envp) == -1)
 			exit(execution_fail(cmd->bin));
 	}
