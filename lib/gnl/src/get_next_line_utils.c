@@ -3,88 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 19:00:38 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/31 00:02:18 by astavrop         ###   ########.fr       */
+/*   Created: 2023/10/24 22:24:46 by ltreser           #+#    #+#             */
+/*   Updated: 2023/10/29 01:57:59 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdlib.h>
+#include <unistd.h>
 
-void	ft_bzero(void *s, size_t n)
+char	*str_cutter(int *start, int *end, char **longstr, int free_me)
 {
-	char	*str;
-	size_t	i;
-
-	str = (char *)s;
-	i = 0;
-	while (i < n)
-	{
-		str[i] = '\0';
-		i++;
-	}
-}
-
-void	*ft_calloc(size_t nmem, size_t size)
-{
-	char	*content;
-
-	content = malloc(size * nmem);
-	if (!content)
-		return (NULL);
-	ft_bzero(content, size * nmem);
-	return (content);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		sizetotal;
-	char	*content;
 	int		i;
-	int		j;
-
-	i = 0;
-	sizetotal = ft_strlen(s1) + ft_strlen(s2);
-	content = malloc(sizeof(char) * (sizetotal + 1));
-	if (!content || !s1 || !s2)
-		return (NULL);
-	while (s1[i] != 0)
-	{
-		content[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j] != 0)
-	{
-		content[i] = s2[j];
-		i++;
-		j++;
-	}
-	content[sizetotal] = 0;
-	return (content);
-}
-
-size_t	ft_strlen(const char *string)
-{
-	int	i;
-
-	i = 0;
-	while (string[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strchr(const char *string, int c)
-{
 	char	*str;
 
-	str = (char *)string;
-	while (*str != c && *str != 0)
-		str++;
-	if (*str == c)
-		return (str);
-	else
-		return (NULL);
+	i = 0;
+	if (*start == *end && (*longstr)[*end] != '\n')
+		return (*start = 0, *end = 0, free(*longstr), *longstr = NULL, NULL);
+	str = malloc((*end - *start) + 2);
+	if (!str)
+		return (*start = 0, *end = 0, NULL);
+	while (*start <= *end)
+		str[i++] = (*longstr)[(*start)++];
+	str[i] = '\0';
+	if (free_me)
+	{
+		free(*longstr);
+		*longstr = NULL;
+		*end = 0;
+		*start = 0;
+	}
+	return (str);
+}
+
+char	*ft_realloc(char **ptr, int size, int i)
+{
+	char	*new_ptr;
+
+	new_ptr = NULL;
+	if (*ptr == NULL)
+		return (free(new_ptr), malloc(size));
+	new_ptr = malloc(size);
+	while (new_ptr && i < size - 1 && (*ptr)[i] != '\0')
+	{
+		new_ptr[i] = (*ptr)[i];
+		i++;
+	}
+	if (new_ptr && i < size)
+		new_ptr[i] = '\0';
+	free(*ptr);
+	*ptr = NULL;
+	return (new_ptr);
 }
