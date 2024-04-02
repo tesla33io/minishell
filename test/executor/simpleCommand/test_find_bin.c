@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   test_find_bin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 20:18:23 by astavrop          #+#    #+#             */
 /*   Updated: 2024/04/02 20:17:34 by astavrop         ###   ########.fr       */

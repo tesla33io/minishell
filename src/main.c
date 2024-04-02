@@ -3,24 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
 /*   Updated: 2024/04/02 20:25:36 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
-#include "../include/builtins.h"
+#include "../include/minishell.h"
 
-#include "../lib/libft/libft.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-
-/* Test code */
-int	main(int ac, char **av, char **envp)
+int	main(void)
 {
+/*<<<<<<< executor
 	(void)ac;
 	(void)av;
 	t_CommandNode	*pipen;
@@ -43,7 +37,6 @@ int	main(int ac, char **av, char **envp)
 	print_command(l);
 	status = 0;
 	cmd_exe(l, 0);
-	/*
 	print_command(r);
 
 	lnode->type = CMD;
@@ -56,6 +49,17 @@ int	main(int ac, char **av, char **envp)
 	pipen->left = lnode;
 	pipen->right = rnode;
 	status = process_pipe(pipen);
-	*/
 	return (status);
+=======*/
+	t_shell_data *shell_data;
+
+	shell_data = malloc(sizeof(t_shell_data));
+	while (1)
+	{
+		init(shell_data);
+		render_prompt(shell_data);
+		lexer(shell_data->lexer);
+		//takeout_trash(shell_data);
+	}
+	return (0);
 }
