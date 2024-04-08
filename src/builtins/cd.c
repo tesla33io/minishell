@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 16:59:32 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/02 14:05:23 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/08 18:48:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include <errno.h>
 #include <string.h>
-#include <stdio.h>
 #include <unistd.h>
 
 void	ft_cd(const char *path)
