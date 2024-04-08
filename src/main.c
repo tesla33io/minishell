@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 19:06:58 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:58:19 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(int ac, char **av, char **envp)
 	pipen->right = rnode;
 	status = process_pipe(pipen);
 	return (status);*/
-	ft_pwd();
+	ft_export("TESLA", "33IO", &envp);
+	ft_env(envp);
 	return (status);
 }

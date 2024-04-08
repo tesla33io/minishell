@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 20:59:52 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 20:57:51 by astavrop         ###   ########.fr       */
+/*   Created: 2024/04/08 19:40:08 by astavrop          #+#    #+#             */
+/*   Updated: 2024/04/08 20:15:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../../lib/libft/libft.h"
 
-void	ft_echo(int fd, int ac, char **av);
-void	ft_cd(const char *path);
-void	ft_pwd(void);
-void	ft_env(char *envp[]);
-void	ft_export(char *name, char *value, char **envp[]);
+#include <stdlib.h>
 
-#endif
+void	ft_env(char *envp[])
+{
+	int	i;
+
+	if (!envp)
+		ft_putendl_fd("env: no environment variables", 2);
+	else
+	{
+		i = 0;
+		while (envp[i] != NULL)
+			ft_putendl_fd(envp[i++], 1);
+	}
+}
