@@ -26,6 +26,7 @@ SRC_FILES		+= holy_executor/execute.c		# Executor
 SRC_FILES		+= holy_executor/pipe.c			# Pipes
 SRC_FILES		+= builtins/echo.c				# Echo
 SRC_FILES		+= builtins/cd.c				# CD
+SRC_FILES		+= builtins/pwd.c				# PWD
 SRC_FILES		+= utils/free_utils.c			# Utils
 SRC_FILES		+= utils/error_utils.c			# Utils
 SRC_FILES		+= utils/wait_utils.c			# Utils
