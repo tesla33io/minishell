@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 17:26:44 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:06:58 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **envp)
 	t_CommandNode	*lnode;
 	t_SimpleCommand	*r;
 	t_CommandNode	*rnode;
-	int				status;
+	int				status = 0;
 
 	pipen = malloc(sizeof(t_CommandNode));
 	lnode = malloc(sizeof(t_CommandNode));
@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **envp)
 	r = cmd_gen("echo", (char *[]){"echo", NULL}, envp,
 			-1, -1, (int [2]){-1, -1});
 
-	print_command(r);
+/*	print_command(r);
 	print_command(l);
 
 	lnode->type = CMD;
@@ -53,5 +53,7 @@ int	main(int ac, char **av, char **envp)
 	pipen->left = lnode;
 	pipen->right = rnode;
 	status = process_pipe(pipen);
+	return (status);*/
+	ft_pwd();
 	return (status);
 }
