@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 20:58:19 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:14:39 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int	main(int ac, char **av, char **envp)
 	status = process_pipe(pipen);
 	return (status);*/
 	ft_export("TESLA", "33IO", &envp);
+	ft_export("MINI", "SHELL", &envp);
+	ft_export("USER_1", "me", &envp);
+	ft_export("123456", "7890", &envp);
 	ft_env(envp);
 	return (status);
 }
