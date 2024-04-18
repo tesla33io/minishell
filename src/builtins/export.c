@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/16 21:11:53 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:56:31 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ static char	**realloc_envp(char *envp[], char *new_kv[2])
 	i = -1;
 	while (envp[++i])
 		;
-	new_envp = ft_malloc(NULL, (size_t) sizeof(char *) * (i + 1));
+	new_envp = ft_malloc(NULL, (size_t) sizeof(char *) * (i + 2));
 	i = 0;
-	while (envp[i + 1] != NULL)
+	while (envp[i] != NULL)
 	{
 		new_envp[i] = ft_strdup(envp[i]);
 		i++;
 	}
-	new_envp[i + 1] = create_kv_entry(new_kv[0], new_kv[1]);
-	new_envp[i + 2] = envp[i];
-	new_envp[i + 3] = NULL;
+	new_envp[i] = create_kv_entry(new_kv[0], new_kv[1]);
+	new_envp[i + 1] = envp[i];
+	new_envp[i + 2] = NULL;
 	return (new_envp);
 }
