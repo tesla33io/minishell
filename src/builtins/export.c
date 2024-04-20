@@ -6,28 +6,35 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/18 16:56:31 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:03:04 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
+#include "../../include/builtins.h"
 
+static char	**change_value(char *envp[], char *kv[2]);
 static char	**realloc_envp(char *envp[], char *new_kv[2]);
 
 void	ft_export(char *name, char *value, char **envp[])
 {
-	*(envp) = realloc_envp(*envp, (char *[2]){name, value});
+	if (envp_contains(name, *envp))
+		*(envp) = change_value(*envp, (char *[2]){name, value});
+	else
+		*(envp) = realloc_envp(*envp, (char *[2]){name, value});
 }
 
-static char	*create_kv_entry(char *name, char *value)
+static char	**change_value(char *envp[], char *kv[2])
 {
-	char	*kv;
-
-	kv = ft_malloc(NULL, sizeof(char) * (ft_strlen(name)
-				+ ft_strlen(value) + 1));
-	kv = ft_strjoin(name, "=");
-	kv = ft_strjoin(kv, value);
-	return (kv);
+	int	i;
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(kv[0], envp[i], ft_strlen(kv[0])) == 0)
+			// coming soon...
+		i++;
+	}
+	return (envp);
 }
 
 static char	**realloc_envp(char *envp[], char *new_kv[2])
