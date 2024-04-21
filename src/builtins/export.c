@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/21 16:17:40 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:28:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ void	ft_export(char *key, char *value, char **envp[])
 static char	**change_value(char *envp[], char *kv[2])
 {
 	int	i;
+
 	i = 0;
 	while (envp[i])
 	{
 		if (envp_keycmp(kv[0], envp[i], ft_strlen(kv[0])) == 0)
 		{
 			printf("search: <%s>\ncurrent: <%s>\ncmp result: %d\n-------\n",
-					kv[0], envp[i],
-					envp_keycmp(kv[0], envp[i], ft_strlen(kv[0])));
+				kv[0], envp[i],
+				envp_keycmp(kv[0], envp[i], ft_strlen(kv[0])));
 			ft_free_ptr(envp[i]);
 			envp[i] = create_kv_entry(kv[0], kv[1]);
 			break ;

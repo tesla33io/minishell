@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:58:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 17:53:00 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:29:43 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,26 @@ void	find_bin(t_SimpleCommand *cmd)
  */
 void	set_pipes(t_SimpleCommand *cmd, int mode)
 {
-    if (mode == 'l') {
-        if (cmd->pipefd[RDEND] >= 0)
-            close(cmd->pipefd[RDEND]);
-        if (cmd->in_fd == -1 && cmd->pipefd[RDEND] >= 0)
-            dup2(cmd->pipefd[RDEND], STDIN_FILENO);
-    } else if (mode == 'r') {
-        if (cmd->pipefd[WREND] >= 0)
-            close(cmd->pipefd[WREND]);
-        if (cmd->in_fd == -1 && cmd->pipefd[RDEND] >= 0)
-            dup2(cmd->pipefd[RDEND], STDIN_FILENO);
-    }
-    if (cmd->in_fd != -1)
-        dup2(cmd->in_fd, STDIN_FILENO);
-    if (cmd->out_fd != -1)
-        dup2(cmd->out_fd, STDOUT_FILENO);
-    else if (cmd->out_fd == -1 && cmd->pipefd[WREND] >= 0)
-        dup2(cmd->pipefd[WREND], STDOUT_FILENO);
+	if (mode == 'l')
+	{
+		if (cmd->pipefd[RDEND] >= 0)
+			close(cmd->pipefd[RDEND]);
+		if (cmd->in_fd == -1 && cmd->pipefd[RDEND] >= 0)
+			dup2(cmd->pipefd[RDEND], STDIN_FILENO);
+	}
+	else if (mode == 'r')
+	{
+		if (cmd->pipefd[WREND] >= 0)
+			close(cmd->pipefd[WREND]);
+		if (cmd->in_fd == -1 && cmd->pipefd[RDEND] >= 0)
+			dup2(cmd->pipefd[RDEND], STDIN_FILENO);
+	}
+	if (cmd->in_fd != -1)
+		dup2(cmd->in_fd, STDIN_FILENO);
+	if (cmd->out_fd != -1)
+		dup2(cmd->out_fd, STDOUT_FILENO);
+	else if (cmd->out_fd == -1 && cmd->pipefd[WREND] >= 0)
+		dup2(cmd->pipefd[WREND], STDOUT_FILENO);
 }
 
 /**
