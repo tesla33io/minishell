@@ -16,9 +16,6 @@ A shell implementation is divided into two main parts: **The parser** and **the 
 3. Validate tokens.
 4. Prepare a _Command Table_ for future executing.
 
-> [!TIP]
-> Tokenization could be done without extra memory allocation by simply storing pointer to the beginning of the substring and replacing space with `\0`-terminator.
-
 ---
 ## The executor
 

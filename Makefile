@@ -29,10 +29,15 @@ SRC_FILES		+= holy_executor/execute.c		# Executor
 SRC_FILES		+= holy_executor/pipe.c			# Pipes
 SRC_FILES		+= builtins/echo.c				# Echo
 SRC_FILES		+= builtins/cd.c				# CD
+SRC_FILES		+= builtins/pwd.c				# PWD
+SRC_FILES		+= builtins/env.c				# ENV
+SRC_FILES		+= builtins/export.c			# EXPORT
+SRC_FILES		+= builtins/unset.c				# UNSET
 SRC_FILES		+= utils/free_utils.c			# Utils
 SRC_FILES		+= utils/error_utils.c			# Utils
 SRC_FILES		+= utils/wait_utils.c			# Utils
 SRC_FILES		+= utils/execution_utils.c		# Utils
+SRC_FILES		+= utils/env_utils.c			# Built-in Utils
 SRC_FILES		+= utils/debug_utils.c			# TODO: Delete
 
 # [PARSER]

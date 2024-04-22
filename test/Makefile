@@ -29,10 +29,12 @@ SRC_FILES		+= src/holy_executor/execute.c		# Executor
 SRC_FILES		+= src/holy_executor/pipe.c			# Pipeline
 SRC_FILES		+= src/builtins/echo.c				# Echo
 SRC_FILES		+= src/builtins/cd.c				# CD
+SRC_FILES		+= src/builtins/export.c			# EXPORT
 SRC_FILES		+= src/utils/free_utils.c			# Utils
 SRC_FILES		+= src/utils/execution_utils.c		# Utils
 SRC_FILES		+= src/utils/error_utils.c			# Utils
 SRC_FILES		+= src/utils/wait_utils.c			# Utils
+SRC_FILES		+= src/utils/env_utils.c			# Built-ins Utils
 SRC_FILES		+= src/utils/debug_utils.c			# TODO: Delete
 SRC_FILES		+= src/prompt/prompt.c					#Prompt 
 SRC_FILES		+= src/lexer/lexer.c					#Lexer
@@ -43,11 +45,11 @@ SRC_FILES		+= test/executor/simpleCommand/test_find_bin.c		# find_bin tests
 SRC_FILES		+= test/executor/simpleCommand/test_execution.c		# execution tests
 SRC_FILES		+= test/executor/builtins/test_echo.c				# ft_echo tests
 SRC_FILES		+= test/executor/builtins/test_cd.c					# ft_cd tests
+SRC_FILES		+= test/executor/builtins/test_export.c				# ft_export tests
 SRC_FILES		+= test/parser/lexer/test_tokens1.c
 SRC_FILES		+= test/parser/lexer/test_tokens2.c
 SRC_FILES		+= test/parser/lexer/test_tokens3.c
 SRC_FILES		+= test/parser/lexer/token_launcher.c 
-
 
 # Object files directory
 OBJ_DIR			:= obj/

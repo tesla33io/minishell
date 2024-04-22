@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/24 16:59:32 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 18:48:05 by astavrop         ###   ########.fr       */
+/*   Created: 2024/04/08 19:40:08 by astavrop          #+#    #+#             */
+/*   Updated: 2024/04/08 20:15:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
 #include "../../lib/libft/libft.h"
 
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
+#include <stdlib.h>
 
-void	ft_cd(const char *path)
+void	ft_env(char *envp[])
 {
-	int	errnum;
+	int	i;
 
-	if (chdir(path) != 0)
+	if (!envp)
+		ft_putendl_fd("env: no environment variables", 2);
+	else
 	{
-		errnum = errno;
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(strerror(errnum), 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd((char *)path, 2);
+		i = 0;
+		while (envp[i] != NULL)
+			ft_putendl_fd(envp[i++], 1);
 	}
 }
