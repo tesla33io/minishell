@@ -4,6 +4,7 @@ mini_test_hell
 *.txt
 .obsidian/
 dox.conf
+.vscode/
 
 # Prerequisites
 *.d

@@ -1,13 +1,14 @@
 #### MAIN SETTINGS ####
 
 # Compiler to be used
-CC				:= clang
+CC				:= cc
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
+CFLAGS			:= -Wall -Werror -Wextra -O3
 
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
+LIBS			+= -lreadline
 LIBS			+= -L./lib/ft_printf/ -lftprintf
 
 # Include directories
@@ -20,8 +21,10 @@ TARGET			:= minishell
 # Source files directory
 SRC_DIR			:= src/
 
-# Source files
 SRC_FILES		+= main.c						# Main
+SRC_FILES		+= init.c						# Initialization
+
+# [EXECUTOR]
 SRC_FILES		+= holy_executor/execute.c		# Executor
 SRC_FILES		+= holy_executor/pipe.c			# Pipes
 SRC_FILES		+= builtins/echo.c				# Echo
@@ -36,6 +39,10 @@ SRC_FILES		+= utils/wait_utils.c			# Utils
 SRC_FILES		+= utils/execution_utils.c		# Utils
 SRC_FILES		+= utils/env_utils.c			# Built-in Utils
 SRC_FILES		+= utils/debug_utils.c			# TODO: Delete
+
+# [PARSER]
+SRC_FILES		+= prompt/prompt.c				# 
+SRC_FILES		+= lexer/lexer.c				# 
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -67,7 +74,7 @@ LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 #### DEBUG SETTINGS ####
 
 ifeq ($(DEBUG), 1)
-	CFLAGS		+= -g3 -O0
+	CFLAGS		+= -O0 -g3
 endif
 
 #### TARGET COMPILATION ####

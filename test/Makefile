@@ -4,7 +4,7 @@
 CC				:= cc
 
 # Compiler flags
-CFLAGS			:= -Wall -Wextra -Werror -pedantic -O3
+CFLAGS			:= -Wall -Wextra -Werror -O3
 
 # Libraries to be linked (if any)
 LIBS			+= -Llibunit/framework/ -lunit
@@ -36,7 +36,8 @@ SRC_FILES		+= src/utils/error_utils.c			# Utils
 SRC_FILES		+= src/utils/wait_utils.c			# Utils
 SRC_FILES		+= src/utils/env_utils.c			# Built-ins Utils
 SRC_FILES		+= src/utils/debug_utils.c			# TODO: Delete
-
+SRC_FILES		+= src/prompt/prompt.c					#Prompt 
+SRC_FILES		+= src/lexer/lexer.c					#Lexer
 
 # Test source files
 SRC_FILES		+= test/executor/main.c								# Main
@@ -45,6 +46,10 @@ SRC_FILES		+= test/executor/simpleCommand/test_execution.c		# execution tests
 SRC_FILES		+= test/executor/builtins/test_echo.c				# ft_echo tests
 SRC_FILES		+= test/executor/builtins/test_cd.c					# ft_cd tests
 SRC_FILES		+= test/executor/builtins/test_export.c				# ft_export tests
+SRC_FILES		+= test/parser/lexer/test_tokens1.c
+SRC_FILES		+= test/parser/lexer/test_tokens2.c
+SRC_FILES		+= test/parser/lexer/test_tokens3.c
+SRC_FILES		+= test/parser/lexer/token_launcher.c 
 
 # Object files directory
 OBJ_DIR			:= obj/
