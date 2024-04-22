@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 20:50:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 22:02:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:36:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,16 @@ int	cmd_exe_launcher(void)
 	return (launch_test(&tlst));
 }
 
+int	builtins_launcher(void)
+{
+	t_unit_test	*tlst;
+
+	tlst = NULL;
+	load_test(&tlst, "export", "add new var", test_export_basic_new);
+	load_test(&tlst, "export", "change var value", test_export_add_dupl);
+	return (launch_test(&tlst));
+}
+
 int	main(void)
 {
 	int	res;
@@ -68,5 +78,6 @@ int	main(void)
 	res += echo_cmd_launcher();
 	res += cd_cmd_launcher();
 	res += cmd_exe_launcher();
+	res += builtins_launcher();
 	return (res);
 }
