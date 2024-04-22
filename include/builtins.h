@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 20:59:52 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/21 16:09:44 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:02:48 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_cd(const char *path);
 void	ft_pwd(void);
 void	ft_env(char *envp[]);
 void	ft_export(char *key, char *value, char **envp[]);
+void	ft_unset(char *name, char **envp[]);
 
 /* Utils */
 
