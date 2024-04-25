@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 18:43:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/22 18:35:23 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:27:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,9 @@ int		test_ls_spec_path(void);
 
 int		test_export_basic_new(void);
 int		test_export_add_dupl(void);
+
+int		test_env_basic(void);
+
+int		test_unset_basic(void);
 
 #endif

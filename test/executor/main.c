@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 20:50:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/22 18:36:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:28:14 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	builtins_launcher(void)
 	tlst = NULL;
 	load_test(&tlst, "export", "add new var", test_export_basic_new);
 	load_test(&tlst, "export", "change var value", test_export_add_dupl);
+	load_test(&tlst, "env", "basic, nothing fancy", test_env_basic);
+	load_test(&tlst, "unset", "basic", test_unset_basic);
 	return (launch_test(&tlst));
 }
 
