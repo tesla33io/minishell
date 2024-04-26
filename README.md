@@ -1,4 +1,4 @@
-# mini~~s~~hell
+![minishell_banner](docs/img/minishell_banner.png)
 
 Allowed functions and usage examples: [Functions.md](/docs/Functions.md)
 
