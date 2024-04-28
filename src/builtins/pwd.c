@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:47:25 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 19:05:24 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/28 19:07:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 #include <string.h>
 #include <unistd.h>
 
-void	ft_pwd(void)
+void	ft_pwd(t_SimpleCommand *cmd)
 {
 	char	cp[PATH_MAX];
 	char	*ret;
 	int		errnum;
+	(void)cmd;
 
 	ret = getcwd(cp, PATH_MAX);
 	if (ret)

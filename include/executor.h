@@ -6,12 +6,14 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:50:05 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 19:53:32 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:53:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
+
+# include <stdbool.h>
 
 typedef struct s_SimpleCommand
 {
@@ -60,6 +62,8 @@ int		process_pipe(t_CommandNode *pipen);
 
 int		bin_check(t_SimpleCommand *cmd, char *path);
 int		cmd_check(t_SimpleCommand *cmd);
+
+bool	is_builtint(char *bin, char *b_list[]);
 
 /* Util functions */
 

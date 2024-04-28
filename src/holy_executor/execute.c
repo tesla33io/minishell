@@ -6,15 +6,40 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:59:25 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/26 19:49:25 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:34:17 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h> /* pid_t, fork */
 
 #include "../../include/executor.h"
+#include "../../lib/libft/libft.h"
 
-static void	setup_ipc(t_SimpleCommand *cmd);
+// static void	setup_ipc(t_SimpleCommand *cmd);
+
+/*
+ * Check the command if it's:
+ * - built-in
+ * - binary on $PATH
+ * - local binary
+ * And runs it
+ */
+int	try_execute(t_SimpleCommand *cmd)
+{
+	if (is_builtint(cmd->bin, (char **){"echo", "cd", "pwd", "export", "unset",
+				"env", "exit", NULL}))
+	{
+		// run builtin
+	}
+	else if (ft_strncmp(cmd->bin, "./", 2) == 0)
+	{
+		// run local bin
+	}
+	else
+	{
+		// run bin on $PATH
+	}
+}
 
 /*
  * executes a command and

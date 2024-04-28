@@ -1,41 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_utils.c                                  :+:      :+:    :+:   */
+/*   run_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/26 18:59:58 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/28 17:27:19 by astavrop         ###   ########.fr       */
+/*   Created: 2024/04/28 17:34:55 by astavrop          #+#    #+#             */
+/*   Updated: 2024/04/28 19:02:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
-
 #include "../../include/executor.h"
+#include "../../include/builtins.h"
 #include "../../lib/libft/libft.h"
 
-bool	is_builtint(char *bin, char *b_list[])
+t_kv	*setup_builtin_hashtable(void)
 {
-	int	i;
+	static t_kv	ht[TABLE_SIZE];
 
-	i = 0;
-	while (b_list[i])
-	{
-		if (ft_strncmp(bin, b_list[i], ft_strlen(b_list[i])) == 0)
-			return (true);
-		i++;
-	}
-	return (false);
+	ht_set(ht, "echo", ft_echo);
+	ht_set(ht, "cd", ft_cd);
+	ht_set(ht, "pwd", ft_pwd);
+	ht_set(ht, "export", ft_export);
+	ht_set(ht, "unset", ft_unset);
+	ht_set(ht, "env", ft_env);
+	// ht_set(ht, "exit", ft_exit); <- not ready yet
+	return (ht);
 }
 
-int	check_command(t_SimpleCommand **command)
+int	execute_builtin(t_SimpleCommand *cmd, t_kv ht[TABLE_SIZE])
 {
-	t_SimpleCommand	*cmd;
+	void	*bfunc;
 
-	cmd = *(command);
-	if (!cmd->bin || !cmd->args || !cmd->envp)
+	bfunc = ht_get(ht, cmd->bin);
+	if (!bfunc)
 		return (-1);
-	// binary lookup coming soon..................
-	return (-1);
+	// bfunc();
 }

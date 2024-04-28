@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 20:59:52 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/22 18:02:48 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/28 19:08:24 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 # include <stdbool.h>
 # include <stddef.h>
 
-void	ft_echo(int fd, int ac, char **av);
-void	ft_cd(const char *path);
-void	ft_pwd(void);
-void	ft_env(char *envp[]);
+# include "executor.h"
+
+void	ft_echo(t_SimpleCommand *cmd);
+void	ft_cd(t_SimpleCommand *cmd);
+void	ft_pwd(t_SimpleCommand *cmd);
+void	ft_env(t_SimpleCommand *cmd);
 void	ft_export(char *key, char *value, char **envp[]);
 void	ft_unset(char *name, char **envp[]);
 
@@ -29,5 +31,6 @@ void	free_envp(char *envp[]);
 char	*create_kv_entry(char *key, char *value);
 bool	envp_contains(char *key, char *envp[]);
 int		envp_keycmp(char *key, char *envp_entry, size_t key_len);
+char	*ft_getenv(char *envp[], char *name);
 
 #endif

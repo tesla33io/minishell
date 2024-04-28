@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:29:54 by astavrop          #+#    #+#             */
-/*   Updated: 2024/02/17 20:43:24 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:49:10 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,25 @@ void			deque_push_back(t_deque *deque, t_deque_node *node);
 void			deque_push_front(t_deque *deque, t_deque_node *node);
 t_deque_node	*deque_pop_back(t_deque *deque);
 t_deque_node	*deque_pop_front(t_deque *deque);
+
+/* HASH TABLE */
+
+# define TABLE_SIZE 42
+
+typedef struct s_kv
+{
+	char		*k;
+	void		*v;
+	struct s_kv	*n;
+}				t_kv;
+
+unsigned int	hash(char *key);
+
+void			ht_set(t_kv ht[TABLE_SIZE], char *key, void *value);
+char			*ht_get(t_kv ht[TABLE_SIZE], char *key);
+void			ht_destroy(t_kv ht[TABLE_SIZE]);
+
+/* /HASH TABLE */
 
 /* MEMORY */
 
