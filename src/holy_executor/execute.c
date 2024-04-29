@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:59:25 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/28 17:34:17 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:14:07 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
  */
 int	try_execute(t_SimpleCommand *cmd)
 {
-	if (is_builtint(cmd->bin, (char **){"echo", "cd", "pwd", "export", "unset",
+	if (is_builtint(cmd->bin, (char *[]){"echo", "cd", "pwd", "export", "unset",
 				"env", "exit", NULL}))
 	{
 		// run builtin
@@ -39,6 +39,7 @@ int	try_execute(t_SimpleCommand *cmd)
 	{
 		// run bin on $PATH
 	}
+	return (-1);
 }
 
 /*
@@ -61,6 +62,12 @@ int	execute_command(t_SimpleCommand *cmd)
 			execution_fail(cmd->args[0]);
 	}
 	return (pid);
+}
+
+int		cmd_exe(t_SimpleCommand *cmd, int mode)
+{
+	(void)cmd;
+	return (mode);
 }
 
 /*

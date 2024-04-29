@@ -6,23 +6,35 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/22 17:44:55 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:43:45 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/builtins.h"
+#include "../../include/executor.h"
+
 #include <stdio.h>
 
 static char	**change_value(char *envp[], char *kv[2]);
 static char	**realloc_envp(char *envp[], char *new_kv[2]);
 
-void	ft_export(char *key, char *value, char **envp[])
+// void	ft_export(char *key, char *value, char **envp[])
+void	ft_export(t_SimpleCommand *cmd)
 {
-	if (envp_contains(key, *envp))
-		*(envp) = change_value(*envp, (char *[2]){key, value});
+	char	**kv;
+	// char	**new_envp;
+
+	if (!cmd->args[1])
+		return ;
+	(void)change_value;
+	(void)realloc_envp;
+	kv = ft_split(cmd->args[1], '=');
+	if (envp_contains(cmd->args[1], cmd->envp))
+		cmd->envp = change_value(cmd->envp, (char *[2]){kv[0], kv[1]});
 	else
-		*(envp) = realloc_envp(*envp, (char *[2]){key, value});
+		cmd->envp = realloc_envp(cmd->envp, (char *[2]){kv[0], kv[1]});
+	// return (new_envp);
 }
 
 static char	**change_value(char *envp[], char *kv[2])

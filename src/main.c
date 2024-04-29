@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/22 18:13:58 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:44:51 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	t_CommandNode	*pipen;
+	int				status = 0;
+/*	t_CommandNode	*pipen;
 	t_SimpleCommand	*l;
 	t_CommandNode	*lnode;
 	t_SimpleCommand	*r;
 	t_CommandNode	*rnode;
-	int				status = 0;
 
 	pipen = malloc(sizeof(t_CommandNode));
 	lnode = malloc(sizeof(t_CommandNode));
@@ -39,7 +39,7 @@ int	main(int ac, char **av, char **envp)
 			-1, -1, (int [2]){-1, -1});
 	r = cmd_gen("echo", (char *[]){"echo", NULL}, envp,
 			-1, -1, (int [2]){-1, -1});
-
+*/
 /*	print_command(r);
 	print_command(l);
 
@@ -54,12 +54,27 @@ int	main(int ac, char **av, char **envp)
 	pipen->right = rnode;
 	status = process_pipe(pipen);
 	return (status);*/
-	ft_export("TESLA", "33IO", &envp);
+/*	ft_export("TESLA", "33IO", &envp);
 	ft_export("TESLA", "USER", &envp);
 	ft_export("USER", "minishell", &envp);
 	ft_export("USER_2", "me", &envp);
 	ft_unset("LOGNAME", &envp);
 	ft_env(envp);
+	*/
 	// free_envp(envp);
+	envp = ft_envdup(envp);
+	t_SimpleCommand	*exprt = malloc(sizeof(t_SimpleCommand));
+	exprt = cmd_gen("export", (char *[]){"export", "KV1", NULL},
+			envp, 0, 1, (int [2]){-1, -1});
+	ft_export(exprt);
+	envp = exprt->envp;
+	t_SimpleCommand	*envc = malloc(sizeof(t_SimpleCommand));
+	envc = cmd_gen("env", (char *[]){"env", NULL}, envp, 0, 1,
+			(int [2]){-1, -1});
+	/*t_SimpleCommand	*exprt = malloc(sizeof(t_SimpleCommand));
+	exprt = cmd_gen("export", (char *[]){"export", "KV1=VAL1", NULL},
+			envp, 0, 1, (int [2]){-1, -1});	
+	envp = ft_export(exprt);*/
+	ft_env(envc);
 	return (status);
 }

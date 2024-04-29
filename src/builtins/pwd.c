@@ -6,11 +6,12 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:47:25 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/28 19:07:38 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:10:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
+#include "../../include/executor.h"
 
 #include <errno.h>
 #include <linux/limits.h>
