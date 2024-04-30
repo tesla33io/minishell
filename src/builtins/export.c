@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/30 21:55:44 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/30 22:25:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	set_variable(char *kv_pair, char **envp[])
 {
 	char	**kv;
 
-	kv = ft_split(kv_pair, '=');
+	kv = ft_split_name_value(kv_pair);
 	if (!kv || !kv[KEY] || !kv[VALUE])
 		return (1);
 	if (envp_contains(kv[KEY], *envp))
