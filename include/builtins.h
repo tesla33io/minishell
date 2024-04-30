@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 20:59:52 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/29 21:42:49 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:53:13 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_echo(t_SimpleCommand *cmd);
 void	ft_cd(t_SimpleCommand *cmd);
 void	ft_pwd(t_SimpleCommand *cmd);
 void	ft_env(t_SimpleCommand *cmd);
+void	ft_env_sorted(char *envp[]);
 // void	ft_export(char *key, char *value, char **envp[]);
 void	ft_export(t_SimpleCommand *cmd);
 // char	**ft_export(t_SimpleCommand *cmd);
@@ -35,5 +36,6 @@ char	*create_kv_entry(char *key, char *value);
 bool	envp_contains(char *key, char *envp[]);
 int		envp_keycmp(char *key, char *envp_entry, size_t key_len);
 char	*ft_getenv(char *envp[], char *name);
+void	ft_strquicksort(char const *arr[], unsigned int length);
 
 #endif

@@ -35,6 +35,7 @@ SRC_FILES		+= utils/error_utils.c			# Utils
 SRC_FILES		+= utils/wait_utils.c			# Utils
 SRC_FILES		+= utils/execution_utils.c		# Utils
 SRC_FILES		+= utils/env_utils.c			# Built-in Utils
+SRC_FILES		+= utils/string_qs.c			# Qucksort for strings
 SRC_FILES		+= utils/debug_utils.c			# TODO: Delete
 
 # Object files directory

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/30 19:26:58 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:55:44 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	ft_export(t_SimpleCommand *cmd)
 	int	i;
 
 	i = 1;
+	if (!cmd->args[i])
+	{
+		ft_env_sorted(cmd->envp);
+		return ;
+	}
 	while (cmd->args[i])
 	{
 		if (ft_strchr(cmd->args[i], '=') != NULL)

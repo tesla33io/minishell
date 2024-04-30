@@ -6,31 +6,25 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 19:40:08 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/29 21:31:34 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:53:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/executor.h"
+#include "../../include/builtins.h"
 
 #include <stdlib.h>
+#include <stdbool.h>
+
+static void	print_envp(char *envp[], bool for_export);
 
 void	ft_env(t_SimpleCommand *cmd)
 {
-	int	i;
-
 	if (!cmd->envp)
 		ft_putendl_fd("env: no environment variables", 2);
 	else
-	{
-		i = 0;
-		while (cmd->envp[i] != NULL)
-		{
-			if (ft_strchr(cmd->envp[i], '=') != NULL)
-				ft_putendl_fd(cmd->envp[i], 1);
-			i++;
-		}
-	}
+		print_envp(cmd->envp, false);
 }
 
 char	*ft_getenv(char *envp[], char *name)
@@ -66,4 +60,36 @@ char	**ft_envdup(char *envp[])
 		new_envp[i] = envp[i];
 	new_envp[i] = NULL;
 	return (new_envp);
+}
+
+void	ft_env_sorted(char *envp[])
+{
+	char			**sorted_envp;
+	unsigned int	i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	sorted_envp = ft_envdup(envp);
+	ft_strquicksort((const char **) sorted_envp, i);
+	print_envp(sorted_envp, true);
+	ft_free_ptr(sorted_envp);
+}
+
+static void	print_envp(char *envp[], bool for_export)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strchr(envp[i], '=') != NULL)
+		{
+			if (for_export)
+				ft_putstr_fd("export ", 1);
+			ft_putstr_fd(envp[i], 1);
+			ft_putstr_fd("\n", 1);
+		}
+		i++;
+	}
 }

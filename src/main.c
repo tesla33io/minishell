@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/30 19:29:33 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:55:20 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ int	main(int ac, char **av, char **envp)
 	// free_envp(envp);
 	envp = ft_envdup(envp);
 	t_SimpleCommand	*exprt = malloc(sizeof(t_SimpleCommand));
-	exprt = cmd_gen("export", (char *[]){"export", "K421=V1", "K422=V2", "K423=V3", NULL},
+	exprt = cmd_gen("export", (char *[]){"export", NULL},
 			envp, 0, 1, (int [2]){-1, -1});
 	ft_export(exprt);
-	envp = exprt->envp;
+	/*envp = exprt->envp;
 	t_SimpleCommand	*envc = malloc(sizeof(t_SimpleCommand));
 	envc = cmd_gen("env", (char *[]){"env", NULL}, envp, 0, 1,
 			(int [2]){-1, -1});
-	/*t_SimpleCommand	*exprt = malloc(sizeof(t_SimpleCommand));
+	t_SimpleCommand	*exprt = malloc(sizeof(t_SimpleCommand));
 	exprt = cmd_gen("export", (char *[]){"export", "KV1=VAL1", NULL},
 			envp, 0, 1, (int [2]){-1, -1});	
-	envp = ft_export(exprt);*/
-	ft_env(envc);
+	envp = ft_export(exprt);
+	ft_env(envc);*/
 	return (status);
 }
