@@ -80,6 +80,9 @@ SRC_FILES		+= deque/deque_empty.c			# Deque
 SRC_FILES		+= deque/deque_size.c			# Deque
 SRC_FILES		+= deque/deque_swap.c			# Deque
 
+SRC_FILES		+= hash_table/hashtable.c		### Hash Table ###
+SRC_FILES		+= hash_table/ht_utils.c		# Hash Table
+
 # Object files directory
 OBJ_DIR			:= obj/
 

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 19:40:08 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/30 21:53:03 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:03:20 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,31 @@ char	*ft_getenv(char *envp[], char *name)
 	return (NULL);
 }
 
-char	**ft_envdup(char *envp[])
+void	ft_envdup(t_kv envp_ht[ENVP_HT_SIZE], char *envp[])
 {
-	char	**new_envp;
+	char	**kv;
 	int		i;
 
 	i = 0;
 	while (envp[i] != NULL)
 		i++;
-	new_envp = ft_malloc(NULL, sizeof(char *) * (i + 1));
 	i = -1;
 	while (envp[++i] != NULL)
-		new_envp[i] = envp[i];
-	new_envp[i] = NULL;
-	return (new_envp);
+	{
+		kv = ft_split_name_value(envp[i]);
+		ht_set(envp_ht, kv[0], kv[1]);
+	}
 }
 
 void	ft_env_sorted(char *envp[])
 {
-	char			**sorted_envp;
+	char			**sorted_envp = NULL;
 	unsigned int	i;
 
 	i = 0;
 	while (envp[i])
 		i++;
-	sorted_envp = ft_envdup(envp);
+	// sorted_envp = ft_envdup(NULL, envp);
 	ft_strquicksort((const char **) sorted_envp, i);
 	print_envp(sorted_envp, true);
 	ft_free_ptr(sorted_envp);

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:29:54 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/28 17:49:10 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:14:22 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_deque_node	*deque_pop_front(t_deque *deque);
 
 /* HASH TABLE */
 
-# define TABLE_SIZE 42
+# define TABLE_SIZE 500
 
 typedef struct s_kv
 {
@@ -67,6 +67,10 @@ unsigned int	hash(char *key);
 void			ht_set(t_kv ht[TABLE_SIZE], char *key, void *value);
 char			*ht_get(t_kv ht[TABLE_SIZE], char *key);
 void			ht_destroy(t_kv ht[TABLE_SIZE]);
+
+char			**get_all_keys(t_kv ht[TABLE_SIZE]);
+size_t			get_hash_table_size(t_kv ht[TABLE_SIZE]);
+void			clear_hash_table(t_kv ht[TABLE_SIZE]);
 
 /* /HASH TABLE */
 

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 20:59:52 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/30 22:25:09 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:27:14 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 # include <stdbool.h>
 # include <stddef.h>
 
+# include "../lib/libft/libft.h"
 # include "executor.h"
+
+# define ENVP_HT_SIZE 1000
+# define BUILTIN_HT_SIZE 42
 
 void	ft_echo(t_SimpleCommand *cmd);
 void	ft_cd(t_SimpleCommand *cmd);
@@ -30,7 +34,8 @@ void	ft_unset(char *name, char **envp[]);
 
 /* Utils */
 
-char	**ft_envdup(char *envp[]);
+// char	**ft_envdup(char *envp[]);
+void	ft_envdup(t_kv envp_ht[ENVP_HT_SIZE], char *envp[]);
 void	free_envp(char *envp[]);
 char	*create_kv_entry(char *key, char *value);
 bool	envp_contains(char *key, char *envp[]);
