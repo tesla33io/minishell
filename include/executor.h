@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:50:05 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/30 21:54:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:14:51 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 # define EXECUTOR_H
 
 # include <stdbool.h>
+# include "../lib/libft/libft.h"
 
 typedef struct s_SimpleCommand
 {
 	char	*bin;
 	char	**args;
-	char	**envp;
+	t_kv	envp_ht[TABLE_SIZE];
 	int		in_fd;
 	int		out_fd;
 	int		pipefd[2];

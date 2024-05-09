@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 19:40:08 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/07 21:51:42 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:40:52 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ static void	print_envp(char **keys, t_kv envp_ht[TABLE_SIZE], bool for_export);
 
 void	ft_env(t_SimpleCommand *cmd)
 {
-	if (!cmd->envp)
-		ft_putendl_fd("env: no environment variables", 2);
-	else
-		// print_envp(, false);
+	char	**keys;
+
+	keys = get_all_keys(cmd->envp_ht);
+	print_envp(keys, cmd->envp_ht, false);
+	ft_strarray_free(keys);
 }
 
 char	*ft_getenv(char *envp[], char *name)
@@ -46,7 +47,7 @@ char	*ft_getenv(char *envp[], char *name)
 	return (NULL);
 }
 
-void	ft_envdup(t_kv envp_ht[ENVP_HT_SIZE], char *envp[])
+void	ft_envdup(t_kv envp_ht[TABLE_SIZE], char *envp[])
 {
 	char	**kv;
 	int		i;

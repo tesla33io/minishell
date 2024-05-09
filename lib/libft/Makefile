@@ -41,6 +41,7 @@ SRC_FILES		+= string/ft_split.c			# String
 SRC_FILES		+= string/ft_strmapi.c			# String
 SRC_FILES		+= string/ft_striteri.c			# String
 SRC_FILES		+= string/ft_strchr.c			# String
+SRC_FILES		+= string/ft_strarray.c			# String array
 
 SRC_FILES		+= utils/ft_isalnum.c			### Utils ###
 SRC_FILES		+= utils/ft_isalpha.c			# Utils

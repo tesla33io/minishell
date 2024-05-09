@@ -6,25 +6,13 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:57:24 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/21 16:31:38 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:53:41 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include <stdbool.h>
-
-void	free_envp(char *envp[])
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (envp[i])
-			ft_free_ptr(envp[i]);
-		i++;
-	}
-}
+#include <stddef.h>
 
 char	*create_kv_entry(char *key, char *value)
 {
@@ -50,6 +38,24 @@ char	*create_kv_entry(char *key, char *value)
 	}
 	kv[i] = 0;
 	return (kv);
+}
+
+char	**envp_ht_to_str_array(t_kv envp_ht[TABLE_SIZE])
+{
+	size_t	envp_size;
+	int		i;
+	char	**envp_str_array;
+	char	**keys;
+
+	envp_size = get_hash_table_size(envp_ht);
+	keys = get_all_keys(envp_ht);
+	i = 0;
+	envp_str_array = ft_strarray_alloc(envp_size);
+	if (!envp_str_array)
+		return (NULL);
+	while (i < envp_size)
+	{
+	}
 }
 
 int	envp_keycmp(char *key, char *envp_entry, size_t key_len)
