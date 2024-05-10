@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 20:59:52 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/07 21:52:03 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:18:16 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	ft_unset(char *name, char **envp[]);
 // char	**ft_envdup(char *envp[]);
 void	ft_envdup(t_kv envp_ht[TABLE_SIZE], char *envp[]);
 void	free_envp(char *envp[]);
-char	*create_kv_entry(char *key, char *value);
+char	*create_kv_entry(char *key, t_kv envp_ht[TABLE_SIZE]);
+char	**envp_ht_to_str_array(t_kv envp_ht[TABLE_SIZE]);
 bool	envp_contains(char *key, char *envp[]);
 int		envp_keycmp(char *key, char *envp_entry, size_t key_len);
 char	*ft_getenv(char *envp[], char *name);

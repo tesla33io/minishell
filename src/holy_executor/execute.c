@@ -6,14 +6,16 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:59:25 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/29 21:14:07 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:03:35 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h> /* pid_t, fork */
-
 #include "../../include/executor.h"
+#include "../../include/builtins.h"
 #include "../../lib/libft/libft.h"
+
+#include <unistd.h> /* pid_t, fork */
+#include <stdlib.h>
 
 // static void	setup_ipc(t_SimpleCommand *cmd);
 
@@ -49,6 +51,7 @@ int	try_execute(t_SimpleCommand *cmd)
 int	execute_command(t_SimpleCommand *cmd)
 {
 	pid_t	pid;
+	char	**envp;
 
 	pid = fork();
 	if (pid < 0)
@@ -58,7 +61,8 @@ int	execute_command(t_SimpleCommand *cmd)
 		// check and look for binary
 		close(cmd->in_fd);
 		dup2(cmd->out_fd, STDOUT_FILENO);
-		if (execve(cmd->bin, cmd->args, cmd->envp) < 0)
+		envp = envp_ht_to_str_array(cmd->envp_ht);
+		if (execve(cmd->bin, cmd->args, envp) < 0 && (free(envp), 1))
 			execution_fail(cmd->args[0]);
 	}
 	return (pid);

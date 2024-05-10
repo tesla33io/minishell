@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 16:59:32 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/28 19:02:52 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:24:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	ft_cd(t_SimpleCommand *cmd)
 
 	if (!cmd->args[1])
 	{
-		if (ft_getenv(cmd->envp, "HOME=") != NULL)
-			chdir(ft_getenv(cmd->envp, "HOME=") + 5);
+		if (ht_get(cmd->envp_ht, "HOME") != NULL)
+			chdir(ht_get(cmd->envp_ht, "HOME"));
 	}
 	else if (chdir(cmd->args[1]) != 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:50:05 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/09 20:14:51 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:56:04 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		pipe_fail(int pipefd[2]);
 int		execution_fail(char *cmd_bin);
 int		fork_fail(void);
 
-t_SimpleCommand	*cmd_gen(char *bin, char **args, char **envp, int in_fd,
+t_SimpleCommand	*cmd_gen(char *bin, char **args, t_kv envp_ht[TABLE_SIZE], int in_fd,
 		int out_fd, int pipefd[2]); /* TODO: DELETE*/
 
 void	print_command(t_SimpleCommand	*cmd);

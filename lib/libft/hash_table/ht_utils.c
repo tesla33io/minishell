@@ -6,13 +6,25 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:40:32 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/07 19:14:08 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:54:50 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft.h"
+
 #include <stdlib.h>
 
-#include "../libft.h"
+void	ht_copy(t_kv src_ht[TABLE_SIZE], t_kv dest_ht[TABLE_SIZE])
+{
+	char	**keys;
+	int		i;
+
+	keys = get_all_keys(src_ht);
+	i = -1;
+	while (keys[++i] != NULL)
+		ht_set(dest_ht, keys[i], ft_strdup(ht_get(src_ht, keys[i])));
+	ft_strarray_free(keys);
+}
 
 size_t	get_hash_table_size(t_kv ht[TABLE_SIZE])
 {
@@ -58,6 +70,7 @@ char	**get_all_keys(t_kv ht[TABLE_SIZE])
 			keys_arr[j++] = next->k;
 		i++;
 	}
+	keys_arr[j] = NULL;
 	return (keys_arr);
 }
 

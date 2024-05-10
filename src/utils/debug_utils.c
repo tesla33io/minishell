@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 20:34:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/21 16:31:17 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:56:28 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define CYAN		"\x1b[36m"
 #define WHITE		"\x1b[37m"
 
-t_SimpleCommand	*cmd_gen(char *bin, char **args, char **envp, int in_fd,
+t_SimpleCommand	*cmd_gen(char *bin, char **args, t_kv envp_ht[TABLE_SIZE], int in_fd,
 		int out_fd, int pipefd[2])
 {
 	t_SimpleCommand	*cmd;
@@ -32,7 +32,7 @@ t_SimpleCommand	*cmd_gen(char *bin, char **args, char **envp, int in_fd,
 	cmd = malloc(sizeof(t_SimpleCommand));
 	cmd->bin = bin;
 	cmd->args = args;
-	cmd->envp = envp;
+	ht_copy(envp_ht, cmd->envp_ht);
 	cmd->in_fd = in_fd;
 	cmd->out_fd = out_fd;
 	cmd->pipefd[0] = pipefd[0];

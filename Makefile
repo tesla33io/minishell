@@ -140,7 +140,10 @@ help: ## Show help info
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "$(CYAN)%-30s$(RESET) %s\n", $$1, $$2}'
 
-.PHONY: all re clean fclean help test
+rclear: ## Clear the terminal and run `make`
+	echo -ne "\033c" && make
+
+.PHONY: all re clean fclean help test rclear
 
 #### COLORS ####
 # Color codes

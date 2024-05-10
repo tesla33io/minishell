@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:59:58 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/28 17:27:19 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:22:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_command(t_SimpleCommand **command)
 	t_SimpleCommand	*cmd;
 
 	cmd = *(command);
-	if (!cmd->bin || !cmd->args || !cmd->envp)
+	if (!cmd->bin || !cmd->args)
 		return (-1);
 	// binary lookup coming soon..................
 	return (-1);
