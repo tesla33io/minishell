@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:40:32 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/10 18:54:50 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:39:49 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ char	**get_all_keys(t_kv ht[TABLE_SIZE])
 			keys_arr[j++] = ht[i].k;
 		next = ht[i].n;
 		while (next)
+		{
 			keys_arr[j++] = next->k;
+			next = next->n;
+		}
 		i++;
 	}
 	keys_arr[j] = NULL;
