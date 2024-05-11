@@ -19,6 +19,7 @@
 
 int	pipe_fail(int pipefd[2])
 {
+	(void)pipefd;
 	perror("pipe: ");
 	pipefd = (int [2]){-1, -1};
 	return (EPIPE);
