@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 23:05:57 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/11 16:45:49 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:58:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stdio.h>
 
 /* Test code */
-int	main(int ac, char **av, char **envp)
+int	main2(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
@@ -44,15 +44,30 @@ int	main(int ac, char **av, char **envp)
 		case 30676: // pwd
 			ft_pwd(cmd);
 			break;
-		case 114259604: // export
-			ft_export(cmd);
 		case 27734: // env
 			ft_env(cmd);
+			break;
+		case 114259604: // export
+			ft_export(cmd);
 			break;
 		case 8149444: // unset
 			break;
 		default:
+			execute_command(cmd);
 			break;
 	}
 	return (status);
+}
+
+int	main(int ac, char *av[], char *envp[])
+{
+	(void)av;
+	if (ac < 1)
+		return (1);
+	t_SimpleCommand *cmd; // = ft_malloc(NULL, sizeof(*cmd));
+	t_kv			envp_ht[TABLE_SIZE];
+	ft_envdup(envp_ht, envp);
+	cmd = cmd_gen("ls", (char *[]) {"ls", NULL}, envp_ht, 0, 1, (int [2]) {-1, -1});
+	execute_command(cmd);
+	return (0);
 }

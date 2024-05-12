@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:50:05 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/10 18:56:04 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:11:21 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,20 @@ typedef struct s_CommandNode
 
 /* HOLY EXECUTOR Functions */
 
-void	find_bin(t_SimpleCommand *cmd);
-int		cmd_exe(t_SimpleCommand *cmd, int mode);
+// void	find_bin(t_SimpleCommand *cmd);
+int		find_executable(t_SimpleCommand **cmd);
+// int		cmd_exe(t_SimpleCommand *cmd, int mode);
+int		execute_command(t_SimpleCommand *cmd);
 int		process_pipe(t_CommandNode *pipen);
 
 /* Executor utils */
 
-int		bin_check(t_SimpleCommand *cmd, char *path);
+// int		bin_check(t_SimpleCommand *cmd, char *path);
+int		check_command(t_SimpleCommand **command, bool is_full_path);
 int		cmd_check(t_SimpleCommand *cmd);
 
 bool	is_builtint(char *bin, char *b_list[]);
+int		run_builtin(t_SimpleCommand *cmd);
 
 /* Util functions */
 

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 17:05:09 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 17:37:03 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:06:59 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	process_pipe(t_CommandNode *pipen)
 	if (pipe(pipefd) != 0)
 		exit(pipe_fail(pipefd));
 	assign_pipes(pipen, pipefd);
-	pids[0] = cmd_exe(pipen->left->cmd, 'l');
-	pids[1] = cmd_exe(pipen->right->cmd, 'r');
+	pids[0] = execute_command(pipen->left->cmd);
+	pids[1] = execute_command(pipen->right->cmd);
 	close(pipefd[WREND]);
 	close(pipefd[RDEND]);
 	waitpid(pids[0], &status, 0);

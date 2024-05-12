@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:59:25 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/10 19:03:35 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:05:04 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,24 @@
  */
 int	try_execute(t_SimpleCommand *cmd)
 {
+	pid_t	pid;
+
 	if (is_builtint(cmd->bin, (char *[]){"echo", "cd", "pwd", "export", "unset",
 				"env", "exit", NULL}))
-	{
-		// run builtin
-	}
+		pid = run_builtin(cmd);
 	else if (ft_strncmp(cmd->bin, "./", 2) == 0)
 	{
-		// run local bin
+		if (check_command(&cmd, true) != SUCCESS)
+			return (FATAL_ERROR);
+		pid = execute_command(cmd);
 	}
 	else
 	{
-		// run bin on $PATH
+		if (check_command(&cmd, true) != SUCCESS)
+			return (FATAL_ERROR);
+		pid = execute_command(cmd);
 	}
-	return (-1);
+	return (pid);
 }
 
 /*
@@ -58,7 +62,6 @@ int	execute_command(t_SimpleCommand *cmd)
 		fork_fail();
 	if (pid == 0)
 	{
-		// check and look for binary
 		close(cmd->in_fd);
 		dup2(cmd->out_fd, STDOUT_FILENO);
 		envp = envp_ht_to_str_array(cmd->envp_ht);
