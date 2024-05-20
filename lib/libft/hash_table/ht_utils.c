@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:40:32 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/11 16:39:49 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:51:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	ht_copy(t_kv src_ht[TABLE_SIZE], t_kv dest_ht[TABLE_SIZE])
 	char	**keys;
 	int		i;
 
-	keys = get_all_keys(src_ht);
+	keys = ht_get_keys(src_ht);
 	i = -1;
 	while (keys[++i] != NULL)
 		ht_set(dest_ht, keys[i], ft_strdup(ht_get(src_ht, keys[i])));
 	ft_strarray_free(keys);
 }
 
-size_t	get_hash_table_size(t_kv ht[TABLE_SIZE])
+size_t	ht_len(t_kv ht[TABLE_SIZE])
 {
 	size_t		count;
 	int			i;
@@ -49,7 +49,7 @@ size_t	get_hash_table_size(t_kv ht[TABLE_SIZE])
 	return (count);
 }
 
-char	**get_all_keys(t_kv ht[TABLE_SIZE])
+char	**ht_get_keys(t_kv ht[TABLE_SIZE])
 {
 	char		**keys_arr;
 	size_t		ht_size;
@@ -57,7 +57,7 @@ char	**get_all_keys(t_kv ht[TABLE_SIZE])
 	int			j;
 	struct s_kv	*next;
 
-	ht_size = get_hash_table_size(ht);
+	ht_size = ht_len(ht);
 	keys_arr = ft_malloc(NULL, sizeof(*keys_arr) * (ht_size + 1));
 	i = 0;
 	j = 0;
@@ -77,7 +77,7 @@ char	**get_all_keys(t_kv ht[TABLE_SIZE])
 	return (keys_arr);
 }
 
-void	clear_hash_table(t_kv ht[TABLE_SIZE])
+void	ht_clear(t_kv ht[TABLE_SIZE])
 {
 	int	i;
 
