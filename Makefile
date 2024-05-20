@@ -21,23 +21,11 @@ TARGET			:= minishell
 SRC_DIR			:= src/
 
 # Source files
-SRC_FILES		+= main.c						# Main
-SRC_FILES		+= holy_executor/execute.c		# Executor
-SRC_FILES		+= holy_executor/pipe.c			# Pipes
-SRC_FILES		+= builtins/echo.c				# Echo
-SRC_FILES		+= builtins/cd.c				# CD
-SRC_FILES		+= builtins/pwd.c				# PWD
-SRC_FILES		+= builtins/env.c				# ENV
-SRC_FILES		+= builtins/export.c			# EXPORT
-SRC_FILES		+= builtins/unset.c				# UNSET
-SRC_FILES		+= utils/free_utils.c			# Utils
-SRC_FILES		+= utils/error_utils.c			# Utils
-SRC_FILES		+= utils/wait_utils.c			# Utils
-SRC_FILES		+= utils/execution_utils.c		# Utils
-SRC_FILES		+= utils/env_utils.c			# Built-in Utils
-SRC_FILES		+= utils/export_utils.c			# Built-in Utils
-SRC_FILES		+= utils/string_qs.c			# Qucksort for strings
-SRC_FILES		+= utils/debug_utils.c			# TODO: Delete
+SRC_FILES		+= execution/main.c
+SRC_FILES		+= execution/external_cmd.c
+
+SRC_FILES		+= utils/envp_utils.c
+SRC_FILES		+= utils/cmd_error_utils.c
 
 # Object files directory
 OBJ_DIR			:= obj/

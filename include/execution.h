@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/20 18:38:24 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:13:07 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,30 @@
 
 # include "../lib/libft/libft.h"
 
-# define ENVP_HT_SIZE 100
-
 enum	e_CommandType
 {
 	EXTERNAL,
 	BUILTIN
 };
 
+typedef enum e_CommandType t_CommandType;
+
 struct	s_Command
 {
-	e_CommandType	type;
+	t_CommandType	type;
 	char			*bin_name;
 	char			**args;
-	t_kv			envp_ht[ENVP_HT_SIZE];
+	t_kv			envp_ht[TABLE_SIZE];
+	char			**envpv;
 	int				in_fd;
 	int				out_fd;
 };
 
 typedef struct s_Command t_Command;
+
+/* Helper functions */
+
+char				**generate_envpv(t_kv envp_ht[TABLE_SIZE]);
 
 /* Error utility functions */
 
