@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/20 22:13:07 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:15:08 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define EXECUTION_H
 
 # include "../lib/libft/libft.h"
+
+/* Macros to make ht access code more readable */
+# define KEY 0
+# define VALUE 1
 
 enum	e_CommandType
 {
@@ -39,6 +43,7 @@ typedef struct s_Command t_Command;
 /* Helper functions */
 
 char				**generate_envpv(t_kv envp_ht[TABLE_SIZE]);
+void				generate_envp_ht(t_kv envp_ht[TABLE_SIZE], char **envpv);
 
 /* Error utility functions */
 
