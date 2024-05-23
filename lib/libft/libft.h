@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:29:54 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/20 19:51:28 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/24 22:10:27 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ unsigned int	hash(char *key);
 
 void			ht_set(t_kv ht[TABLE_SIZE], char *key, void *value);
 char			*ht_get(t_kv ht[TABLE_SIZE], char *key);
+t_kv			*ht_init(void);
 void			ht_destroy(t_kv ht[TABLE_SIZE]);
 void			ht_copy(t_kv src_ht[TABLE_SIZE], t_kv dest_ht[TABLE_SIZE]);
 

@@ -6,23 +6,26 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/21 20:21:04 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/24 22:13:27 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
+#include <stddef.h>
 #include <stdio.h> /* DELETE */
 
 static char	*connect_kv(char *key, char *value);
 static char	**split_kv(char *entry);
 
-char	**generate_envpv(t_kv envp_ht[TABLE_SIZE])
+char	**generate_envpv(t_kv envp_ht[TABLE_SIZE], size_t size)
 {
 	char	**envpv;
 	int		envp_size;
 	char	**envp_keys;
 	int		i;
+	(void)size;
 
+	printf("%p (generat_envpv)\n", (void *) &envp_ht);
 	envp_size = (int) ht_len(envp_ht);
 	envp_keys = ht_get_keys(envp_ht);
 	if (!envp_keys)
@@ -33,6 +36,7 @@ char	**generate_envpv(t_kv envp_ht[TABLE_SIZE])
 	i = 0;
 	while (i < envp_size)
 	{
+		printf("key: %s\n", envp_keys[i]);
 		envpv[i] = connect_kv(envp_keys[i], ht_get(envp_ht, envp_keys[i]));
 		i++;
 	}

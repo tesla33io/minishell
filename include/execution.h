@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/21 20:15:08 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/24 22:36:29 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ struct	s_Command
 
 typedef struct s_Command t_Command;
 
+/* Core functions */
+
+int					execute_command_in_child(t_Command *command);
+
 /* Helper functions */
 
 char				**generate_envpv(t_kv envp_ht[TABLE_SIZE]);
@@ -49,5 +53,10 @@ void				generate_envp_ht(t_kv envp_ht[TABLE_SIZE], char **envpv);
 
 int					fork_fail(void);
 int					execve_fail(void);
+
+/* Misc functions TO BE DELETED */
+
+void				print_strarray(char **arr);
+void				print_hashtable(t_kv ht[TABLE_SIZE]);
 
 #endif /* EXECUTION_H */

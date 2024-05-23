@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 17:37:08 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/28 17:48:34 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/24 22:10:08 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,14 @@ char	*ht_get(t_kv ht[TABLE_SIZE], char *key)
 	if (kv && kv->k)
 		return (kv->v);
 	return (NULL);
+}
+
+t_kv	*ht_init(void)
+{
+	t_kv	*ht;
+
+	ht = ft_malloc(NULL, sizeof(*ht) * TABLE_SIZE);
+	return (ht);
 }
 
 void	ht_destroy(t_kv ht[TABLE_SIZE])

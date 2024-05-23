@@ -27,6 +27,8 @@ SRC_FILES		+= execution/external_cmd.c
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
 
+SRC_FILES		+= utils/misc.c ## DELETE
+
 # Object files directory
 OBJ_DIR			:= obj/
 
