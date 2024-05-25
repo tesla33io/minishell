@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/24 22:36:41 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/25 18:08:51 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,19 @@ int	main(int ac, char *av[], char *envp[])
 	(void)ac;
 	(void)av;
 	(void)envp;
-	t_kv		test_ht[TABLE_SIZE];
 	pid_t		cpid;
 	int			status = 0;
 	t_Command	cmd;
 
-	// test_ht = ht_init();
-	ht_clear(test_ht);
-	generate_envp_ht(test_ht, envp);
-	printf("%p (main)\n", (void *) &test_ht);
 	if (ac <= 1)
-		return (1);
+		return (printf("wrong input\n"));
 	cmd.bin_name = av[1];
 	cmd.args = (char *[]) {av[1], av[2], NULL};
-	ht_copy(test_ht, cmd.envp_ht);
-	cmd.envpv = generate_envpv(test_ht);
+	cmd.envpv = ft_strarray_alloc(ft_strarray_len(envp));
+	if (!cmd.envpv)
+		return (printf("ft_strarray_alloc failed.\n"));
+	if (ft_strarray_dup(envp, cmd.envpv) < 0)
+		return (printf("ft_strarray_dup failed.\n"));
 	cmd.in_fd = 0;
 	cmd.out_fd = 1;
 

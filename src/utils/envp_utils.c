@@ -6,18 +6,73 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/24 22:13:27 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/25 18:43:02 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
+#include "../../include/colors.h"
+
 #include <stddef.h>
 #include <stdio.h> /* DELETE */
+#include <string.h>
+#include <unistd.h>
 
+char	*ft_getenv(char **envp, char *name)
+{
+	char	*var;
+	int		i;
+
+	i = 0;
+	var = NULL;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0)
+		{
+			var = envp[i] + 5;
+			break ;
+		}
+		i++;
+	}
+	return (var);
+}
+
+int	find_executable_on_path(char *path, char *bin_name)
+{
+	char	**path_entries;
+	char	*tmp_bin_name;
+	int		i;
+
+	path_entries = ft_split(path, ':');
+	if (!path_entries)
+		return (-1);
+	i = 0;
+	while (path_entries[i] != NULL)
+	{
+		tmp_bin_name = ft_path_join(path_entries[i], bin_name);
+		if (!bin_name)
+			return (printf("ft_path_join failed.\n"));
+		if (access(tmp_bin_name, F_OK) == 0 && access(tmp_bin_name, X_OK) == 0)
+		{
+			printf("[%sDEBUG%s] - found executable - %s [i=%d]\n", YEL, RESET, tmp_bin_name, i);
+			ft_strarray_free(path_entries);
+			// ft_free_ptr(bin_name);
+			strncpy(bin_name, tmp_bin_name, ft_strlen(tmp_bin_name));
+			bin_name[ft_strlen(tmp_bin_name)] = 0;
+			return (0);
+		}
+		else
+			ft_free_ptr(tmp_bin_name);
+		i++;
+	}
+	return (printf("[REPLACE] %s: programm not found\n", bin_name));
+}
+
+/*
 static char	*connect_kv(char *key, char *value);
 static char	**split_kv(char *entry);
 
-char	**generate_envpv(t_kv envp_ht[TABLE_SIZE], size_t size)
+char	**generate_envpv(t_kv envp_ht[TABLE_SIZE])
 {
 	char	**envpv;
 	int		envp_size;
@@ -103,3 +158,4 @@ static char	**split_kv(char *entry)
 	kv[2] = NULL;
 	return (kv);
 }
+*/
