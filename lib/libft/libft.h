@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:29:54 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/24 22:10:27 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:48:59 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ char			**ht_get_keys(t_kv ht[TABLE_SIZE]);
 size_t			ht_len(t_kv ht[TABLE_SIZE]);
 void			ht_clear(t_kv ht[TABLE_SIZE]);
 
-/* /HASH TABLE */
-
 /* MEMORY */
 
 void			*ft_malloc(t_deque *gc, size_t size);
@@ -113,21 +111,33 @@ char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void			ft_striteri(char *s, void (*f)(unsigned int, char *));
+
+/* Printing functions */
+
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_lft_fd(int n, int fd);
+
+/* Linked-List functions */
+
 t_list			*ft_lstnew(void *content);
-void			ft_lstadd_front(t_list **lst, t_list *new);
+void			ft_lstadd_front(t_list **lst, t_list *new_node);
 int				ft_lstsize(t_list *lst);
 t_list			*ft_lstlast(t_list *lst);
-void			ft_lstadd_back(t_list **lst, t_list *new);
+void			ft_lstadd_back(t_list **lst, t_list *new_node);
 void			ft_lstdelone(t_list *lst, void (*del)(void *));
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
+
+/* String array functions */
+
 void			ft_strarray_free(char **array);
 char			**ft_strarray_alloc(int	str_num);
+size_t			ft_strarray_len(char **array);
+int				ft_strarray_dup(char **src_array, char **dest_array);
+char			**ft_strarray_append(char **array, char *new_str);
 
 #endif // !LIBFT_H
