@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/25 17:25:41 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/26 21:07:28 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 /* Macros to make ht access code more readable */
 # define KEY 0
 # define VALUE 1
+# define RD 0
+# define WR 1
+
+typedef struct s_Ast t_Ast;
+typedef union u_AstNode t_AstNode;
+typedef struct s_Command t_Command;
+typedef struct s_Pipeline t_Pipeline;
 
 enum	e_CommandType
 {
@@ -38,11 +45,40 @@ struct	s_Command
 	int				out_fd;
 };
 
-typedef struct s_Command t_Command;
+struct	s_Pipeline
+{
+	t_AstNode	**commands; // TODO: find a better name
+	int			num_cmds;
+};
+
+
+enum	e_AstNodeType
+{
+	COMMAND,
+	PIPELINE,
+	REDIRECTION,
+	L_AND,
+	L_OR
+};
+
+typedef enum e_AstNodeType t_AstNodeType;
+
+union	u_AstNode
+{
+	t_Command		command;
+	t_Pipeline		pipeline;
+};
+
+
+struct	s_Ast
+{
+	t_AstNodeType	node_type;
+	t_AstNode		node;
+};
 
 /* Core functions */
 
-int					execute_command_in_child(t_Command *command);
+void				execute_command_in_child(t_Command *command, int pipefd[2][2]);
 
 /* Helper functions */
 
@@ -61,6 +97,7 @@ int					execve_fail(void);
 /* Misc functions */
   
 char				*ft_path_join(char *path1, char *path2);
+void				print_cmd(t_Command *cmd);
 
 /* DELETE */
 void				print_strarray(char **arr);

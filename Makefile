@@ -22,12 +22,13 @@ SRC_DIR			:= src/
 
 # Source files
 SRC_FILES		+= execution/main.c
-SRC_FILES		+= execution/external_cmd.c
+SRC_FILES		+= execution/command.c
+SRC_FILES		+= execution/pipeline.c
 
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
-
-SRC_FILES		+= utils/misc.c ## DELETE
+SRC_FILES		+= utils/misc.c
+SRC_FILES		+= utils/cmd_misc_utils.c
 
 # Object files directory
 OBJ_DIR			:= obj/
