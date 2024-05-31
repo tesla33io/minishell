@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/25 18:43:02 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:39:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_getenv(char **envp, char *name)
 	return (var);
 }
 
-int	find_executable_on_path(char *path, char *bin_name)
+char	*find_executable_on_path(char *path, char *bin_name)
 {
 	char	**path_entries;
 	char	*tmp_bin_name;
@@ -45,27 +45,27 @@ int	find_executable_on_path(char *path, char *bin_name)
 
 	path_entries = ft_split(path, ':');
 	if (!path_entries)
-		return (-1);
+		return (NULL);
 	i = 0;
 	while (path_entries[i] != NULL)
 	{
 		tmp_bin_name = ft_path_join(path_entries[i], bin_name);
 		if (!bin_name)
-			return (printf("ft_path_join failed.\n"));
+			return (printf("ft_path_join failed.\n"), NULL);
 		if (access(tmp_bin_name, F_OK) == 0 && access(tmp_bin_name, X_OK) == 0)
 		{
 			printf("[%sDEBUG%s] - found executable - %s [i=%d]\n", YEL, RESET, tmp_bin_name, i);
 			ft_strarray_free(path_entries);
 			// ft_free_ptr(bin_name);
-			strncpy(bin_name, tmp_bin_name, ft_strlen(tmp_bin_name));
-			bin_name[ft_strlen(tmp_bin_name)] = 0;
-			return (0);
+			// strncpy(bin_name, tmp_bin_name, ft_strlen(tmp_bin_name));
+			// bin_name[ft_strlen(tmp_bin_name)] = 0;
+			return (tmp_bin_name);
 		}
 		else
 			ft_free_ptr(tmp_bin_name);
 		i++;
 	}
-	return (printf("[REPLACE] %s: programm not found\n", bin_name));
+	return (printf("[REPLACE] %s: programm not found\n", bin_name), NULL);
 }
 
 /*

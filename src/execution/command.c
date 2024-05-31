@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/26 21:13:16 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/31 20:33:43 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 
 #include <stdio.h> /* DELETE */
 #include <unistd.h>
+#include <stdlib.h> /* getenv() */
 
-void	execute_command_in_child(t_Command *command, int pipefd[2][2])
-{
-	/*pid_t	child_pid;
+void execute_command_in_child(t_Command *command, int pipefd[2][2], int i, int num_cmds) {
+	char	*bin;
 
-	child_pid = fork();
-	if (child_pid < 0)
-		return (fork_fail());
-	if (child_pid == 0)
-	{*/
-	find_executable_on_path(
-			ft_getenv(command->envpv, "PATH="),
-			command->bin_name);
-	printf("[%sDEBUG%s] - command to execute - %s\n", YEL, RESET, command->bin_name);
-	print_cmd(command);
-	dup2(command->in_fd, STDIN_FILENO);
-	dup2(command->out_fd, STDOUT_FILENO);
-	if (execve(command->bin_name, command->args, command->envpv) < 0)
-		execve_fail();
-	/*}
-	return (child_pid);*/
+    if (i > 0) {
+        dup2(pipefd[(i - 1) % 2][0], STDIN_FILENO);
+        close(pipefd[(i - 1) % 2][1]);
+    }
+    if (i < num_cmds - 1) {
+        dup2(pipefd[i % 2][1], STDOUT_FILENO);
+        close(pipefd[i % 2][0]);
+    }
+
+    bin = find_executable_on_path(getenv("PATH"), command->bin_name);
+    printf("[%sDEBUG%s] - command to execute - %s\n", YEL, RESET, command->bin_name);
+    print_cmd(command);
+
+    if (execve(bin, command->args, command->envpv) < 0) {
+        execve_fail();
+    }
 }

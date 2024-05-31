@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/25 18:08:51 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/31 20:33:31 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,18 @@ int	main(int ac, char *av[], char *envp[])
 	(void)ac;
 	(void)av;
 	(void)envp;
-	pid_t		cpid;
-	int			status = 0;
-	t_Command	cmd;
 
-	if (ac <= 1)
-		return (printf("wrong input\n"));
-	cmd.bin_name = av[1];
-	cmd.args = (char *[]) {av[1], av[2], NULL};
-	cmd.envpv = ft_strarray_alloc(ft_strarray_len(envp));
-	if (!cmd.envpv)
-		return (printf("ft_strarray_alloc failed.\n"));
-	if (ft_strarray_dup(envp, cmd.envpv) < 0)
-		return (printf("ft_strarray_dup failed.\n"));
-	cmd.in_fd = 0;
-	cmd.out_fd = 1;
+	char	*v1[] = {"ls", "-lR", NULL};
+	char	*v2[] = {"grep", "r-", NULL};
+	char	*v3[] = {"grep", "16", NULL};
 
-	cpid = execute_command_in_child(&cmd);
-	waitpid(cpid, &status, 0);
-	printf("ret: %d\n", WEXITSTATUS(status));
+	t_Command	cmd1 = {v1[0], v1, envp, 0, 1};
+	t_Command	cmd2 = {v2[0], v2, envp, 0, 1};
+	t_Command	cmd3 = {v3[0], v3, envp, 0, 1};
+
+	t_Command	*cmds[] = {&cmd1, &cmd2, &cmd3};
+
+	t_Pipeline pip = {cmds, 3};
+
+	execute_pipeline(&pip);
 }

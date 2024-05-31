@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/26 21:07:28 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:29:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ typedef enum e_CommandType t_CommandType;
 
 struct	s_Command
 {
-	t_CommandType	type;
 	char			*bin_name;
 	char			**args;
-	t_kv			envp_ht[TABLE_SIZE];
 	char			**envpv;
 	int				in_fd;
 	int				out_fd;
@@ -47,7 +45,7 @@ struct	s_Command
 
 struct	s_Pipeline
 {
-	t_AstNode	**commands; // TODO: find a better name
+	t_Command	**commands; // TODO: find a better name
 	int			num_cmds;
 };
 
@@ -78,12 +76,14 @@ struct	s_Ast
 
 /* Core functions */
 
-void				execute_command_in_child(t_Command *command, int pipefd[2][2]);
+void				execute_command_in_child(t_Command *command,
+		int pipefd[2][2], int i, int num_cmds);
+int					execute_pipeline(t_Pipeline *pipeline);
 
 /* Helper functions */
 
 char				*ft_getenv(char **envp, char *name);
-int					find_executable_on_path(char *path, char *bin_name);
+char				*find_executable_on_path(char *path, char *bin_name);
 
 /* DEPRECATED
 char				**generate_envpv(t_kv envp_ht[TABLE_SIZE]);
