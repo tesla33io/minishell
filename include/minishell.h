@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/26 15:46:21 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/03/30 23:33:32 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,23 @@ typedef enum e_tkntype t_tkntype;
 
 enum						e_tkntype
 {
-	DOLARSIGN = '$',
 	AMPERSAND = '&',
-	QUESTIONMARK = '?',
 	PIPE = '|',
 	L_PARENTHESIS = '(',
 	R_PARENTHESIS = ')',
 	D_QUOTE = '"',
 	S_QUOTE = '\'',
 	ASTERISK = '*',
-	GREATER_THAN = '>',
-	LESS_THAN = '<',
+	OUT_REDIRECT = '>',
+	IN_REDIRECT = '<',
 	SSPACE = ' ',
 	TTAB = '\t',
+	NNEWLINE = '\n',
 	STR,
+	HEREDOC,
+	APPEND,
+	AND,
+	OR,
 };
 
 struct						s_token

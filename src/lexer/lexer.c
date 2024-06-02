@@ -14,10 +14,10 @@
 
 int	special_char(char c)
 {
-	return (c == DOLARSIGN || c == AMPERSAND || c == QUESTIONMARK || c == PIPE
+	return (c == AMPERSAND || c == PIPE
 		|| c == L_PARENTHESIS || c == R_PARENTHESIS || c == D_QUOTE
-		|| c == S_QUOTE || c == ASTERISK || c == GREATER_THAN || c == LESS_THAN
-		|| c == SSPACE || c == TTAB);
+		|| c == S_QUOTE || c == ASTERISK || c == OUT_REDIRECT || c == IN_REDIRECT
+		|| c == SSPACE || c == TTAB || c == NNEWLINE);
 }
 
 t_tkntype	get_token(char c)
@@ -55,7 +55,7 @@ void	append_token(t_lex *lexer, char *str, int len)
 	}
 	else
 	{
-		lexer->head = malloc(sizeof(*lexer->head)); //here segfault
+		lexer->head = malloc(sizeof(*lexer->head)); 
 		if (!lexer->head)
 			return ;
 		lexer->head->lexeme = malloc((len + 1) * sizeof(char));
@@ -66,12 +66,35 @@ void	append_token(t_lex *lexer, char *str, int len)
 	}
 }
 
+void	print_tokens(t_lex *lexer)
+{
+	const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR",
+	[AMPERSAND] = "AMPERSAND",
+	[PIPE] = "PIPE",
+	[L_PARENTHESIS] = "L_PARENTHESIS",
+	[R_PARENTHESIS] = "R_PARENTHESIS",
+	[D_QUOTE] = "D_QUOTE",
+	[S_QUOTE] = "S_QUOTE",
+	[ASTERISK] = "ASTERISK",
+	[OUT_REDIRECT] = "OUT_REDIRECT",
+	[IN_REDIRECT] = "IN_REDIRECT",
+	[SSPACE] = "SSPACE",
+};
+	int i;
+        t_token *travel;
+
+        i = 0;
+    	travel = lexer->head;
+        while (i < lexer->tkn_count)
+        {
+                printf("token %d = %s : %s\n", i, token_names[travel->token], travel->lexeme);
+                travel = travel->next;
+                i++;
+        }
+}
+
 void	lexer(t_lex *lexer)
 {
-	//int i;
-	//t_token *travel;
-
-	//i = 0;
 	while (lexer->cmd_line[lexer->end])
 	{
 		lexer->start = lexer->end;
@@ -82,12 +105,5 @@ void	lexer(t_lex *lexer)
 		append_token(lexer, (lexer->cmd_line + lexer->start), (lexer->end - lexer->start));
 		lexer->tkn_count++;
 	}
-	//travel = lexer->head;
-	/*while (i < lexer->tkn_count)
-	{
-		printf("token %d = %c : %s\n", i, travel->token, travel->lexeme);
-		travel = travel->next;
-		i++;
-	}*/
-
+	print_tokens(lexer);
 }

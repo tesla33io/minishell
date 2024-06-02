@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC					:= cc
-CFLAGS				:= -Wall -Werror -Wextra -O3 -g3
+CFLAGS				:= -Wall -Werror -Wextra -g3
 LIBS				:= -Llib/ft_printf/ -lftprintf -Llib/libft/ -lft
 LIBS				+= -lreadline
 INCLUDES			:= -I./include/ -Ilib/ft_printf/includes -Ilib/libft/ -I.
