@@ -86,5 +86,6 @@ void						lexer(t_lex *lexer);
 void						append_token(t_lex *lexer, char *str, int len, int backslash);
 enum e_tkntype				get_token(char c);
 int							special_char(char c);
+int     find_match(char *str, char c);
 
 #endif

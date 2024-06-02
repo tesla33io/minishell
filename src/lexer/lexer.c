@@ -104,6 +104,8 @@ void	lexer(t_lex *lexer)
 		lexer->start = lexer->end;
 		while (lexer->cmd_line[lexer->end] && !(special_char(lexer->cmd_line[lexer->end])))
 			lexer->end++;
+		if (lexer->cmd_line[lexer->end] == '"' || lexer->cmd_line[lexer->end] == '\'')
+			lexer->end += find_match(lexer->cmd_line + lexer->start, lexer->cmd_line[lexer->end]) + 1; //returns 0 if not found, maybe handle later
 		if (lexer->end && lexer->cmd_line[lexer->end - 1] == '\\' && ++backslash)
 			lexer->end++;
 		if (!(lexer->end - lexer->start))

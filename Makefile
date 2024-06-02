@@ -21,7 +21,8 @@ NAME				:= minishell
 CFILES				+= main.c						# Main
 CFILES				+= prompt/prompt.c				# Main
 CFILES				+= init.c						# Main
-CFILES				+= lexer/lexer.c				# Lexer
+CFILES				+= lexer/lexer.c                                    # Lexer
+CFILES				+= lexer/lexer_utils.c                                          #Lexer Utils
 
 
 OBJ_DIR				:= ./obj/
