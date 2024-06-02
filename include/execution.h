@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/31 18:29:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/02 21:21:36 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ struct	s_Ast
 void				execute_command_in_child(t_Command *command,
 		int pipefd[2][2], int i, int num_cmds);
 int					execute_pipeline(t_Pipeline *pipeline);
+int					start_heredoc(const char *del);
 
 /* Helper functions */
 

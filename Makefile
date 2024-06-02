@@ -9,6 +9,7 @@ CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
 LIBS			+= -L./lib/ft_printf/ -lftprintf
+LIBS			+= -lreadline
 
 # Include directories
 INCLUDES		:= -Iinclude/ -Ilib/libft/
@@ -24,6 +25,7 @@ SRC_DIR			:= src/
 SRC_FILES		+= execution/main.c
 SRC_FILES		+= execution/command.c
 SRC_FILES		+= execution/pipeline.c
+SRC_FILES		+= execution/heredoc.c
 
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c

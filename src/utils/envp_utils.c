@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/31 18:39:37 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/02 21:12:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,7 @@ char	*find_executable_on_path(char *path, char *bin_name)
 			return (printf("ft_path_join failed.\n"), NULL);
 		if (access(tmp_bin_name, F_OK) == 0 && access(tmp_bin_name, X_OK) == 0)
 		{
-			printf("[%sDEBUG%s] - found executable - %s [i=%d]\n", YEL, RESET, tmp_bin_name, i);
 			ft_strarray_free(path_entries);
-			// ft_free_ptr(bin_name);
-			// strncpy(bin_name, tmp_bin_name, ft_strlen(tmp_bin_name));
-			// bin_name[ft_strlen(tmp_bin_name)] = 0;
 			return (tmp_bin_name);
 		}
 		else

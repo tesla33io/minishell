@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/02 16:49:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/02 21:10:25 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ int	main(int ac, char *av[], char *envp[])
 	(void)envp;
 
 	if (ac < 2)
-		return (printf("Usage: %s <name of the input file>\n", av[0]));
+		return (printf("Usage: %s <delimiter>\n", av[0]));
 
+	/*
 	int	openfd = open(av[1], O_RDONLY);
 	if (openfd < 0)
 		return (printf("open call [%s:%d] error\n", __FILE__, __LINE__));
+	*/
+	int openfd = start_heredoc(av[1]);
 	int	dev_nullfd = open("/dev/null", O_RDONLY);
 	if (dev_nullfd < 0)
 		return (printf("open call [%s:%d] error\n", __FILE__, __LINE__));
