@@ -38,15 +38,16 @@ t_tkntype	get_token(char c)
 	return (STR);
 }
 
-void	append_token(t_lex *lexer, char *str, int len)
+void	append_token(t_lex *lexer, char *str, int len, int backslash)
 {
+	len = len - backslash;
 	if (lexer->head)
 	{
 		lexer->tail = malloc(sizeof(*lexer->tail));
 		if (!lexer->tail)
 			return ;
 		lexer->tail->lexeme = malloc((len + 1) * sizeof(char));
-		ft_strlcpy(lexer->tail->lexeme, str, len + 1);
+		ft_strlcpy(lexer->tail->lexeme, str + backslash, len + 1);
         lexer->tail->token = get_token(str[0]);
 		lexer->tail->next = lexer->head;
 		lexer->tail->prev = lexer->head->prev;
@@ -59,7 +60,7 @@ void	append_token(t_lex *lexer, char *str, int len)
 		if (!lexer->head)
 			return ;
 		lexer->head->lexeme = malloc((len + 1) * sizeof(char));
-		ft_strlcpy(lexer->head->lexeme, str, len + 1);
+		ft_strlcpy(lexer->head->lexeme, str + backslash, len + 1);
 		lexer->head->token = get_token(str[0]);
 		lexer->head->next = lexer->head;
 		lexer->head->prev = lexer->head;
@@ -95,14 +96,19 @@ void	print_tokens(t_lex *lexer)
 
 void	lexer(t_lex *lexer)
 {
+	int backslash;
+
 	while (lexer->cmd_line[lexer->end])
 	{
+		backslash = 0;
 		lexer->start = lexer->end;
 		while (lexer->cmd_line[lexer->end] && !(special_char(lexer->cmd_line[lexer->end])))
 			lexer->end++;
+		if (lexer->end && lexer->cmd_line[lexer->end - 1] == '\\' && ++backslash)
+			lexer->end++;
 		if (!(lexer->end - lexer->start))
 			lexer->end++;
-		append_token(lexer, (lexer->cmd_line + lexer->start), (lexer->end - lexer->start));
+		append_token(lexer, (lexer->cmd_line + lexer->start), (lexer->end - lexer->start), backslash);
 		lexer->tkn_count++;
 	}
 	print_tokens(lexer);
