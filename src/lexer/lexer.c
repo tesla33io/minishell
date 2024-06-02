@@ -14,10 +14,10 @@
 
 int	special_char(char c)
 {
-	return (c == DOLARSIGN || c == AMPERSAND || c == QUESTIONMARK || c == PIPE
+	return (c == AMPERSAND || c == PIPE
 		|| c == L_PARENTHESIS || c == R_PARENTHESIS || c == D_QUOTE
-		|| c == S_QUOTE || c == ASTERISK || c == GREATER_THAN || c == LESS_THAN
-		|| c == SSPACE || c == TTAB);
+		|| c == S_QUOTE || c == ASTERISK || c == OUT_REDIRECT || c == IN_REDIRECT
+		|| c == SSPACE || c == TTAB || c == NNEWLINE);
 }
 
 t_tkntype	get_token(char c)

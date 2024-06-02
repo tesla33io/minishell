@@ -37,20 +37,23 @@ typedef enum e_tkntype t_tkntype;
 
 enum						e_tkntype
 {
-	DOLARSIGN = '$',
 	AMPERSAND = '&',
-	QUESTIONMARK = '?',
 	PIPE = '|',
 	L_PARENTHESIS = '(',
 	R_PARENTHESIS = ')',
 	D_QUOTE = '"',
 	S_QUOTE = '\'',
 	ASTERISK = '*',
-	GREATER_THAN = '>',
-	LESS_THAN = '<',
+	OUT_REDIRECT = '>',
+	IN_REDIRECT = '<',
 	SSPACE = ' ',
 	TTAB = '\t',
+	NNEWLINE = '\n'
 	STR,
+	HEREDOC,
+	APPEND,
+	AND,
+	OR,
 };
 
 struct						s_token
