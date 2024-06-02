@@ -20,8 +20,8 @@ int	main(void)
 	while (1)
 	{
 		init(shell_data);
-		render_prompt(shell_data);
-		lexer(shell_data->lexer);
+		if (render_prompt(shell_data))
+			lexer(shell_data->lexer);
 		//takeout_trash(shell_data);
 	}
 	return (0);
