@@ -30,12 +30,38 @@ void	group_tokens(t_lex *lexer)
 	}
 }
 
+void	merge_strings(t_lex *lexer)
+{
+	int i;
+	t_token *travel;
+
+	i = 1;
+	travel = lexer->head;
+	while (i < lexer->tkn_count)
+	{
+		if (travel->token == D_QUOTE || travel->token == S_QUOTE)
+			travel->token = STR;
+		if (travel->token == STR)
+		{
+			if (travel->next->token == STR || travel->next->token == D_QUOTE || travel->next->token == S_QUOTE)
+			{
+				travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
+               		         travel->next->token = TRASH;
+               		       	  take_out_trash(lexer);
+			}
+		}
+		travel = travel->next;
+		i++;
+	}
+}
+
+
+
 // optimizing tokenstream for parser
 void	merge_tokens(t_lex *lexer)
 {
 	group_tokens(lexer);
 	//insert_placeholder(lexer);
-	//merge_strings(lexer);
-	//del_empty(lexer);
+	merge_strings(lexer);
 }
 	

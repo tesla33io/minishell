@@ -92,5 +92,7 @@ int     find_match(char *str, char c);
 void    merge_tokens(t_lex *lexer);
 void    group_tokens(t_lex *lexer);
 void    take_out_trash(t_lex *lexer);
+void    merge_strings(t_lex *lexer);
+
 
 #endif

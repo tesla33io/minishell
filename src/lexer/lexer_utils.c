@@ -24,7 +24,7 @@ void	take_out_trash(t_lex *lexer)
 	int i;
 
 	i = 0;
-	while (i < lexer->tkn_count)
+	while (i < lexer->tkn_count) //this is not perfect yet, incrementing and decrementing for while condition at the same time can go wrong, TODO find better way
 	{
 		if (lexer->head->token == TRASH)
 		{
