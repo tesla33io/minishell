@@ -22,7 +22,8 @@ CFILES				+= main.c						# Main
 CFILES				+= prompt/prompt.c				# Main
 CFILES				+= init.c						# Main
 CFILES				+= lexer/lexer.c                                    # Lexer
-CFILES				+= lexer/lexer_utils.c                                          #Lexer Utils
+CFILES				+= lexer/lexer_utils.c                                          #Lexer
+CFILES				+= lexer/merge.c                                          #Lexer
 
 
 OBJ_DIR				:= ./obj/

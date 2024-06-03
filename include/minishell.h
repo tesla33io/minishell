@@ -54,6 +54,7 @@ enum						e_tkntype
 	APPEND,
 	AND,
 	OR,
+	TRASH,
 };
 
 struct						s_token
@@ -84,8 +85,12 @@ void						init(t_shell_data *shell_data);
 void						init_lexer(t_shell_data *shell_data);
 void						lexer(t_lex *lexer);
 void						append_token(t_lex *lexer, char *str, int len, int backslash);
+void get_token_data(t_token *tok, char *str, int len, int backslash);
 enum e_tkntype				get_token(char c);
 int							special_char(char c);
 int     find_match(char *str, char c);
+void    merge_tokens(t_lex *lexer);
+void    group_tokens(t_lex *lexer);
+void    take_out_trash(t_lex *lexer);
 
 #endif

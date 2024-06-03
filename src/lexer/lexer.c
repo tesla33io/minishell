@@ -38,6 +38,15 @@ t_tkntype	get_token(char c)
 	return (STR);
 }
 
+void get_token_data(t_token *tok, char *str, int len, int backslash)
+{
+	tok->lexeme = malloc((len + 1) * sizeof(char));
+	if (!tok->lexeme)
+		return ; //TODO error message		
+        ft_strlcpy(tok->lexeme, str + backslash, len + 1); 
+        tok->token = get_token(str[0]);
+}
+
 void	append_token(t_lex *lexer, char *str, int len, int backslash)
 {
 	len = len - backslash;
@@ -45,31 +54,27 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 	{
 		lexer->tail = malloc(sizeof(*lexer->tail));
 		if (!lexer->tail)
-			return ;
-		lexer->tail->lexeme = malloc((len + 1) * sizeof(char));
-		ft_strlcpy(lexer->tail->lexeme, str + backslash, len + 1);
-        lexer->tail->token = get_token(str[0]);
+			return ; //TODO error message
 		lexer->tail->next = lexer->head;
 		lexer->tail->prev = lexer->head->prev;
 		lexer->head->prev->next = lexer->tail;
 		lexer->head->prev = lexer->tail;
+		get_token_data(lexer->tail, str, len, backslash);
 	}
 	else
 	{
 		lexer->head = malloc(sizeof(*lexer->head)); 
 		if (!lexer->head)
-			return ;
-		lexer->head->lexeme = malloc((len + 1) * sizeof(char));
-		ft_strlcpy(lexer->head->lexeme, str + backslash, len + 1);
-		lexer->head->token = get_token(str[0]);
+			return ; //TODO error message
 		lexer->head->next = lexer->head;
 		lexer->head->prev = lexer->head;
+		get_token_data(lexer->head, str, len, backslash);
 	}
 }
 
 void	print_tokens(t_lex *lexer)
 {
-	const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR",
+	const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR", "TRASH",
 	[AMPERSAND] = "AMPERSAND",
 	[PIPE] = "PIPE",
 	[L_PARENTHESIS] = "L_PARENTHESIS",
@@ -113,5 +118,6 @@ void	lexer(t_lex *lexer)
 		append_token(lexer, (lexer->cmd_line + lexer->start), (lexer->end - lexer->start), backslash);
 		lexer->tkn_count++;
 	}
+	merge_tokens(lexer);
 	print_tokens(lexer);
 }
