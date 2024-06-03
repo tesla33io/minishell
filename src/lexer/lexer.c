@@ -12,6 +12,7 @@
 
 #include "../include/minishell.h"
 
+//see if any character is a one character token
 int	special_char(char c)
 {
 	return (c == AMPERSAND || c == PIPE
@@ -20,24 +21,25 @@ int	special_char(char c)
 		|| c == SSPACE || c == TTAB || c == NNEWLINE);
 }
 
+
+//by looping through the range of characters of tokens (the token with the highest ascii value is 124, which is the PIPE token), if a number is a special character (one of the token special characters as above and in enum struct) and also the character that were trying to find the token for, we have successfully matched the token with the character. for matching the token to a lexeme, it is only necessary to pass the first character
 t_tkntype	get_token(char c)
 {
 	int i;
-	t_tkntype current;
 
 	i = 0;
-	while (i < 125)
+	while (i < 125) //search entire ascii range until highest possible token value (PIPE)
 	{
-		while (!special_char(i))
+		while (!special_char(i)) //if i currently doesnt represent any token, keep looping
 			i++;
-		current = (t_tkntype)i;
-		if (current == (t_tkntype)c)
-			return (current);
+		if ((t_tkntype)i == (t_tkntype)c) //check if the token currently represented matches the character were trying to identify
+			return ((t_tkntype)i); //if so, return the correct enum t_tkntype
 		i++;
 	}
 	return (STR);
 }
 
+//fill in the token data with lexeme and token
 void get_token_data(t_token *tok, char *str, int len, int backslash)
 {
 	tok->lexeme = malloc((len + 1) * sizeof(char));
@@ -47,6 +49,8 @@ void get_token_data(t_token *tok, char *str, int len, int backslash)
         tok->token = get_token(str[0]);
 }
 
+
+//add a token to the tokenstream
 void	append_token(t_lex *lexer, char *str, int len, int backslash)
 {
 	len = len - backslash;
@@ -72,6 +76,7 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 	}
 }
 
+//pretty token printer
 void	print_tokens(t_lex *lexer)
 {
 	const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR", "TRASH",
@@ -99,6 +104,7 @@ void	print_tokens(t_lex *lexer)
         }
 }
 
+//loop through input and tokenize into initial tokens
 void	lexer(t_lex *lexer)
 {
 	int backslash;
