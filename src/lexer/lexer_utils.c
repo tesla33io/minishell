@@ -31,6 +31,7 @@ void	take_out_trash(t_lex *lexer)
 			lexer->tail->next = lexer->head->next;
 			lexer->head->next->prev = lexer->tail;
 			lexer->head = lexer->tail->next;
+			lexer->tkn_count--;
 		}
 		lexer->tail = lexer->head;
 		lexer->head = lexer->tail->next;
