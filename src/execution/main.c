@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/03 18:00:57 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:59:42 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,7 @@ int	main(int ac, char *av[], char *envp[])
 	t_Pipeline pip = {cmds, 3};
 
 	execute_pipeline(&pip);
+
+	close(openfd);
+	close(dev_nullfd);
 }
