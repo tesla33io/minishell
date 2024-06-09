@@ -27,6 +27,8 @@ SRC_FILES		+= execution/command.c
 SRC_FILES		+= execution/pipeline.c
 SRC_FILES		+= execution/heredoc.c
 
+SRC_FILES		+= builtins/echo.c
+
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
 SRC_FILES		+= utils/misc.c
@@ -77,19 +79,13 @@ all: $(TARGET) ## Build this project
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(MKDIR) $(@D)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"build]:$(CYAN)" \
-	"$(BOLD)compile$(RESET)$(CYAN) $@ $(RESET)"
-	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
+	@echo -n "[build] "
+	$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
 $(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"build]:$(GREEN)" \
-	"$(BOLD)Link$(RESET)$(GREEN) $(TARGET) $(RESET)"
-	@$(CC) $(CFLAGS) -o $(TARGET) $(OBJ_FILES) $(INCLUDES) $(LIBS)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"info]: $(GREEN)$(BOLD)Build finished!$(RESET)"
+	@echo -n "[link] "
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ_FILES) $(INCLUDES) $(LIBS)
 	-@echo -n "$(MAGENTA)" && ls -lah $(TARGET) && echo -n "$(RESET)"
 
 #### LOCAL LIBS COMPILATION ####
@@ -103,22 +99,20 @@ $(LIBFT_LIB):
 #### ADDITIONAL RULES ####
 
 clean: ## Clean objects and dependencies
-	@$(RM) $(OBJ_FILES)
-	@$(RM) -r $(OBJ_DIR)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "clean]: $(YELLOW)$(BOLD)Remove objects$(RESET)"
-	@$(RM) $(DEPENDS)
-	@$(RM) -r $(DEP_DIR)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
+	@echo -n "[clean] "
+	$(RM) $(OBJ_FILES)
+	@echo -n "[clean] "
+	$(RM) -r $(OBJ_DIR)
+	@echo -n "[clean] "
+	$(RM) $(DEPENDS)
+	@echo -n "[clean] "
+	$(RM) -r $(DEP_DIR)
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
 
 fclean: clean ## Restore project to initial state
-	@$(RM) $(TARGET)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo -n "fclean]: $(YELLOW)"
-	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
+	@echo -n "[clean] "
+	$(RM) $(TARGET)
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
 	@(test -d test/ && $(MAKE) -C test/ fclean) ||:

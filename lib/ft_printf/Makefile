@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/05 13:26:36 by astavrop          #+#    #+#              #
-#    Updated: 2023/12/17 17:11:33 by astavrop         ###   ########.fr        #
+#    Updated: 2024/06/09 20:27:00 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,17 +26,21 @@ all: $(NAME)
 .DEFAULT_GOAL := all
 
 %.o: %.c
+	@echo -n "[build] "
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
+	@echo -n "[archive] "
 	ar rcs $@ $^
 
 .PHONY: all clean fclean re fclean-test
 
 clean:
+	@echo -n "[clean] "
 	rm -f $(OBJS)
 
 fclean: clean
+	@echo -n "[fclean] "
 	rm -f $(NAME)
 
 re: fclean all

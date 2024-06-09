@@ -1,7 +1,7 @@
 #### MAIN SETTINGS ####
 
 # Compiler to be used
-CC				:= clang
+CC				:= cc
 
 # Compiler flags
 CFLAGS			:= -Wall -Werror -Wextra -O3
@@ -120,18 +120,13 @@ all: $(TARGET) ## Build this project
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(MKDIR) $(@D)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"build]:$(CYAN)" \
-	"$(BOLD)compile$(RESET)$(CYAN) $@ $(RESET)"
-	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
+	@echo -n "[build] "
+	$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
 $(TARGET): $(OBJ_FILES) ## $(LIBFT_LIB) $(FT_PRINTF_LIB)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"build]:$(GREEN)" \
-	"$(BOLD)Archive$(RESET)$(GREEN) $(TARGET) $(RESET)"
-	@ar rcs $@ $^
-	@echo "$(BLUE)[$(TARGET) - info]: $(GREEN)$(BOLD)Build finished!$(RESET)"
+	@echo -n "[archive] "
+	ar rcs $@ $^
 	-@echo -n "$(MAGENTA)" && ls -lah $(TARGET) && echo -n "$(RESET)"
 
 #### LOCAL LIBS COMPILATION ####
@@ -139,17 +134,18 @@ $(TARGET): $(OBJ_FILES) ## $(LIBFT_LIB) $(FT_PRINTF_LIB)
 #### ADDITIONAL RULES ####
 
 clean: ## Clean objects and dependencies
-	@$(RM) $(OBJ_FILES)
-	@$(RM) -r $(OBJ_DIR)
-	@echo "$(BLUE)[$(TARGET) - clean]: $(YELLOW)$(BOLD)Remove objects$(RESET)"
-	@$(RM) $(DEPENDS)
-	@$(RM) -r $(DEP_DIR)
-	@echo "$(BLUE)[$(TARGET) - clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
+	@echo -n "[clean] "
+	$(RM) $(OBJ_FILES)
+	@echo -n "[clean] "
+	$(RM) -r $(OBJ_DIR)
+	@echo -n "[clean] "
+	$(RM) $(DEPENDS)
+	@echo -n "[clean] "
+	$(RM) -r $(DEP_DIR)
 
 fclean: clean ## Restore project to initial state
-	@$(RM) $(TARGET)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "fclean]: $(YELLOW)$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
+	@echo -n "[fclean] "
+	$(RM) $(TARGET)
 
 re: fclean all ## Rebuild project
 
