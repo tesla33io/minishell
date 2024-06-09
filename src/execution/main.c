@@ -6,11 +6,13 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/07 18:59:42 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:47:19 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
+#include "../../include/builtins.h"
+#include "../../lib/libft/libft.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,20 +21,34 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include <string.h> /* TODO: delete */
+
 int	main(int ac, char *av[], char *envp[])
 {
 	(void)ac;
 	(void)av;
 	(void)envp;
 
+	int		exit_status = 0;
+
 	if (ac < 2)
-		return (printf("Usage: %s <delimiter>\n", av[0]));
+		return (printf("Usage: %s <arguments to echo ...>\n", av[0]));
+
+	char	**args = malloc(sizeof(*args) * (ac));
+	if (!args)
+		return (dprintf(2, "malloc failed at %s:%d\n", __FILE__, __LINE__));
+	for (int i = 0; i < ac; i++)
+		args[i] = strdup(av[i]);
+	args[ac] = NULL;
+	t_Command	echo = {"echo", args, envp, 0, 1};
+	exit_status = echo_builtin(&echo);
 
 	/*
 	int	openfd = open(av[1], O_RDONLY);
 	if (openfd < 0)
 		return (printf("open call [%s:%d] error\n", __FILE__, __LINE__));
 	*/
+	/*
 	int openfd = start_heredoc(av[1]);
 	int	dev_nullfd = open("/dev/null", O_RDONLY);
 	if (dev_nullfd < 0)
@@ -54,4 +70,7 @@ int	main(int ac, char *av[], char *envp[])
 
 	close(openfd);
 	close(dev_nullfd);
+	*/
+
+	return (exit_status);
 }
