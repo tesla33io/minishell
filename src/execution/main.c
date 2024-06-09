@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/09 20:47:19 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/09 21:19:56 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	main(int ac, char *av[], char *envp[])
 
 	int		exit_status = 0;
 
+	pwd_builtin(NULL);
+
+	/* ECHO
 	if (ac < 2)
 		return (printf("Usage: %s <arguments to echo ...>\n", av[0]));
 
@@ -42,8 +45,9 @@ int	main(int ac, char *av[], char *envp[])
 	args[ac] = NULL;
 	t_Command	echo = {"echo", args, envp, 0, 1};
 	exit_status = echo_builtin(&echo);
+	*/
 
-	/*
+	/* CMD + PIPE
 	int	openfd = open(av[1], O_RDONLY);
 	if (openfd < 0)
 		return (printf("open call [%s:%d] error\n", __FILE__, __LINE__));

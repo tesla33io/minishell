@@ -28,6 +28,7 @@ SRC_FILES		+= execution/pipeline.c
 SRC_FILES		+= execution/heredoc.c
 
 SRC_FILES		+= builtins/echo.c
+SRC_FILES		+= builtins/pwd.c
 
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
@@ -69,7 +70,7 @@ endif
 
 #### TARGET COMPILATION ####
 
-.DEFAULT_GOAL	:= quick
+.DEFAULT_GOAL	:= all
 
 quick: ## Run recipes simultaneously
 	@$(MAKE) -j all
