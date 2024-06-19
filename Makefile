@@ -1,14 +1,13 @@
 #### MAIN SETTINGS ####
 
 # Compiler to be used
-CC				:= cc
+CC				:= clang
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra -O3
+CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
 
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
-LIBS			+= -lreadline
 LIBS			+= -L./lib/ft_printf/ -lftprintf
 LIBS			+= -lreadline
 
@@ -66,7 +65,7 @@ LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 #### DEBUG SETTINGS ####
 
 ifeq ($(DEBUG), 1)
-	CFLAGS		+= -O0 -g3
+	CFLAGS		+= -g3 -O0
 endif
 
 #### TARGET COMPILATION ####
