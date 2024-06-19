@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_error_utils.c                                  :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/19 13:36:26 by astavrop         ###   ########.fr       */
+/*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/19 13:37:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/minishell.h"
 
-#include <stdio.h>
-
-int	fork_fail(void)
+int	main(void)
 {
-	perror("fork");
-	return (-1);
-}
+	t_shell_data *shell_data;
 
-int	execve_fail(void)
-{
-	perror("execve");
-	return (-2);
+	shell_data = malloc(sizeof(t_shell_data));
+	while (1)
+	{
+		init(shell_data);
+		if (render_prompt(shell_data))
+			lexer(shell_data->lexer);
+		//takeout_trash(shell_data);
+	}
+	return (0);
 }
