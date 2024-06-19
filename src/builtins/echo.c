@@ -3,40 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 20:59:23 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 19:08:38 by astavrop         ###   ########.fr       */
+/*   Created: 2024/06/09 20:08:16 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/09 21:18:42 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "../../include/execution.h"
 #include "../../lib/libft/libft.h"
-#include "../../lib/ft_printf/includes/ft_printf.h"
 
 #include <stdbool.h>
 
-void	ft_echo(int fd, int ac, char **av)
+int	echo_builtin(t_Command *echo)
 {
 	int		i;
 	bool	new_line;
 
-	if (!av[0])
-		return ;
+	if (!echo->args[1])
+		return (-1);
 	new_line = true;
-	i = 0;
-	if (ft_strncmp(av[0], "-n", 2) == 0)
-	{
+	i = 1;
+	if (ft_strcmp(echo->args[i], "-n") == 0 && i++)
 		new_line = false;
-		i++;
-	}
-	while (i < ac)
+	while (echo->args[i + 1])
 	{
-		ft_printf(fd, "%s", av[i]);
-		if (i < ac - 1)
-			ft_printf(fd, " ");
+		ft_putstr_fd(echo->args[i], 1);
+		ft_putstr_fd(" ", 1);
 		i++;
 	}
+	ft_putstr_fd(echo->args[i], 1);
 	if (new_line)
-		ft_putstr_fd("\n", fd);
+		ft_putstr_fd("\n", 1);
+	return (0);
 }

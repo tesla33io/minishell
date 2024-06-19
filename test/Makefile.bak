@@ -30,6 +30,8 @@ SRC_FILES		+= src/holy_executor/pipe.c			# Pipeline
 SRC_FILES		+= src/builtins/echo.c				# Echo
 SRC_FILES		+= src/builtins/cd.c				# CD
 SRC_FILES		+= src/builtins/export.c			# EXPORT
+SRC_FILES		+= src/builtins/env.c				# ENV
+SRC_FILES		+= src/builtins/unset.c				# UNSET
 SRC_FILES		+= src/utils/free_utils.c			# Utils
 SRC_FILES		+= src/utils/execution_utils.c		# Utils
 SRC_FILES		+= src/utils/error_utils.c			# Utils
@@ -46,6 +48,8 @@ SRC_FILES		+= test/executor/simpleCommand/test_execution.c		# execution tests
 SRC_FILES		+= test/executor/builtins/test_echo.c				# ft_echo tests
 SRC_FILES		+= test/executor/builtins/test_cd.c					# ft_cd tests
 SRC_FILES		+= test/executor/builtins/test_export.c				# ft_export tests
+SRC_FILES		+= test/executor/builtins/test_env.c				# ft_env tests
+SRC_FILES		+= test/executor/builtins/test_unset.c				# ft_unset tests
 SRC_FILES		+= test/parser/lexer/test_tokens1.c
 SRC_FILES		+= test/parser/lexer/test_tokens2.c
 SRC_FILES		+= test/parser/lexer/test_tokens3.c
@@ -158,7 +162,7 @@ clean: ## Clean objects and dependencies
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
 	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) clean) ||:
 	@(test -s $(UNIT_LIB) && $(MAKE) -C $(LIBUNIT_PATH) clean) ||:
-	@$(RM) *.log
+	@$(RM) *.log test_vg_report.txt
 
 fclean: clean ## Restore project to initial state
 	@$(RM) $(TARGET)

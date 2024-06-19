@@ -74,25 +74,19 @@ all: $(TARGET) ## Build this project
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(MKDIR) $(@D)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo -n "build]: $(CYAN)"
-	@echo "$(BOLD)compile$(RESET)$(CYAN) $@ $(RESET)"
-	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
+	@echo -n "[build] "
+	$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
 $(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB) $(GNL_LIB)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo -n "build]: $(GREEN)"
-	@echo "$(BOLD)Archive$(RESET)$(GREEN) $(TARGET) $(RESET)"
-	@ar -rcs $(TARGET) $(OBJ_FILES)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "info]: $(GREEN)$(BOLD)Build finished!$(RESET)"
+	@echo -n "[archive] "
+	ar -rcs $(TARGET) $(OBJ_FILES)
 	-@echo -n "$(MAGENTA)" && ls -lah $(TARGET) && echo -n "$(RESET)"
 
 #### LOCAL LIBS COMPILATION ####
 
 $(FT_PRINTF_LIB):
-	@$(MAKE) -sC $(FT_PRINTF_PATH)
+	@$(MAKE) -C $(FT_PRINTF_PATH)
 
 $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_PATH)
@@ -103,23 +97,21 @@ $(GNL_LIB):
 #### ADDITIONAL RULES ####
 
 clean: ## Clean objects and dependencies
-	@$(RM) $(OBJ_FILES)
-	@$(RM) -r $(OBJ_DIR)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "clean]: $(YELLOW)$(BOLD)Remove objects$(RESET)"
-	@$(RM) $(DEPENDS)
-	@$(RM) -r $(DEP_DIR)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
+	@echo -n "[clean] "
+	$(RM) $(OBJ_FILES)
+	@echo -n "[clean] "
+	$(RM) -r $(OBJ_DIR)
+	@echo -n "[clean] "
+	$(RM) $(DEPENDS)
+	@echo -n "[clean] "
+	$(RM) -r $(DEP_DIR)
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
 	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) clean) ||:
 
 fclean: clean ## Restore project to initial state
-	@$(RM) $(TARGET)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo -n "fclean]: $(YELLOW)"
-	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
+	@echo -n "[fclean] "
+	$(RM) $(TARGET)
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
 	@(test -s $(GNL_LIB) && $(MAKE) -C $(GNL_PATH) fclean) ||:

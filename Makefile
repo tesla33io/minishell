@@ -1,15 +1,15 @@
 #### MAIN SETTINGS ####
 
 # Compiler to be used
-CC				:= cc
+CC				:= clang
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra -O3
+CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
 
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
-LIBS			+= -lreadline
 LIBS			+= -L./lib/ft_printf/ -lftprintf
+LIBS			+= -lreadline
 
 # Include directories
 INCLUDES		:= -Iinclude/ -Ilib/libft/
@@ -21,28 +21,19 @@ TARGET			:= minishell
 # Source files directory
 SRC_DIR			:= src/
 
-SRC_FILES		+= main.c						# Main
-SRC_FILES		+= init.c						# Initialization
+# Source files
+SRC_FILES		+= execution/main.c
+SRC_FILES		+= execution/command.c
+SRC_FILES		+= execution/pipeline.c
+SRC_FILES		+= execution/heredoc.c
 
-# [EXECUTOR]
-SRC_FILES		+= holy_executor/execute.c		# Executor
-SRC_FILES		+= holy_executor/pipe.c			# Pipes
-SRC_FILES		+= builtins/echo.c				# Echo
-SRC_FILES		+= builtins/cd.c				# CD
-SRC_FILES		+= builtins/pwd.c				# PWD
-SRC_FILES		+= builtins/env.c				# ENV
-SRC_FILES		+= builtins/export.c			# EXPORT
-SRC_FILES		+= builtins/unset.c				# UNSET
-SRC_FILES		+= utils/free_utils.c			# Utils
-SRC_FILES		+= utils/error_utils.c			# Utils
-SRC_FILES		+= utils/wait_utils.c			# Utils
-SRC_FILES		+= utils/execution_utils.c		# Utils
-SRC_FILES		+= utils/env_utils.c			# Built-in Utils
-SRC_FILES		+= utils/debug_utils.c			# TODO: Delete
+SRC_FILES		+= builtins/echo.c
+SRC_FILES		+= builtins/pwd.c
 
-# [PARSER]
-SRC_FILES		+= prompt/prompt.c				# 
-SRC_FILES		+= lexer/lexer.c				# 
+SRC_FILES		+= utils/envp_utils.c
+SRC_FILES		+= utils/cmd_error_utils.c
+SRC_FILES		+= utils/misc.c
+SRC_FILES		+= utils/cmd_misc_utils.c
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -74,12 +65,12 @@ LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 #### DEBUG SETTINGS ####
 
 ifeq ($(DEBUG), 1)
-	CFLAGS		+= -O0 -g3
+	CFLAGS		+= -g3 -O0
 endif
 
 #### TARGET COMPILATION ####
 
-.DEFAULT_GOAL	:= quick
+.DEFAULT_GOAL	:= all
 
 quick: ## Run recipes simultaneously
 	@$(MAKE) -j all
@@ -89,19 +80,13 @@ all: $(TARGET) ## Build this project
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(MKDIR) $(@D)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"build]:$(CYAN)" \
-	"$(BOLD)compile$(RESET)$(CYAN) $@ $(RESET)"
-	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
+	@echo -n "[build] "
+	$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
 $(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"build]:$(GREEN)" \
-	"$(BOLD)Link$(RESET)$(GREEN) $(TARGET) $(RESET)"
-	@$(CC) $(CFLAGS) -o $(TARGET) $(OBJ_FILES) $(INCLUDES) $(LIBS)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"info]: $(GREEN)$(BOLD)Build finished!$(RESET)"
+	@echo -n "[link] "
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ_FILES) $(INCLUDES) $(LIBS)
 	-@echo -n "$(MAGENTA)" && ls -lah $(TARGET) && echo -n "$(RESET)"
 
 #### LOCAL LIBS COMPILATION ####
@@ -115,22 +100,20 @@ $(LIBFT_LIB):
 #### ADDITIONAL RULES ####
 
 clean: ## Clean objects and dependencies
-	@$(RM) $(OBJ_FILES)
-	@$(RM) -r $(OBJ_DIR)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "clean]: $(YELLOW)$(BOLD)Remove objects$(RESET)"
-	@$(RM) $(DEPENDS)
-	@$(RM) -r $(DEP_DIR)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
+	@echo -n "[clean] "
+	$(RM) $(OBJ_FILES)
+	@echo -n "[clean] "
+	$(RM) -r $(OBJ_DIR)
+	@echo -n "[clean] "
+	$(RM) $(DEPENDS)
+	@echo -n "[clean] "
+	$(RM) -r $(DEP_DIR)
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
 
 fclean: clean ## Restore project to initial state
-	@$(RM) $(TARGET)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo -n "fclean]: $(YELLOW)"
-	@echo "$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
+	@echo -n "[clean] "
+	$(RM) $(TARGET)
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
 	@(test -d test/ && $(MAKE) -C test/ fclean) ||:
@@ -145,7 +128,10 @@ help: ## Show help info
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "$(CYAN)%-30s$(RESET) %s\n", $$1, $$2}'
 
-.PHONY: all re clean fclean help test
+rclear: ## Clear the terminal and run `make`
+	echo -ne "\033c" && make
+
+.PHONY: all re clean fclean help test rclear
 
 #### COLORS ####
 # Color codes

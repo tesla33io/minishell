@@ -1,7 +1,7 @@
 #### MAIN SETTINGS ####
 
 # Compiler to be used
-CC				:= clang
+CC				:= cc
 
 # Compiler flags
 CFLAGS			:= -Wall -Werror -Wextra -O3
@@ -41,6 +41,7 @@ SRC_FILES		+= string/ft_split.c			# String
 SRC_FILES		+= string/ft_strmapi.c			# String
 SRC_FILES		+= string/ft_striteri.c			# String
 SRC_FILES		+= string/ft_strchr.c			# String
+SRC_FILES		+= string/ft_strarray.c			# String array
 
 SRC_FILES		+= utils/ft_isalnum.c			### Utils ###
 SRC_FILES		+= utils/ft_isalpha.c			# Utils
@@ -80,6 +81,9 @@ SRC_FILES		+= deque/deque_empty.c			# Deque
 SRC_FILES		+= deque/deque_size.c			# Deque
 SRC_FILES		+= deque/deque_swap.c			# Deque
 
+SRC_FILES		+= hash_table/hashtable.c		### Hash Table ###
+SRC_FILES		+= hash_table/ht_utils.c		# Hash Table
+
 # Object files directory
 OBJ_DIR			:= obj/
 
@@ -116,18 +120,13 @@ all: $(TARGET) ## Build this project
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(MKDIR) $(@D)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"build]:$(CYAN)" \
-	"$(BOLD)compile$(RESET)$(CYAN) $@ $(RESET)"
-	@$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
+	@echo -n "[build] "
+	$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
 $(TARGET): $(OBJ_FILES) ## $(LIBFT_LIB) $(FT_PRINTF_LIB)
-	@echo "$(BLUE)[$(TARGET) -" \
-	"build]:$(GREEN)" \
-	"$(BOLD)Archive$(RESET)$(GREEN) $(TARGET) $(RESET)"
-	@ar rcs $@ $^
-	@echo "$(BLUE)[$(TARGET) - info]: $(GREEN)$(BOLD)Build finished!$(RESET)"
+	@echo -n "[archive] "
+	ar rcs $@ $^
 	-@echo -n "$(MAGENTA)" && ls -lah $(TARGET) && echo -n "$(RESET)"
 
 #### LOCAL LIBS COMPILATION ####
@@ -135,17 +134,18 @@ $(TARGET): $(OBJ_FILES) ## $(LIBFT_LIB) $(FT_PRINTF_LIB)
 #### ADDITIONAL RULES ####
 
 clean: ## Clean objects and dependencies
-	@$(RM) $(OBJ_FILES)
-	@$(RM) -r $(OBJ_DIR)
-	@echo "$(BLUE)[$(TARGET) - clean]: $(YELLOW)$(BOLD)Remove objects$(RESET)"
-	@$(RM) $(DEPENDS)
-	@$(RM) -r $(DEP_DIR)
-	@echo "$(BLUE)[$(TARGET) - clean]: $(YELLOW)$(BOLD)Remove dependecies$(RESET)"
+	@echo -n "[clean] "
+	$(RM) $(OBJ_FILES)
+	@echo -n "[clean] "
+	$(RM) -r $(OBJ_DIR)
+	@echo -n "[clean] "
+	$(RM) $(DEPENDS)
+	@echo -n "[clean] "
+	$(RM) -r $(DEP_DIR)
 
 fclean: clean ## Restore project to initial state
-	@$(RM) $(TARGET)
-	@echo -n "$(BLUE)[$(TARGET) - "
-	@echo "fclean]: $(YELLOW)$(BOLD)Remove$(RESET)$(YELLOW) \`$(TARGET)\`$(RESET)"
+	@echo -n "[fclean] "
+	$(RM) $(TARGET)
 
 re: fclean all ## Rebuild project
 

@@ -3,31 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 20:59:52 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/22 18:02:48 by astavrop         ###   ########.fr       */
+/*   Created: 2024/06/09 20:15:30 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/09 21:18:20 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include <stdbool.h>
-# include <stddef.h>
+# include "./execution.h"
 
-void	ft_echo(int fd, int ac, char **av);
-void	ft_cd(const char *path);
-void	ft_pwd(void);
-void	ft_env(char *envp[]);
-void	ft_export(char *key, char *value, char **envp[]);
-void	ft_unset(char *name, char **envp[]);
+int		echo_builtin(t_Command *echo);
+int		pwd_builtin(t_Command *pwd);
 
-/* Utils */
-
-void	free_envp(char *envp[]);
-char	*create_kv_entry(char *key, char *value);
-bool	envp_contains(char *key, char *envp[]);
-int		envp_keycmp(char *key, char *envp_entry, size_t key_len);
-
-#endif
+#endif /* BUILTINS_H */

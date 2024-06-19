@@ -5,32 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 18:47:25 by astavrop          #+#    #+#             */
-/*   Updated: 2024/04/08 19:05:24 by astavrop         ###   ########.fr       */
+/*   Created: 2024/06/09 21:10:49 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/09 21:21:12 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../lib/libft/libft.h"
+#include "../../include/execution.h"
 
-#include <errno.h>
 #include <linux/limits.h>
-#include <string.h>
 #include <unistd.h>
 
-void	ft_pwd(void)
+int	pwd_builtin(t_Command *pwd)
 {
-	char	cp[PATH_MAX];
-	char	*ret;
-	int		errnum;
+	(void)pwd;
+	char	*pwd_value;
 
-	ret = getcwd(cp, PATH_MAX);
-	if (ret)
-		ft_putendl_fd(cp, STDOUT_FILENO);
-	else
-	{
-		errnum = errno;
-		ft_putstr_fd("pwd: ", STDERR_FILENO);
-		ft_putstr_fd(strerror(errnum), STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-	}
+	pwd_value = getcwd(NULL, 0);
+	ft_putendl_fd(pwd_value, 1);
+	return (0);
 }
