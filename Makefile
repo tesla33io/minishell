@@ -29,8 +29,10 @@ SRC_FILES		+= execution/heredoc.c
 
 SRC_FILES		+= builtins/echo.c
 SRC_FILES		+= builtins/pwd.c
+SRC_FILES		+= builtins/cd.c
 SRC_FILES		+= builtins/env.c
 SRC_FILES		+= builtins/export.c
+SRC_FILES		+= builtins/unset.c
 
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
