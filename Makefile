@@ -1,7 +1,7 @@
 #### MAIN SETTINGS ####
 
 # Compiler to be used
-CC				:= clang
+CC				:= cc
 
 # Compiler flags
 CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
@@ -29,6 +29,8 @@ SRC_FILES		+= execution/heredoc.c
 
 SRC_FILES		+= builtins/echo.c
 SRC_FILES		+= builtins/pwd.c
+SRC_FILES		+= builtins/env.c
+SRC_FILES		+= builtins/export.c
 
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
