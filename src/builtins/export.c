@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 20:15:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/24 20:10:19 by astavrop         ###   ########.fr       */
+/*   Created: 2024/06/24 20:04:55 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/24 21:03:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../../lib/libft/libft.h"
+#include "../../include/execution.h"
 
-# include "./execution.h"
+int	export_builtin(t_Command *exprt)
+{
+	int		i;
 
-int		echo_builtin(t_Command *echo);
-int		pwd_builtin(t_Command *pwd);
-int		env_builtin(t_Command *env);
-int		export_builtin(t_Command *exprt);
-
-#endif /* BUILTINS_H */
+	if (!exprt)
+		return (-1);
+	i = 1;
+	while (exprt->args[i])
+	{
+		if (!ft_strchr(exprt->args[i], '=') && ++i)
+			continue ;
+		exprt->envpv = ft_strarray_append(exprt->envpv, exprt->args[i]);
+		i++;
+	}
+	return (0);
+}
