@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 20:15:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/24 21:39:22 by astavrop         ###   ########.fr       */
+/*   Created: 2024/06/24 21:24:24 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/24 21:39:12 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../../include/execution.h"
 
-# include "./execution.h"
+#include <linux/limits.h>
+#include <stdio.h>
+#include <unistd.h>
 
-int		echo_builtin(t_Command *echo);
-int		pwd_builtin(t_Command *pwd);
-int		env_builtin(t_Command *env);
-int		export_builtin(t_Command *exprt);
-int		unset_builtin(t_Command *unset);
-int		cd_builtin(t_Command *cd);
+int	cd_builtin(t_Command *cd)
+{
+	char	*old_pwd;
 
-#endif /* BUILTINS_H */
+	if (!cd->args[1])
+		return (-1);
+	old_pwd = getcwd(NULL, PATH_MAX);
+	if (!old_pwd)
+		perror("cd");
+	if (chdir(cd->args[1]) != 0)
+		perror("cd");
+	// TODO: set env PWD and OLDPWD
+	return (0);
+}

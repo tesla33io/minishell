@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/24 21:04:20 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/24 21:41:58 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,24 @@ int	main(int ac, char *av[], char *envp[])
 	(void)envp;
 
 	int		exit_status = 0;
-	char	**envpv = malloc(sizeof(char *) * (ft_strarray_len(envp) + 1));
+
+	t_Command	cd = {"cd", (char *[]) {"cd", "/usr/bin", NULL},
+		envp, 0, 1};
+
+	pwd_builtin(NULL);
+	cd_builtin(&cd);
+	pwd_builtin(NULL);
+
+	/*char	**envpv = malloc(sizeof(char *) * (ft_strarray_len(envp) + 1));
 
 	ft_strarray_dup(envp, envpv);
 
-	t_Command	exprt = {"export", (char *[]) {"export", "TEST var", "VVARR=test", NULL},
+	t_Command	exprt = {"export", (char *[]) {"export", "TEST=var", "VVARR=test", NULL},
 		envpv, 0, 1};
 	export_builtin(&exprt);
-	env_builtin(&exprt);
+	exprt.args = (char *[]) {"unset", "VVARR", NULL};
+	unset_builtin(&exprt);
+	env_builtin(&exprt);*/
 
 	/* ECHO
 	if (ac < 2)

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:29:54 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:48:59 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/24 21:18:33 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,7 @@ char			**ft_strarray_alloc(int	str_num);
 size_t			ft_strarray_len(char **array);
 int				ft_strarray_dup(char **src_array, char **dest_array);
 char			**ft_strarray_append(char **array, char *new_str);
+char			**ft_strarray_remove_by_value(char **array, char *str);
+char			**ft_strarray_remove_by_index(char **array, size_t index);
 
 #endif // !LIBFT_H
