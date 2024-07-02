@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/02 19:55:02 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:03:01 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@
  * Parameters:
  * - gc: Pointer to the deque structure to initialize.
  */
-t_deque	*gc_init(t_deque *gc)
+t_deque	*gc_init(void)
 {
+	t_deque	*gc;
+
 	gc = gc_malloc(NULL, sizeof(*gc));
 	if (!gc && (ft_putendl_fd("\n\nFUCK!\n\n", 2), 1))
 		return (NULL);
@@ -102,7 +104,7 @@ void	gc_free_gc(t_deque *gc)
 	while (gc->size > 0)
 	{
 		node = deque_pop_front(gc);
-		if (node->data && printf("[d] :: Free node data\n"))
+		if (node->data)
 			free(node->data);
 		free(node);
 	}

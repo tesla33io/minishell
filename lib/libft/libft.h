@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:29:54 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/02 19:48:27 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:02:17 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void			ht_clear(t_kv ht[TABLE_SIZE]);
 
 /* MEMORY */
 
-t_deque			*gc_init(t_deque *gc);
+t_deque			*gc_init(void);
 void			*gc_malloc(t_deque *gc, size_t size);
 void			gc_free_gc(t_deque *gc);
 void			gc_free_ptr(void *ptr);
