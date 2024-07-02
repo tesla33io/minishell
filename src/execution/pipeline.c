@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:00:09 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/02 16:44:40 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:08:01 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 static int	look_after_children(int num_cmds, int *pids);
 static void	destroy_pipe(int pipefd[2][2], int i);
 
-int	execute_pipeline(t_Pipeline *pipeline)
+int	execute_pipeline(t_Pipeline *pipeline, t_deque *gc)
 {
 	pid_t	*pids;
 	int		pipefd[2][2];
 	int		i;
 
-	pids = ft_malloc(NULL, sizeof(pid_t) * pipeline->num_cmds);
+	pids = gc_malloc(gc, sizeof(pid_t) * pipeline->num_cmds);
 	if (!pids)
 		return (-1);
 	i = 0;
@@ -50,7 +50,7 @@ int	execute_pipeline(t_Pipeline *pipeline)
 	}
 	destroy_pipe(pipefd, (i - 1) % 2);
 	look_after_children(pipeline->num_cmds, pids);
-	free(pids);
+	// free(pids);
 	return (0);
 }
 
