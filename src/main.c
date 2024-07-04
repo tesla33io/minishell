@@ -21,8 +21,11 @@ int	main(void)
 	{
 		init(shell_data);
 		if (render_prompt(shell_data))
+		{
 			lexer(shell_data->lexer);
-		//takeout_trash(shell_data);
+			//ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND), shell_data->ast->root); 
+		}
+			//takeout_trash(shell_data);
 	}
 	return (0);
 }

@@ -18,8 +18,32 @@ int	find_match(char *str, char c)
 		return (0);
 }
 
-//take out the trash token
-void	take_out_trash(t_lex *lexer)
+
+//TODO recode bc of change of list type
+//take out the trash token, should keep tokenstream seemlessly connected
+
+void	take_out_trash(t_token *head)
+{
+	t_token *current;
+	t_token *previous;
+	current  = head;
+	previous = NULL;
+	if (head && head->token == TRASH)
+		head = head->next;
+	if (!head)
+		return ;
+	while (current)
+	{
+		if (current->token == TRASH)
+			previous->next = current->next;
+		previous = current;
+		current = current->next;
+	}
+	return ;	
+}
+
+/*
+void	take_out_trash(t_lex *lexer) //TODO should have condition for when nothing is left/one token is left/etc - error handling
 {
 	int i;
 
@@ -43,5 +67,5 @@ void	take_out_trash(t_lex *lexer)
 		lexer->tail = lexer->tail->prev;
 	}
 }
-
+*/
 

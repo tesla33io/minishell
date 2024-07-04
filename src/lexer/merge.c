@@ -4,12 +4,10 @@
 // find doubles of <, >, |, & and group them as &&, ||, <<, >>
 void	group_tokens(t_lex *lexer)
 {
-	int i;
 	t_token *travel;
 
-	i = 1; //only loop until the one before the last one, so 2 token could follow each other
 	travel = lexer->head;
-	while (i < lexer->tkn_count)
+	while (travel->next)
 	{
 		if (travel->token == IN_REDIRECT && travel->next->token == IN_REDIRECT)
 			travel->token = HEREDOC;
@@ -23,35 +21,31 @@ void	group_tokens(t_lex *lexer)
 		{
 			travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
 			travel->next->token = TRASH;
-			take_out_trash(lexer);
+			take_out_trash(lexer->head);
 		}
 		travel = travel->next;
-		i++;
 	}
 }
 
 void	merge_strings(t_lex *lexer)
 {
-	int i;
 	t_token *travel;
 
-	i = 1;
 	travel = lexer->head;
-	while (i < lexer->tkn_count)
+	while (travel)
 	{
 		if (travel->token == D_QUOTE || travel->token == S_QUOTE)
 			travel->token = STR;
-		if (travel->token == STR)
+		if (travel->token == STR && travel->next)
 		{
 			if (travel->next->token == STR || travel->next->token == D_QUOTE || travel->next->token == S_QUOTE)
 			{
 				travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
-               		         travel->next->token = TRASH;
-               		       	  take_out_trash(lexer);
+				travel->next->token = TRASH;
+				take_out_trash(lexer->head);
 			}
 		}
 		travel = travel->next;
-		i++;
 	}
 }
 

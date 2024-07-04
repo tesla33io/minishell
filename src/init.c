@@ -26,4 +26,6 @@ void	init_lexer(t_shell_data *shell_data)
 void	init(t_shell_data *shell_data)
 {
 	init_lexer(shell_data);
+	shell_data->ast = malloc(sizeof(t_ast));
+	shell_data->ast->leafcount = 0;
 }

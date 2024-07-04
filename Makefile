@@ -24,6 +24,8 @@ CFILES				+= init.c						# Main
 CFILES				+= lexer/lexer.c                                    # Lexer
 CFILES				+= lexer/lexer_utils.c                                          #Lexer
 CFILES				+= lexer/merge.c                                          #Lexer
+CFILES				+= parser/parser.c					#Parser
+CFILES				+= parser/parser_utils.c				#Parser
 
 
 OBJ_DIR				:= ./obj/

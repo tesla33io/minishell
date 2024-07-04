@@ -47,10 +47,14 @@ void get_token_data(t_token *tok, char *str, int len, int backslash)
 		return ; //TODO error message		
         ft_strlcpy(tok->lexeme, str + backslash, len + 1); 
         tok->token = get_token(str[0]);
+	if (tok->token == L_PARENTHESIS || tok->token == R_PARENTHESIS)
+		tok->pair_token = 1;
+	else
+		tok->pair_token = 0;
 }
 
 
-//add a token to the tokenstream
+//add a token to the tokenstream, for now singly linked, maybe double link later | TODO refactor
 void	append_token(t_lex *lexer, char *str, int len, int backslash)
 {
 	len = len - backslash;
@@ -59,10 +63,15 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 		lexer->tail = malloc(sizeof(*lexer->tail));
 		if (!lexer->tail)
 			return ; //TODO error message
-		lexer->tail->next = lexer->head;
-		lexer->tail->prev = lexer->head->prev;
+		t_token *travel;
+		travel = lexer->head;
+		while (travel->next)
+			travel = travel->next;
+		travel->next = lexer->tail;
+		lexer->tail->next = NULL;		
+		/*lexer->tail->prev = lexer->head->prev;
 		lexer->head->prev->next = lexer->tail;
-		lexer->head->prev = lexer->tail;
+		lexer->head->prev = lexer->tail;*/
 		get_token_data(lexer->tail, str, len, backslash);
 	}
 	else
@@ -70,8 +79,9 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 		lexer->head = malloc(sizeof(*lexer->head)); 
 		if (!lexer->head)
 			return ; //TODO error message
-		lexer->head->next = lexer->head;
-		lexer->head->prev = lexer->head;
+		lexer->head->next = NULL;
+		/*lexer->head->next = lexer->head;
+		lexer->head->prev = lexer->head;*/
 		get_token_data(lexer->head, str, len, backslash);
 	}
 }
@@ -79,6 +89,9 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 //pretty token printer
 void	print_tokens(t_lex *lexer)
 {
+	int i;
+
+	i = 0;
 	const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR", "TRASH",
 	[AMPERSAND] = "AMPERSAND",
 	[PIPE] = "PIPE",
@@ -91,16 +104,14 @@ void	print_tokens(t_lex *lexer)
 	[IN_REDIRECT] = "IN_REDIRECT",
 	[SSPACE] = "SSPACE",
 };
-	int i;
         t_token *travel;
 
-        i = 0;
     	travel = lexer->head;
-        while (i < lexer->tkn_count)
+        while (travel)
         {
                 printf("token %d = %s : %s\n", i, token_names[travel->token], travel->lexeme);
                 travel = travel->next;
-                i++;
+		i++;
         }
 }
 

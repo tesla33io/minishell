@@ -24,7 +24,7 @@ int	render_prompt(t_shell_data *shell_data)
 	getcwd(cwd, sizeof(cwd));
 	if (cwd[0] == 0)
 		return (-1);
-	ft_printf("$🔱 minihell 🔥 [%s]> ", cwd);
+	printf("$🔱 minihell 🔥 [%s]> ", cwd);
 	shell_data->lexer->cmd_line = readline("");
 	if (!shell_data->lexer->cmd_line)
 		return (0);

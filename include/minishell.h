@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/30 23:33:32 by astavrop         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -29,11 +17,14 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include "grammar.h"
 
 typedef struct s_lex		t_lex;
 typedef struct s_token		t_token;
 typedef struct s_shell_data	t_shell_data;
 typedef enum e_tkntype t_tkntype;
+typedef struct s_ast	t_ast;
+typedef struct s_leaf  t_leaf;
 
 enum						e_tkntype
 {
@@ -61,12 +52,11 @@ struct						s_token
 {
 	enum e_tkntype			token;
 	char					*lexeme;
+	int	pair_token;
 	t_token					*next;
-	t_token					*prev;
 };
 
-struct						s_lex
-{
+struct						s_lex{
 	t_token					*head;
 	t_token					*tail;
 	char					*cmd_line;
@@ -78,6 +68,22 @@ struct						s_lex
 struct						s_shell_data
 {
 	t_lex					*lexer;
+	t_ast					*ast;
+};
+
+struct	s_ast
+{
+	t_leaf *root;
+	int	leafcount;
+};
+
+struct s_leaf
+{
+	enum e_tkntype  token;
+	char 		*terminal;
+	t_leaf   	*parent;
+	t_leaf 	 	*left;
+	t_leaf 		*right;
 };
 
 int							render_prompt(t_shell_data *shell_data);
@@ -91,8 +97,16 @@ int							special_char(char c);
 int     find_match(char *str, char c);
 void    merge_tokens(t_lex *lexer);
 void    group_tokens(t_lex *lexer);
-void    take_out_trash(t_lex *lexer);
+void    take_out_trash(t_token *head);
 void    merge_strings(t_lex *lexer);
+int     contains_c(char *str, char c);
+char *ft_chop(char *str, char c);
+void    ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_token *token_stream);
+int     is_upper(char c);
+int	is_lower(char c);
+void    print_tokens(t_lex *lexer);char *contains_non_terminal(char *production);
+char    *contains_terminal(char *production);
+
 
 
 #endif
