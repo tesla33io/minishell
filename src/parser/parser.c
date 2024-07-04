@@ -1,16 +1,6 @@
 #include "minishell.h"
 
-//TODO 
-//- handle pair terminals - how to know about pair terminals? bc theres 2? how to mark terminals as pair? -> mit flag in lexeme
-
-
-//match alternative scans an alternative of a production to see if it matches the token stream. because an alternative without terminal can always be true, it is checked for first and in first position in the grammar, so that in case of a better match, the correct alternative will automatically be overwritten. these are the possible findings of match_alternative:
-//	1) an alternative is checked, that contains no terminals, so it is automatically correct and returned
-//	2) an alternative is checked, that contains a terminal, but this terminal isnt present in tokenstream, previously found alternative (can be an alternative or NULL) is returned, means that nothing was matched in this call
-//	3) an alternative is checked, that contains a terminal, and that terminal is found. this terminal is marked as matched and the production that was scanned is returned to indicate a found valid alternative
-//	4) in any case, if the amount of non-terminals in the alternative is higher than the amount of tokens that at least should be available for expanding them, also alternative is returned, no match so the solution isnt altered
-
-
+//TODO handle pair terminals 
 
 char *match_alternative(t_lex *lexer, char *production, char *alternative, int *non_terminals) //alternative is null at first, wont change in case of no match
 {
@@ -46,16 +36,7 @@ char *match_alternative(t_lex *lexer, char *production, char *alternative, int *
 		return (production);
 }
 
-       //find a way to make sure the tokenstream is split up, but that means copying the whole lexer.... or i could just loop until something is consumed, although it actually just shouldnt be there anymore once its consumed. but if its not, how do i know until when to loop. one thing yes, i should actually now have a non circular list bc this way i have a way of knowing when im at the end. 
-        //so this is the new TODO:
-        //turn lexer into non circular linked list
-        //write a function to copy deque for a certain length or whatever is most useful for this chopping work
-        //check code for any conflicts with this approach
-        //think about system for matching non terminals with tokenstream chop by looking at grammar and thinking about different scenarios
-        //
-
-
-//TODO implement pair terminals
+//TODO
 //init ast in init ft
 
 void	terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream) //problem with looping, yeah i have pointer to from where to loop but then its a bit fucked bc the actual thing is the tkn finding for terminal
