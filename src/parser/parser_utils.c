@@ -57,7 +57,7 @@ char    *contains_terminal(char *production)
 {
         int i;
         int len;
-        char *terminal
+        char *terminal;
 
         i = -1;
         len = 0;
@@ -81,7 +81,7 @@ char *contains_non_terminal(char *production)
 {
         int i;
         int len;
-        char *non_terminal
+        char *non_terminal;
 
         i = -1;
         len = 0;
@@ -99,5 +99,16 @@ char *contains_non_terminal(char *production)
                         non_terminal[i] = production[i];
         non_terminal[len] = '\0';
         return (non_terminal);
+}
+
+char *capitalize(char *str)
+{
+	int i;
+
+	i = -1;
+	while (str[++i])
+		if (islower(str[i]))
+			str[i] += 32;
+	return (str);
 }
 

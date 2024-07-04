@@ -57,7 +57,8 @@ struct						s_token
 	t_token					*next;
 };
 
-struct						s_lex{
+struct						s_lex
+{
 	t_token					*head;
 	t_token					*tail;
 	char					*cmd_line;
@@ -108,6 +109,8 @@ int     is_upper(char c);
 int	is_lower(char c);
 void    print_tokens(t_lex *lexer);char *contains_non_terminal(char *production);
 char    *contains_terminal(char *production);
+t_tkntype tok2int(char *symbol);
+char *capitalize(char *str);
 
 
 

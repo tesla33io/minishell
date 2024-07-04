@@ -45,8 +45,9 @@ void get_token_data(t_token *tok, char *str, int len, int backslash)
 	tok->lexeme = malloc((len + 1) * sizeof(char));
 	if (!tok->lexeme)
 		return ; //TODO error message		
-        ft_strlcpy(tok->lexeme, str + backslash, len + 1); 
-        tok->token = get_token(str[0]);
+    ft_strlcpy(tok->lexeme, str + backslash, len + 1); 
+    tok->token = get_token(str[0]);
+	tok->matched = 0;
 	if (tok->token == L_PARENTHESIS || tok->token == R_PARENTHESIS)
 		tok->pair_token = 1;
 	else
@@ -84,6 +85,29 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 		lexer->head->prev = lexer->head;*/
 		get_token_data(lexer->head, str, len, backslash);
 	}
+}
+
+t_tkntype	tok2int(char *symbol)
+{
+	int i;
+
+	i = -1;
+    const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR", "TRASH",
+    [AMPERSAND] = "AMPERSAND",
+    [PIPE] = "PIPE",
+    [L_PARENTHESIS] = "L_PARENTHESIS",
+    [R_PARENTHESIS] = "R_PARENTHESIS",
+    [D_QUOTE] = "D_QUOTE",
+    [S_QUOTE] = "S_QUOTE",
+    [ASTERISK] = "ASTERISK",
+    [OUT_REDIRECT] = "OUT_REDIRECT",
+    [IN_REDIRECT] = "IN_REDIRECT",
+    [SSPACE] = "SSPACE",
+};
+	while (++i <= 26)
+		if (!ft_strncmp(token_names[i], symbol, ft_strlen(symbol)))
+			return (i);
+	return (0);
 }
 
 //pretty token printer
@@ -135,6 +159,7 @@ void	lexer(t_lex *lexer)
 		append_token(lexer, (lexer->cmd_line + lexer->start), (lexer->end - lexer->start), backslash);
 		lexer->tkn_count++;
 	}
+	lexer->unmatched = lexer->tkn_count;
 	merge_tokens(lexer);
 	print_tokens(lexer);
 }
