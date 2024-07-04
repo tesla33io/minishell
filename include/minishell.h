@@ -53,6 +53,7 @@ struct						s_token
 	enum e_tkntype			token;
 	char					*lexeme;
 	int	pair_token;
+	int	matched;
 	t_token					*next;
 };
 
@@ -63,6 +64,7 @@ struct						s_lex{
 	int						start;
 	int						end;
 	int						tkn_count;
+	int 						unmatched;
 };
 
 struct						s_shell_data

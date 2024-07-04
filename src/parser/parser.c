@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-//TODO handle pair terminals 
+//TODO handle pair terminals
+//split up/shorten ft 
 
 char *match_alternative(t_lex *lexer, char *production, char *alternative, int *non_terminals) //alternative is null at first, wont change in case of no match
 {
@@ -12,32 +13,33 @@ char *match_alternative(t_lex *lexer, char *production, char *alternative, int *
 	i = -1;
 	tmp = ft_strdup(production);
 	symbol = NULL;
-	while (contains_c(tmp, " ")) //how will this be fucked with pair terminals?
+	while (contains_c(tmp, ' ')) //how will this be fucked with pair terminals?
 	{
-		symbol = ft_chop(tmp, " ");
+		symbol = ft_chop(tmp, ' ');
 		if (contains_non_terminal(symbol))
-			*non_terminals++; //TODO insert correct syntax
+			(*non_terminals)++; 
 		else if (contains_terminal(symbol)) 
 		{
 			travel = lexer->head;
 			while (++i < lexer->tkn_count)
 			{
-				if (travel->token == symbol && shell_data->lexer->unmatched-- && ++travel->matched)
+				if (travel->token == (t_tkntype)symbol && lexer->unmatched-- && ++travel->matched)
 					break ;
 				travel = travel->next;
 			}
-			if (travel->token != symbol)
+			if (travel->token != (t_tkntype)symbol)
 				return (alternative);
 		}	
 	}
-	if (*non_terminals > shell_data->lexer->unmatched ) //TODO insert correct syntax
+	if (*non_terminals > lexer->unmatched)
 		return (alternative);
-	else if (!contains_terminal(production) || travel->token == symbol)
+	else if (!contains_terminal(production) || travel->token == (t_tkntype)symbol)
 		return (production);
 }
 
 //TODO
 //init ast in init ft
+//split up ft
 
 void	terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream) //problem with looping, yeah i have pointer to from where to loop but then its a bit fucked bc the actual thing is the tkn finding for terminal
 {
@@ -129,9 +131,9 @@ int	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_token
 			print("Syntax Error near token "%s"\n", parent->terminal);
 	}
 	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);
-	while (*non_terminals-- && contains_c(alternative, " "))
+	while (*non_terminals-- && contains_c(alternative, ' '))
 	{
-		symbol = ft_chop(alternative, " ");
+		symbol = ft_chop(alternative, ' ');
 		if (contains_non_terminal(symbol))
 			return (ft_parse(shell_data, str_capitalize(symbol), parent, split_stream(&token_stream)));
 	}
