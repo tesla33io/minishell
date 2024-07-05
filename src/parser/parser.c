@@ -6,14 +6,11 @@
 char *match_alternative(t_lex *lexer, char *production, char *alternative, int *non_terminals) //alternative is null at first, wont change in case of no match
 {
 	printf("production rn: %s\n", production);
-	int i;
 	char *tmp;
 	char *symbol; //the non-terminals and terminals within an alternative are called symbols, basically it is an umbrella term for terminals and non-terminals
 	t_token *travel;
 
-	i = -1;
 	tmp = ft_strdup(production);
-	symbol = NULL;
 	while (contains_c(tmp, ' ')) //how will this be fucked with pair terminals?
 	{
 		symbol = ft_chop(tmp, ' ');
@@ -31,67 +28,50 @@ char *match_alternative(t_lex *lexer, char *production, char *alternative, int *
 			if (travel && travel->token != tok2int(symbol))
 				return (alternative);
 		}	
-	}
+	}//TODO wrong if statement logic
 	if ((*non_terminals > lexer->unmatched) && (!contains_terminal(production) || travel->token == tok2int(symbol)))
 		return (production);
 	else
 		return (alternative);
 }
 
-//TODO
-//init ast in init ft
-//split up ft
+t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
+{
+	leaf = malloc(sizeof(t_leaf*));
+	leaf->token = tok->token;
+	leaf->terminal = tok->lexeme;
+	printf("appending : %s\n", tok->lexeme);
+	if (parent)
+		leaf->parent = parent;
+	else 
+		leaf->parent = NULL;
+	leaf->left = NULL;
+	leaf->right = NULL;
+	tok->token = TRASH;
+	return (leaf);
+}
+	
 
-t_leaf	*terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream) //problem with looping, yeah i have pointer to from where to loop but then its a bit fucked bc the actual thing is the tkn finding for terminal
+
+t_leaf	*terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
 {
 	t_token *travel;
-	t_leaf *ret;
 
 	travel = token_stream;
-	ret = NULL;
 	while (travel)
 	{
 		if (travel->matched)
 		{
 			if (!parent)
-			{
-				ast->root = malloc(sizeof(t_leaf*));
-				ast->root->token = travel->token;
-				ast->root->terminal = travel->lexeme;
-				printf("appending : %s\n", travel->lexeme);
-				ast->root->parent = NULL;
-				ast->root->left = NULL;
-				ast->root->right = NULL;
-				ret = ast->root;
-			}
+				parent = append_leaf(ast->root, parent, travel);
 			else if (!parent->left)
-			{
-				parent->left = malloc(sizeof(t_leaf*));
-				parent->left->token = travel->token;
-				parent->left->terminal = travel->lexeme;
-				printf("appending : %s\n", travel->lexeme);
-				parent->left->parent = parent;
-				parent->left->left = NULL;
-				parent->left->right = NULL;
-				ret = parent->left;
-			}
+				parent = append_leaf(parent->left, parent, travel);
 			else
-			{
-				parent->right = malloc(sizeof(t_leaf*));
-				parent->right->token = travel->token;
-				parent->right->terminal = travel->lexeme;
-				printf("appending : %s\n", travel->lexeme);
-				parent->right->parent = parent;
-				parent->right->left = NULL;
-				parent->right->right = NULL;
-				ret = parent->right;
-			}
-		travel->token = TRASH;
+				parent = append_leaf(parent->right, parent, travel);
 		}
 		travel = travel->next;
 	}
-	//take_out_trash(token_stream);
-	return (ret);
+	return (parent);
 }
 
 //input for token stream is head of lexer, parent input is null at first
@@ -101,9 +81,12 @@ t_token *split_stream(t_token **token_stream)
 	t_token *travel;
 	t_token *ret;
 
+	if (
 	travel = (*token_stream);
-	while (travel->token && travel->token == TRASH)
+	while (travel && travel->token && travel->token == TRASH)
 		travel = travel->next;
+	if (!travel)
+		return (NULL);
 	ret = travel;
 	*token_stream = travel;
 	while (travel && travel->next->token != TRASH)
@@ -126,7 +109,7 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
 	if (!production) //condition to end recursion
 		return ;
 	while (contains_c(production, '|')) // keep launching match on next part of grammar
-		alternative = match_alternative(shell_data->lexer, ft_chop(production, '|'), alternative, &non_terminals); //return valid alternative TODO segfaults
+		alternative = match_alternative(shell_data->lexer, ft_chop(production, '|'), alternative, &non_terminals); //return valid alternative TODO segfaults TODO problem: non-terminals never get reset
 	if (!alternative) 
 	{
 		if (parent == shell_data->ast->root)
