@@ -1,18 +1,5 @@
 #include "minishell.h"
 
-int	contains_c(char *str, char c)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 char *ft_chop(char *str, char c)
 {
 	int i;
@@ -35,22 +22,6 @@ char *ft_chop(char *str, char c)
 	ft_memmove(str, str + len, (ft_strlen(str) - len));
 	ft_bzero(str + (ft_strlen(str) - len), len);
 	return (chop);
-}
-
-int	is_upper(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-	       return (1);
-	else
-		return (0);
-}
-
-int	is_lower(char c)
-{
-	if (c >= 'a' & c <= 'z')
-		return (1);
-	else
-		return (0);
 }
 
 char    *contains_terminal(char *production)
@@ -101,14 +72,40 @@ char *contains_non_terminal(char *production)
         return (non_terminal);
 }
 
-char *capitalize(char *str)
+t_leaf  *terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
 {
-	int i;
+    t_token *travel;
 
-	i = -1;
-	while (str[++i])
-		if (islower(str[i]))
-			str[i] += 32;
-	return (str);
+    travel = token_stream;
+    while (travel)
+    {
+        if (travel->matched)
+        {
+            if (!parent)
+                parent = append_leaf(ast->root, parent, travel);
+            else if (!parent->left)
+                parent = append_leaf(parent->left, parent, travel);
+            else
+                parent = append_leaf(parent->right, parent, travel);
+        }
+        travel = travel->next;
+    }
+    return (parent);
+}
+
+t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
+{
+    leaf = malloc(sizeof(t_leaf*));
+    leaf->token = tok->token;
+    leaf->terminal = tok->lexeme;
+    printf("appending : %s\n", tok->lexeme);
+    if (parent)
+        leaf->parent = parent;
+    else
+        leaf->parent = NULL;
+    leaf->left = NULL;
+    leaf->right = NULL;
+    tok->token = TRASH;
+    return (leaf);
 }
 

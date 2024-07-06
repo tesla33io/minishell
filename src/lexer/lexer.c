@@ -159,7 +159,6 @@ void	lexer(t_lex *lexer)
 		append_token(lexer, (lexer->cmd_line + lexer->start), (lexer->end - lexer->start), backslash);
 		lexer->tkn_count++;
 	}
-	lexer->unmatched = lexer->tkn_count;
 	merge_tokens(lexer);
 	print_tokens(lexer);
 }

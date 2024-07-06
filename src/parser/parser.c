@@ -3,7 +3,7 @@
 //TODO handle pair terminals
 //split up/shorten ft 
 
-char *match_alternative(t_lex *lexer, char *production, char *alternative, int *non_terminals) //alternative is null at first, wont change in case of no match
+char *match_alternative(t_lex *lexer, t_token *token_stream, char **alternatives, int *non_terminals) //alternative is null at first, wont change in case of no match
 {
 	printf("production rn: %s\n", production);
 	char *tmp;
@@ -21,7 +21,7 @@ char *match_alternative(t_lex *lexer, char *production, char *alternative, int *
 			travel = lexer->head;
 			while (travel)
 			{
-				if (travel->token == tok2int(symbol) && lexer->unmatched-- && ++travel->matched)
+				if (travel->token == tok2int(symbol) && ++travel->matched)
 					break ;
 				travel = travel->next;
 			}
@@ -35,53 +35,11 @@ char *match_alternative(t_lex *lexer, char *production, char *alternative, int *
 		return (alternative);
 }
 
-t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
-{
-	leaf = malloc(sizeof(t_leaf*));
-	leaf->token = tok->token;
-	leaf->terminal = tok->lexeme;
-	printf("appending : %s\n", tok->lexeme);
-	if (parent)
-		leaf->parent = parent;
-	else 
-		leaf->parent = NULL;
-	leaf->left = NULL;
-	leaf->right = NULL;
-	tok->token = TRASH;
-	return (leaf);
-}
-	
-
-
-t_leaf	*terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
-{
-	t_token *travel;
-
-	travel = token_stream;
-	while (travel)
-	{
-		if (travel->matched)
-		{
-			if (!parent)
-				parent = append_leaf(ast->root, parent, travel);
-			else if (!parent->left)
-				parent = append_leaf(parent->left, parent, travel);
-			else
-				parent = append_leaf(parent->right, parent, travel);
-		}
-		travel = travel->next;
-	}
-	return (parent);
-}
-
-//input for token stream is head of lexer, parent input is null at first
-
 t_token *split_stream(t_token **token_stream)
 {
 	t_token *travel;
 	t_token *ret;
 
-	if (
 	travel = (*token_stream);
 	while (travel && travel->token && travel->token == TRASH)
 		travel = travel->next;
@@ -98,6 +56,7 @@ t_token *split_stream(t_token **token_stream)
 	return (ret);
 }
 
+//input for token stream is head of lexer, parent input is null at first
 void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_token *token_stream)
 {
 	char *alternative;	//within a production rule, when theres multiple possibilities that are valid for a production rule, they are called alternatives
@@ -109,13 +68,15 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
 	if (!production) //condition to end recursion
 		return ;
 	while (contains_c(production, '|')) // keep launching match on next part of grammar
-		alternative = match_alternative(shell_data->lexer, ft_chop(production, '|'), alternative, &non_terminals); //return valid alternative TODO segfaults TODO problem: non-terminals never get reset
+		alternative = match_alternative(shell_data->lexer, t_token *token_stream, (char *[]){alternative, ft_chop(production, '|')}, &non_terminals);
+
+ //return valid alternative TODO segfaults TODO problem: non-terminals never get reset
 	if (!alternative) 
 	{
 		if (parent == shell_data->ast->root)
 			printf("Syntax Error\n"); 
 		else
-			printf("Syntax Error near token %s\n", parent->terminal);
+			printf("Syntax Error near token %s\n", token_stream->lexeme);
 	}
 	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);
 	while (non_terminals-- && contains_c(alternative, ' '))
