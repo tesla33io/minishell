@@ -3,36 +3,29 @@
 //TODO handle pair terminals
 //split up/shorten ft 
 
-char *match_alternative(t_lex *lexer, t_token *token_stream, char **alternatives, int *non_terminals) //alternative is null at first, wont change in case of no match
+char *match_alternative(t_lex *lexer, t_token *token_stream, char **alternatives) //alternative is null at first, wont change in case of no match
 {
-	printf("production rn: %s\n", production);
+	printf("production rn: %s\n", alternatives[1]);
 	char *tmp;
 	char *symbol; //the non-terminals and terminals within an alternative are called symbols, basically it is an umbrella term for terminals and non-terminals
 	t_token *travel;
 
-	tmp = ft_strdup(production);
-	while (contains_c(tmp, ' ')) //how will this be fucked with pair terminals?
+	tmp = ft_strdup(alternatives[1]);
+	while (contains_c(tmp, ' '))
 	{
 		symbol = ft_chop(tmp, ' ');
-		if (contains_non_terminal(symbol))
-			(*non_terminals)++; 
-		else if (contains_terminal(symbol)) 
+		travel = token_stream;
+		while (travel && contains_terminal(symbol)) 
 		{
-			travel = lexer->head;
-			while (travel)
-			{
-				if (travel->token == tok2int(symbol) && ++travel->matched)
-					break ;
-				travel = travel->next;
-			}
-			if (travel && travel->token != tok2int(symbol))
-				return (alternative);
+			if (travel->token == tok2int(symbol) && ++travel->matched && lexer->unmatched--)
+				break ;
+			travel = travel->next;
 		}	
-	}//TODO wrong if statement logic
-	if ((*non_terminals > lexer->unmatched) && (!contains_terminal(production) || travel->token == tok2int(symbol)))
-		return (production);
+	}
+	if (travel->token == tok2int(symbol) || !contains_terminal(alternatives[1]))
+		return (alternatives[1]);
 	else
-		return (alternative);
+		return (alternatives[0]);
 }
 
 t_token *split_stream(t_token **token_stream)
@@ -65,12 +58,11 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
 
 	alternative = NULL;
 	non_terminals = 0;
-	if (!production) //condition to end recursion
+	if (!token_stream && !production && !shell_data->lexer->unmatched) //condition to end recursion
 		return ;
 	while (contains_c(production, '|')) // keep launching match on next part of grammar
-		alternative = match_alternative(shell_data->lexer, t_token *token_stream, (char *[]){alternative, ft_chop(production, '|')}, &non_terminals);
-
- //return valid alternative TODO segfaults TODO problem: non-terminals never get reset
+		alternative = match_alternative(shell_data->lexer, token_stream, (char *[]){alternative, ft_chop(production, '|')}); 
+//return valid alternative TODO segfaults
 	if (!alternative) 
 	{
 		if (parent == shell_data->ast->root)
@@ -79,7 +71,7 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
 			printf("Syntax Error near token %s\n", token_stream->lexeme);
 	}
 	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);
-	while (non_terminals-- && contains_c(alternative, ' '))
+	while (contains_c(alternative, ' '))
 	{
 		symbol = ft_chop(alternative, ' ');
 		if (contains_non_terminal(symbol))

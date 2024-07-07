@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/03/26 15:56:43 by ltreser          ###   ########.fr        #
+#    Updated: 2024/07/07 00:55:21 by ltreser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ CFILES				+= lexer/lexer_utils.c                                          #Lexer
 CFILES				+= lexer/merge.c                                          #Lexer
 CFILES				+= parser/parser.c					#Parser
 CFILES				+= parser/parser_utils.c				#Parser
+CFILES				+= parser/utils.c				#Parser
 
 
 OBJ_DIR				:= ./obj/

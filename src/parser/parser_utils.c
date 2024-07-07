@@ -33,7 +33,7 @@ char    *contains_terminal(char *production)
         i = -1;
         len = 0;
         while (production[++i])
-                if (is_upper(production[i]))
+                if (is_upper(production[i]) || production[i] == '_')
                         len++;
         if (len)
                 terminal = malloc(len * sizeof(char));
@@ -42,7 +42,7 @@ char    *contains_terminal(char *production)
         i = -1;
         len = 0;
         while (production[++i])
-                if (is_upper(production[i]) && len++)
+                if ((is_upper(production[i]) || && len++)
                         terminal[i] = production[i];
         terminal[len] = '\0';
         return (terminal);
@@ -57,7 +57,7 @@ char *contains_non_terminal(char *production)
         i = -1;
         len = 0;
         while (production[++i])
-                if (is_lower(production[i]))
+                if (is_lower(production[i]) || production[i] == '_')
                         len++;
         if (len)
                 non_terminal = malloc(len * sizeof(char));

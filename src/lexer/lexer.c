@@ -58,7 +58,10 @@ void get_token_data(t_token *tok, char *str, int len, int backslash)
 //add a token to the tokenstream, for now singly linked, maybe double link later | TODO refactor
 void	append_token(t_lex *lexer, char *str, int len, int backslash)
 {
-	len = len - backslash;
+	if (backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"')) 
+		len = len - backslash;
+	else
+		backslash = 0;
 	if (lexer->head)
 	{
 		lexer->tail = malloc(sizeof(*lexer->tail));
@@ -70,9 +73,6 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 			travel = travel->next;
 		travel->next = lexer->tail;
 		lexer->tail->next = NULL;		
-		/*lexer->tail->prev = lexer->head->prev;
-		lexer->head->prev->next = lexer->tail;
-		lexer->head->prev = lexer->tail;*/
 		get_token_data(lexer->tail, str, len, backslash);
 	}
 	else
@@ -81,14 +81,13 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 		if (!lexer->head)
 			return ; //TODO error message
 		lexer->head->next = NULL;
-		/*lexer->head->next = lexer->head;
-		lexer->head->prev = lexer->head;*/
 		get_token_data(lexer->head, str, len, backslash);
 	}
 }
 
 t_tkntype	tok2int(char *symbol)
 {
+	exit (0);
 	int i;
 
 	i = -1;
@@ -149,8 +148,8 @@ void	lexer(t_lex *lexer)
 		backslash = 0;
 		lexer->start = lexer->end;
 		while (lexer->cmd_line[lexer->end] && !(special_char(lexer->cmd_line[lexer->end])))
-			lexer->end++;
-		if (lexer->cmd_line[lexer->end] == '"' || lexer->cmd_line[lexer->end] == '\'')
+            lexer->end++;
+		if (lexer->end == lexer->start && (lexer->cmd_line[lexer->end] == '"' || lexer->cmd_line[lexer->end] == '\''))
 			lexer->end += find_match(lexer->cmd_line + lexer->start, lexer->cmd_line[lexer->end]) + 1; //returns 0 if not found, maybe handle later
 		if (lexer->end && lexer->cmd_line[lexer->end - 1] == '\\' && ++backslash)
 			lexer->end++;
@@ -161,4 +160,5 @@ void	lexer(t_lex *lexer)
 	}
 	merge_tokens(lexer);
 	print_tokens(lexer);
+	lexer->unmatched = lexer->tkn_count++;
 }
