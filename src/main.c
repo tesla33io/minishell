@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/19 13:37:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/09 23:38:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ int	main(void)
 	{
 		init(shell_data);
 		if (render_prompt(shell_data))
+		{
 			lexer(shell_data->lexer);
-		//takeout_trash(shell_data);
+			printf("lexer done\n___________\n\n");
+			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND), shell_data->ast->root, shell_data->lexer->head); 
+		}
+			//takeout_trash(shell_data);
 	}
 	return (0);
 }
+
+//init unmatched and matched in lexer and token

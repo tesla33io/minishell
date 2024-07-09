@@ -26,9 +26,11 @@ int	render_prompt(t_shell_data *shell_data)
 		return (-1);
 	printf("$🔱 minihell 🔥 [%s]> ", cwd);
 	shell_data->lexer->cmd_line = readline("");
+	if (!shell_data->lexer->cmd_line)
+		return (0);
 	// if command_line == exit -> clear history, free_all, exit
 	printf("%s\n", shell_data->lexer->cmd_line);
 	//rl_replace_line(shell_data->lexer->cmd_line, 0);
 	//rl_redisplay();
-	return (0);
+	return (1);
 }

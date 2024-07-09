@@ -1,15 +1,48 @@
+<<<<<<< HEAD
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
+#    Updated: 2024/07/07 00:55:21 by ltreser          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+CC					:= cc
+CFLAGS				:= -Wall -Werror -Wextra -g3
+LIBS				:= -Llib/ft_printf/ -lftprintf -Llib/libft/ -lft
+LIBS				+= -lreadline
+INCLUDES			:= -I./include/ -Ilib/ft_printf/includes -Ilib/libft/ -I.
+NAME				:= minishell
+=======
 #### MAIN SETTINGS ####
 
 # Compiler to be used
 CC				:= cc
+>>>>>>> dev
 
 # Compiler flags
 CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
 
+<<<<<<< HEAD
+CFILES				+= main.c						# Main
+CFILES				+= prompt/prompt.c				# Main
+CFILES				+= init.c						# Main
+CFILES				+= lexer/lexer.c                                    # Lexer
+CFILES				+= lexer/lexer_utils.c                                          #Lexer
+CFILES				+= lexer/merge.c                                          #Lexer
+CFILES				+= parser/parser.c					#Parser
+CFILES				+= parser/parser_utils.c				#Parser
+CFILES				+= parser/utils.c				#Parser
+=======
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
 LIBS			+= -L./lib/ft_printf/ -lftprintf
 LIBS			+= -lreadline
+>>>>>>> dev
 
 # Include directories
 INCLUDES		:= -Iinclude/ -Ilib/libft/
