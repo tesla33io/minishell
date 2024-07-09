@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:00:09 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/02 18:08:01 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/04 22:58:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int	execute_pipeline(t_Pipeline *pipeline, t_deque *gc)
 	pid_t	*pids;
 	int		pipefd[2][2];
 	int		i;
+	(void)gc;
 
-	pids = gc_malloc(gc, sizeof(pid_t) * pipeline->num_cmds);
+	pids = gc_malloc(sizeof(pid_t) * pipeline->num_cmds);
 	if (!pids)
 		return (-1);
 	i = 0;

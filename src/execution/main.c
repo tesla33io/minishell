@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/02 20:02:31 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:21:42 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	main(int ac, char *av[], char *envp[])
 	(void)envp;
 
 	int		exit_status = 0;
-	t_deque	*gc_storage;
+	// t_deque	*gc_storage;
 
-	gc_storage = gc_init();
+	// gc_storage = gc_init();
 
 	/*char	**envpv = malloc(sizeof(char *) * (ft_strarray_len(envp) + 1));
 
@@ -83,11 +83,11 @@ int	main(int ac, char *av[], char *envp[])
 
 	t_Pipeline pip = {cmds, 4};
 
-	execute_pipeline(&pip, gc_storage);
+	execute_pipeline(&pip, NULL);
 
 	// close(openfd);
 	close(dev_nullfd);
-	gc_free_gc(gc_storage);
+	gc_free_gc();
 
 	return (exit_status);
 }

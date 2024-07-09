@@ -135,7 +135,7 @@ help: ## Show help info
 rclear: ## Clear the terminal and run `make`
 	echo -ne "\033c" && make
 
-.PHONY: all re clean fclean help test rclear
+.PHONY: all re clean fclean help test rclear ftprintf libft
 
 #### COLORS ####
 # Color codes

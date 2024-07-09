@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/09 19:34:21 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/09 20:08:52 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,24 @@
 /**
  * Retrieves the static garbage collector storage.
  * 
- * This function returns a pointer to a static `t_deque` structure that acts
+ * This function returns a pointer to a static `t_list` structure that acts
  * as the garbage collector (GC) storage. If the storage has not been 
  * initialized yet, it initializes it.
  *
  * Returns:
- * - A pointer to the static `t_deque` storage.
+ * - A pointer to the static `t_list` storage.
  */
-t_deque	*gc_get_storage(void)
+t_list	**gc_get_storage(void)
 {
-	static t_deque	*gc = NULL;
+	static t_list	*gc = NULL;
 
 	if (!gc)
+	{
 		gc = malloc(sizeof(*gc));
-	return (gc);
+		gc->content = NULL;
+		gc->next = NULL;
+	}
+	return (&gc);
 }
 
 /* 
@@ -50,12 +54,15 @@ t_deque	*gc_get_storage(void)
  */
 void	*gc_malloc(size_t size)
 {
-	void			*ret;
+	void	*ret;
+	t_list	*new_node;
 
 	ret = malloc(size);
 	if (!ret)
 		ft_putstr_fd("Error (gc_malloc): memory allocation failed.\n", 2);
-	deque_emplace_back(gc_get_storage(), ret);
+	new_node = ft_lstnew(ret);
+	ft_lstadd_back(gc_get_storage(), new_node);
+	printf("Debug:: new ptr added: %p\n", gc_get_storage());
 	return (ret);
 }
 
@@ -89,16 +96,20 @@ void	gc_free_ptr(void *ptr)
  */
 void	gc_free_gc(void)
 {
-	t_deque_node	*node;
-	t_deque			*gc;
+	t_list		*node;
+	t_list		*tmp;
+	t_list		**gc;
 
 	gc = gc_get_storage();
-	while (gc->size > 0)
+	node = *gc;
+	while (node->next)
 	{
-		node = deque_pop_front(gc);
-		if (node->data)
-			free(node->data);
-		free(node);
+		if (node->content)
+			free(node->content);
+		tmp = node;
+		node = node->next;
+		free(tmp);
 	}
-	free(gc);
+	free(node->content);
+	free(node);
 }
