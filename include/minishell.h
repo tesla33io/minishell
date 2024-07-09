@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/09 23:37:07 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/10 00:03:26 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 typedef struct s_lex		t_lex;
 typedef struct s_token		t_token;
 typedef struct s_shell_data	t_shell_data;
-typedef enum e_tkntype		t_tkntype;
 typedef struct s_ast		t_ast;
 typedef struct s_leaf		t_leaf;
 
@@ -58,6 +57,8 @@ enum						e_tkntype
 	OR,
 	TRASH,
 };
+
+typedef enum e_tkntype		t_tkntype;
 
 struct						s_token
 {
@@ -131,5 +132,8 @@ t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok);
 char *get_production(char *production);
 int count_words(char *s, char c);
 int count_tokens(t_token *head);
+
+
+void	print_ast_leafs(t_leaf *l);
 
 #endif

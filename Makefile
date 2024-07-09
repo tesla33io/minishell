@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -7,42 +6,22 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/07/07 00:55:21 by ltreser          ###   ########.fr        #
+#    Updated: 2024/07/10 00:04:06 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC					:= cc
-CFLAGS				:= -Wall -Werror -Wextra -g3
-LIBS				:= -Llib/ft_printf/ -lftprintf -Llib/libft/ -lft
-LIBS				+= -lreadline
-INCLUDES			:= -I./include/ -Ilib/ft_printf/includes -Ilib/libft/ -I.
-NAME				:= minishell
-=======
 #### MAIN SETTINGS ####
 
 # Compiler to be used
 CC				:= cc
->>>>>>> dev
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
+CFLAGS			:= -Wall -Werror -Wextra -O3
 
-<<<<<<< HEAD
-CFILES				+= main.c						# Main
-CFILES				+= prompt/prompt.c				# Main
-CFILES				+= init.c						# Main
-CFILES				+= lexer/lexer.c                                    # Lexer
-CFILES				+= lexer/lexer_utils.c                                          #Lexer
-CFILES				+= lexer/merge.c                                          #Lexer
-CFILES				+= parser/parser.c					#Parser
-CFILES				+= parser/parser_utils.c				#Parser
-CFILES				+= parser/utils.c				#Parser
-=======
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
 LIBS			+= -L./lib/ft_printf/ -lftprintf
 LIBS			+= -lreadline
->>>>>>> dev
 
 # Include directories
 INCLUDES		:= -Iinclude/ -Ilib/libft/
@@ -55,7 +34,7 @@ TARGET			:= minishell
 SRC_DIR			:= src/
 
 # Source files
-SRC_FILES		+= execution/main.c
+# SRC_FILES		+= execution/main.c
 SRC_FILES		+= execution/command.c
 SRC_FILES		+= execution/pipeline.c
 SRC_FILES		+= execution/heredoc.c
@@ -71,6 +50,16 @@ SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
 SRC_FILES		+= utils/misc.c
 SRC_FILES		+= utils/cmd_misc_utils.c
+
+SRC_FILES		+= main.c						# Main
+SRC_FILES		+= prompt/prompt.c				# Main
+SRC_FILES		+= init.c						# Main
+SRC_FILES		+= lexer/lexer.c                                    # Lexer
+SRC_FILES		+= lexer/lexer_utils.c                                          #Lexer
+SRC_FILES		+= lexer/merge.c                                          #Lexer
+SRC_FILES		+= parser/parser.c					#Parser
+SRC_FILES		+= parser/parser_utils.c				#Parser
+SRC_FILES		+= parser/utils.c				#Parser
 
 # Object files directory
 OBJ_DIR			:= obj/
