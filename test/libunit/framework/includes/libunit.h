@@ -6,7 +6,7 @@
 /*   By: htam <htam@student.42berlin.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:19:56 by htam              #+#    #+#             */
-/*   Updated: 2024/02/03 19:50:45 by htam             ###   ########.fr       */
+/*   Updated: 2024/04/02 20:12:40 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define RESET "\033[0m"
 
 # ifndef TOUT
-#  define TOUT 10
+#  define TOUT 360
 # endif // !TOUT
 
 typedef int	(*t_test_function)(void);
@@ -51,7 +51,8 @@ void	load_test(t_unit_test **list, char *test_fun,
 int		launch_test(t_unit_test **list);
 void	free_list(t_unit_test *head);
 
-int		check_output(int fd, char **expected, size_t len);
+// int		check_output(int fd, char **expected, size_t len);
+int			check_output(char *fname, char **expected, size_t len);
 
 /* Utils */
 

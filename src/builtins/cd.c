@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/05 13:45:26 by astavrop          #+#    #+#             */
-/*   Updated: 2023/12/19 16:20:37 by astavrop         ###   ########.fr       */
+/*   Created: 2024/06/24 21:24:24 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/24 21:39:12 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/ft_printf.h"
-#include <stdarg.h>
-#include <stdlib.h>
+#include "../../include/execution.h"
 
-int	ft_printf(int fd, const char *format, ...)
+#include <linux/limits.h>
+#include <stdio.h>
+#include <unistd.h>
+
+int	cd_builtin(t_Command *cd)
 {
-	va_list	arg;
-	int		done;
+	char	*old_pwd;
 
-	if (!format)
+	if (!cd->args[1])
 		return (-1);
-	if (*format == '\0')
-		return (0);
-	va_start (arg, format);
-	done = print(fd, format, arg);
-	va_end (arg);
-	return (done);
+	old_pwd = getcwd(NULL, PATH_MAX);
+	if (!old_pwd)
+		perror("cd");
+	if (chdir(cd->args[1]) != 0)
+		perror("cd");
+	// TODO: set env PWD and OLDPWD
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_find_bin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 20:18:23 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/21 20:18:23 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:39:56 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@
 
 #include <stdlib.h>
 
+extern char **environ;
+
 int	test_find_bin_ls_ok(void)
 {
 	t_SimpleCommand	*ls;
-	char			*envp;
+	char			**envp;
 
-	envp = getenv("PATH");
-	ls = cmd_gen("ls", (char *[]){"ls", NULL}, &envp, 
-			(char **){NULL}, (char **){NULL}, (int [2]){-1, -1});
+	envp = environ;
+	ls = cmd_gen("ls", (char *[]){"ls", NULL}, envp, 
+			-1, -1, (int [2]){-1, -1});
 	if (ls == NULL)
 		return (-1);
 	if (ft_strncmp("ls", ls->bin, ft_strlen(ls->bin)) == 0)
@@ -43,17 +45,17 @@ int	test_find_bin_ls_ok(void)
 int	test_find_bin_args_ok(void)
 {
 	t_SimpleCommand	*ls;
-	char			*envp;
+	char			**envp;
 
-	envp = getenv("PATH");
-	ls = cmd_gen("ls", (char *[]){"ls", NULL}, &envp, 
-			(char **){NULL}, (char **){NULL}, (int [2]){-1, -1});
+	envp = environ;
+	ls = cmd_gen("ls", (char *[]){"ls", NULL}, envp, 
+			-1, -1, (int [2]){-1, -1});
 	if (ls == NULL)
 		return (-1);
 	if (ft_strncmp("ls", ls->args[0], ft_strlen(ls->bin)) == 0)
 	{
 		find_bin(ls);
-		if (ft_strncmp("/usr/bin/ls", ls->args[0], ft_strlen(ls->args[0]))
+		if (ft_strncmp("ls", ls->args[0], ft_strlen(ls->args[0]))
 				== 0)
 		{
 			free_cmd(ls);
@@ -67,11 +69,11 @@ int	test_find_bin_args_ok(void)
 int	test_find_bin_null(void)
 {
 	t_SimpleCommand	*cmd;
-	char			*envp;
+	char			**envp;
 
-	envp = getenv("PATH");
-	cmd = cmd_gen("lorem_ipsum", (char *[]){"lorem_ipsum", NULL}, &envp, 
-			(char **){NULL}, (char **){NULL}, (int [2]){-1, -1});
+	envp = environ;
+	cmd = cmd_gen("lorem_ipsum", (char *[]){"lorem_ipsum", NULL}, envp, 
+			-1, -1, (int [2]){-1, -1});
 	if (cmd == NULL)
 		return (-1);
 	find_bin(cmd);

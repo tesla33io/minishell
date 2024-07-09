@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/05 13:45:26 by astavrop          #+#    #+#             */
-/*   Updated: 2023/12/19 16:20:37 by astavrop         ###   ########.fr       */
+/*   Created: 2023/11/13 12:29:41 by astavrop          #+#    #+#             */
+/*   Updated: 2024/05/23 21:42:59 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/ft_printf.h"
-#include <stdarg.h>
-#include <stdlib.h>
-
-int	ft_printf(int fd, const char *format, ...)
+int	ft_strlen(const char *s)
 {
-	va_list	arg;
-	int		done;
+	int	i;
 
-	if (!format)
-		return (-1);
-	if (*format == '\0')
-		return (0);
-	va_start (arg, format);
-	done = print(fd, format, arg);
-	va_end (arg);
-	return (done);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

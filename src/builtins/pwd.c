@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/05 13:45:26 by astavrop          #+#    #+#             */
-/*   Updated: 2023/12/19 16:20:37 by astavrop         ###   ########.fr       */
+/*   Created: 2024/06/09 21:10:49 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/09 21:21:12 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/ft_printf.h"
-#include <stdarg.h>
-#include <stdlib.h>
+#include "../../include/execution.h"
 
-int	ft_printf(int fd, const char *format, ...)
+#include <linux/limits.h>
+#include <unistd.h>
+
+int	pwd_builtin(t_Command *pwd)
 {
-	va_list	arg;
-	int		done;
+	(void)pwd;
+	char	*pwd_value;
 
-	if (!format)
-		return (-1);
-	if (*format == '\0')
-		return (0);
-	va_start (arg, format);
-	done = print(fd, format, arg);
-	va_end (arg);
-	return (done);
+	pwd_value = getcwd(NULL, 0);
+	ft_putendl_fd(pwd_value, 1);
+	return (0);
 }

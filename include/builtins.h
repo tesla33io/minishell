@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/05 13:45:26 by astavrop          #+#    #+#             */
-/*   Updated: 2023/12/19 16:20:37 by astavrop         ###   ########.fr       */
+/*   Created: 2024/06/09 20:15:30 by astavrop          #+#    #+#             */
+/*   Updated: 2024/06/24 21:39:22 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/ft_printf.h"
-#include <stdarg.h>
-#include <stdlib.h>
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-int	ft_printf(int fd, const char *format, ...)
-{
-	va_list	arg;
-	int		done;
+# include "./execution.h"
 
-	if (!format)
-		return (-1);
-	if (*format == '\0')
-		return (0);
-	va_start (arg, format);
-	done = print(fd, format, arg);
-	va_end (arg);
-	return (done);
-}
+int		echo_builtin(t_Command *echo);
+int		pwd_builtin(t_Command *pwd);
+int		env_builtin(t_Command *env);
+int		export_builtin(t_Command *exprt);
+int		unset_builtin(t_Command *unset);
+int		cd_builtin(t_Command *cd);
+
+#endif /* BUILTINS_H */

@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 12:29:41 by astavrop          #+#    #+#             */
-/*   Updated: 2023/11/26 20:15:58 by astavrop         ###   ########.fr       */
+/*   Created: 2023/11/26 17:25:15 by astavrop          #+#    #+#             */
+/*   Updated: 2024/05/25 16:03:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *s)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+void	ft_lstadd_back(t_list **lst, t_list *new_node)
+{
+	t_list	*end;
+
+	end = ft_lstlast((*lst));
+	if (end)
+		end->next = new_node;
+	else
+		(*lst) = new_node;
 }

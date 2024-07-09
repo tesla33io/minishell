@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   cmd_error_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/26 15:09:19 by astavrop          #+#    #+#             */
-/*   Updated: 2023/11/26 15:45:26 by astavrop         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/06/19 13:36:26 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+#include <stdio.h>
+
+int	fork_fail(void)
 {
-	new->next = (*lst);
-	(*lst) = new;
+	perror("fork");
+	return (-1);
+}
+
+int	execve_fail(void)
+{
+	perror("execve");
+	return (-2);
 }

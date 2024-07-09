@@ -1,6 +1,10 @@
 # My own
 minishell
+mini_test_hell
+*.txt
 .obsidian/
+dox.conf
+.vscode/
 
 # Prerequisites
 *.d
@@ -45,6 +49,7 @@ minishell
 *.su
 *.idb
 *.pdb
+*.log
 
 # Kernel Module Compile Results
 *.mod*
