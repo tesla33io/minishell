@@ -24,24 +24,33 @@ char *ft_chop(char *str, char c)
 	return (chop);
 }
 
+//TODO they should work even if terminal is in the middle
+
 char    *contains_terminal(char *production)
 {
         int i;
         int len;
         char *terminal;
+	int word;
 
         i = -1;
         len = 0;
+	word = 0;
         while (production[++i])
-                if (is_upper(production[i]) || production[i] == '_')
+	{
+		if (is_lower(production[i]) && word)
+			word--;
+		else if (word || (is_upper(production[i]) && ++word))
                         len++;
+	}
         if (len)
                 terminal = malloc(len * sizeof(char));
         else
                 return (NULL);
         i = -1;
         len = 0;
-        while (production[++i])
+        while (production[++i])    //TODO build loop here
+
                 if ((is_upper(production[i]) || && len++)
                         terminal[i] = production[i];
         terminal[len] = '\0';
@@ -53,12 +62,18 @@ char *contains_non_terminal(char *production)
         int i;
         int len;
         char *non_terminal;
+	int word;
 
         i = -1;
         len = 0;
+	word = 0;
         while (production[++i])
-                if (is_lower(production[i]) || production[i] == '_')
-                        len++;
+	{
+                if (is_upper(production[i]) && word)
+                        word--;
+		else if (word || (is_lower(production[i]) && ++word))
+			len++;
+	}
         if (len)
                 non_terminal = malloc(len * sizeof(char));
         else

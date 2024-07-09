@@ -37,7 +37,7 @@ int is_upper(char c)
 
 int is_lower(char c)
 {   
-    if (c >= 'a' & c <= 'z')
+    if (c >= 'a' && c <= 'z')
         return (1);
     else
         return (0);
@@ -54,3 +54,15 @@ char *capitalize(char *str)
     return (str);
 }
 
+t_tkntype       tok2int(char *symbol)
+{
+        int i;
+
+        i = -1;
+    const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR", "TRASH",  "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", [SSPACE] = "SSPACE", "x", [D_QUOTE] = "D_QUOTE", "x", "x", "x", [AMPERSAND] = "AMPERSAND", [S_QUOTE] = "S_QUOTE", [L_PARENTHESIS] = "L_PARENTHESIS", [R_PARENTHESIS] = "R_PARENTHESIS", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", [IN_REDIRECT] = "IN_REDIRECT", "x", [OUT_REDIRECT] = "OUT_REDIRECT", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", [PIPE] = "PIPE",
+};
+        while (++i < 125)
+		if (!ft_strncmp(token_names[i], symbol, ft_strlen(token_names[i])))
+			return (i);
+        return (0);
+}

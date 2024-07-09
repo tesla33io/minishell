@@ -17,7 +17,7 @@ int	special_char(char c)
 {
 	return (c == AMPERSAND || c == PIPE
 		|| c == L_PARENTHESIS || c == R_PARENTHESIS || c == D_QUOTE
-		|| c == S_QUOTE || c == ASTERISK || c == OUT_REDIRECT || c == IN_REDIRECT
+		|| c == S_QUOTE || c == OUT_REDIRECT || c == IN_REDIRECT
 		|| c == SSPACE || c == TTAB || c == NNEWLINE);
 }
 
@@ -85,30 +85,6 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 	}
 }
 
-t_tkntype	tok2int(char *symbol)
-{
-	exit (0);
-	int i;
-
-	i = -1;
-    const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR", "TRASH",
-    [AMPERSAND] = "AMPERSAND",
-    [PIPE] = "PIPE",
-    [L_PARENTHESIS] = "L_PARENTHESIS",
-    [R_PARENTHESIS] = "R_PARENTHESIS",
-    [D_QUOTE] = "D_QUOTE",
-    [S_QUOTE] = "S_QUOTE",
-    [ASTERISK] = "ASTERISK",
-    [OUT_REDIRECT] = "OUT_REDIRECT",
-    [IN_REDIRECT] = "IN_REDIRECT",
-    [SSPACE] = "SSPACE",
-};
-	while (++i <= 26)
-		if (!ft_strncmp(token_names[i], symbol, ft_strlen(symbol)))
-			return (i);
-	return (0);
-}
-
 //pretty token printer
 void	print_tokens(t_lex *lexer)
 {
@@ -122,7 +98,6 @@ void	print_tokens(t_lex *lexer)
 	[R_PARENTHESIS] = "R_PARENTHESIS",
 	[D_QUOTE] = "D_QUOTE",
 	[S_QUOTE] = "S_QUOTE",
-	[ASTERISK] = "ASTERISK",
 	[OUT_REDIRECT] = "OUT_REDIRECT",
 	[IN_REDIRECT] = "IN_REDIRECT",
 	[SSPACE] = "SSPACE",

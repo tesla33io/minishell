@@ -34,7 +34,6 @@ enum						e_tkntype
 	R_PARENTHESIS = ')',
 	D_QUOTE = '"',
 	S_QUOTE = '\'',
-	ASTERISK = '*',
 	OUT_REDIRECT = '>',
 	IN_REDIRECT = '<',
 	SSPACE = ' ',
