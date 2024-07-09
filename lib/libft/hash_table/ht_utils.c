@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:40:32 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/02 17:27:34 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/04 23:07:24 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**ht_get_keys(t_kv ht[TABLE_SIZE])
 	struct s_kv	*next;
 
 	ht_size = ht_len(ht);
-	keys_arr = gc_malloc(NULL, sizeof(*keys_arr) * (ht_size + 1));
+	keys_arr = gc_malloc(sizeof(*keys_arr) * (ht_size + 1));
 	i = 0;
 	j = 0;
 	while (i < TABLE_SIZE)

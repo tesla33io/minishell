@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:15:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/02 17:26:27 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/04 22:59:55 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_strarray_remove_by_value(char **array, char *str)
 	char	**new_array;
 
 	len = ft_strarray_len(array);
-	new_array = gc_malloc(NULL, (sizeof(char *)) * len);
+	new_array = gc_malloc((sizeof(char *)) * len);
 	if (!new_array)
 		return (NULL);
 	i = 0;
@@ -55,7 +55,7 @@ char	**ft_strarray_remove_by_index(char **array, size_t index)
 	if (index >= len)
 		return (array);
 
-	new_array = gc_malloc(NULL, (sizeof(char *)) * len);
+	new_array = gc_malloc((sizeof(char *)) * len);
 	if (!new_array)
 		return (NULL);
 
