@@ -49,6 +49,20 @@ void	merge_strings(t_lex *lexer)
 	}
 }
 
+void remove_spaces(t_lex *lexer)
+{
+	t_token *travel;
+
+	travel = lexer->head;
+	while (travel)
+	{
+		if (travel->token == SSPACE)
+			travel->token = TRASH;
+		travel = travel->next;
+	}
+	take_out_trash(lexer->head);
+}
+
 
 
 // optimizing tokenstream for parser
@@ -57,5 +71,6 @@ void	merge_tokens(t_lex *lexer)
 	group_tokens(lexer);
 	//insert_placeholder(lexer);
 	merge_strings(lexer);
+	remove_spaces(lexer);
 }
 	

@@ -116,5 +116,8 @@ t_tkntype					tok2int(char *symbol);
 char						*capitalize(char *str);
 t_leaf  *terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream);
 t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok);
+char *get_production(char *production);
+int count_words(char *s, char c);
+int count_tokens(t_token *head);
 
 #endif

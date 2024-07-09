@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 01:08:00 by ltreser           #+#    #+#             */
-/*   Updated: 2024/07/06 01:09:52 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/07/09 19:32:58 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char *capitalize(char *str)
 
     i = -1;
     while (str[++i])
-        if (islower(str[i]))
+        if (is_lower(str[i]))
             str[i] += 32;
     return (str);
 }
@@ -65,4 +65,25 @@ t_tkntype       tok2int(char *symbol)
 		if (!ft_strncmp(token_names[i], symbol, ft_strlen(token_names[i])))
 			return (i);
         return (0);
+}
+
+int	count_words(char *s, char c)
+{
+	int	words;
+	int	in_word;
+
+	words = 0;
+	in_word = 0;
+	while (*s)
+	{
+		if (*s == c)
+			in_word = 0;
+		else if (!in_word)
+		{
+			words++;
+			in_word = 1;
+		}
+		s++;
+	}
+	return (words);
 }
