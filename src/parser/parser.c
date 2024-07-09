@@ -52,7 +52,7 @@ char *match_alternative(t_lex *lexer, t_token *token_stream, char **alternatives
 }
 
 //input for token stream is head of lexer, parent input is null at first
-void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_token *token_stream)
+void	ft_parse(t_shell_data *shell_data, char *production, t_leaf **parent, t_token *token_stream)
 {
 	char *alternative;	//within a production rule, when theres multiple possibilities that are valid for a production rule, they are called alternatives
 	char *symbol;
@@ -66,13 +66,13 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
 	printf("alternative selected: %s\n", alternative);
 	if (!alternative) 
 	{
-		if (parent == shell_data->ast->root)
+		if (*parent == shell_data->ast->root)
 			printf("Syntax Error\n"); 
 		else
 			printf("Syntax Error near token %s\n", token_stream->lexeme);
 		return ;
 	}
-	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);
+	*parent = terminal_to_leaf(shell_data->ast, *parent, token_stream);
 	while (contains_c(alternative, ' '))
 	{
 		symbol = ft_chop(alternative, ' ');

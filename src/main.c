@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/10 00:02:42 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/10 01:26:51 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	main(void)
 		{
 			lexer(shell_data->lexer);
 			printf("lexer done\n___________\n\n");
-			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND), shell_data->ast->root, shell_data->lexer->head); 
+			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND), &shell_data->ast->root, shell_data->lexer->head); 
+			print_ast_leafs(shell_data->ast->root);
 		}
-		print_ast_leafs(shell_data->ast->root);
 			//GC CLEAN
 	}
 	return (0);

@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/07/10 00:04:06 by astavrop         ###   ########.fr        #
+#    Updated: 2024/07/10 01:34:22 by ltreser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@
 CC				:= cc
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra -O3
+CFLAGS			:= -Wall -Werror -Wextra 
+
 
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
