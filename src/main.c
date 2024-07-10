@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/10 21:07:58 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/07/10 21:11:21 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	print_ast_leafs(t_leaf *l, int i)
 		printf("RIGHT NODE of %i (%p)\n", i - 1, (void *) l);
 		print_ast_leafs(l->right, i);
 	}
+		printf("=== ======================\n");
 }
 
 //init unmatched and matched in lexer and token

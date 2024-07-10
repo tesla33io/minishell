@@ -18,6 +18,18 @@ int	find_match(char *str, char c)
 		return (0);
 }
 
+int	contains_token(t_token *head, t_tkntype type)
+{
+	t_token *travel;
+
+	travel = head;
+	while (head && head->token != type)
+		head = head->next;
+	if (!head)
+		return (0);
+	else 
+		return (1);
+}	
 
 //TODO recode bc of change of list type
 //take out the trash token, should keep tokenstream seemlessly connected
@@ -39,7 +51,10 @@ void	take_out_trash(t_token *head)
 		previous = current;
 		current = current->next;
 	}
-	return ;	
+	if (contains_token(head, TRASH))
+		return (take_out_trash(head));
+	else
+		return ;	
 }
 
 int count_tokens(t_token *head)
