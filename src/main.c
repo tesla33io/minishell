@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/10 21:11:21 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/07/10 21:56:19 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	print_ast_leafs(t_leaf *l, int i)
 	printf("[%d] TERM: %s\n", l->token, l->terminal);
 	printf("Parent: %p\nLeft: %p\nRight: %p\n",
 			(void *) l->parent, (void *) l->left, (void *) l->right);
-	if (l->left->terminal)
+	if (l->left && l->left->terminal)
 	{
 		printf("=== ======================\n");
 		printf("LEFT NODE of %i (%p)\n", i - 1, (void *) l);
 		print_ast_leafs(l->left, i);
 	}
-	if (l->right->terminal)
+	if (l->right && l->right->terminal)
 	{
 		printf("=== ======================\n");
 		printf("RIGHT NODE of %i (%p)\n", i - 1, (void *) l);

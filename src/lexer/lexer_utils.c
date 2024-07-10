@@ -20,9 +20,9 @@ int	find_match(char *str, char c)
 
 int	contains_token(t_token *head, t_tkntype type)
 {
-	t_token *travel;
+	// t_token	*travel;
 
-	travel = head;
+	// travel = head;
 	while (head && head->token != type)
 		head = head->next;
 	if (!head)

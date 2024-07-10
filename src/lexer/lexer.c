@@ -6,11 +6,11 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Crelted: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/07/09 23:37:43 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/10 22:13:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 //see if any character is a one character token
 int	special_char(char c)
@@ -118,6 +118,8 @@ void	lexer(t_lex *lexer)
 {
 	int backslash;
 
+	if (lexer->cmd_line[0] == 0)
+		return ;
 	while (lexer->cmd_line[lexer->end])
 	{
 		backslash = 0;
