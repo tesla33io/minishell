@@ -88,45 +88,37 @@ t_leaf *terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
 {
     t_token *travel;
 
-    travel = token_stream;
-    while (travel)
-    {
-        if (travel->matched)
-        {
-            if (!parent)
-            {
-                parent = append_leaf(NULL, parent, travel); // Create root if no parent
-                ast->root = parent; // Assign the root to the AST
-            }
-            else
-            {
-                if (!parent->left)
-                    parent->left = append_leaf(NULL, parent, travel);
-                else if (!parent->right)
-                    parent->right = append_leaf(NULL, parent, travel);
-                else
-                    printf("Parent node already has two children, which should not happen in binary tree logic.\n");
-            }
-        }
-        travel = travel->next;
-    }
-    return (parent);
+	travel = token_stream;
+	while (travel)
+	{
+		if (travel->matched)
+		{
+			if (!parent->terminal)
+				parent = append_leaf(ast->root, parent, travel);
+			else if (!parent->left->terminal)
+				parent = append_leaf(parent->left, parent, travel);
+			else if (!parent->right->terminal)
+				parent = append_leaf(parent->right, parent, travel);
+			else
+				printf("parent already has 2 children, error in terminal to leaf\n");
+		}
+		travel = travel->next;
+	}
+	return (parent);
 }
 
 t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
 {
-    leaf = malloc(sizeof(t_leaf));
-    if (!leaf)
-    {
-        perror("malloc");
-        exit(EXIT_FAILURE);
-    }
+	if (!leaf)
+		printf("issue, not malloced leaf when appending\n");
     leaf->token = tok->token;
     leaf->terminal = tok->lexeme;
     printf("appending : %s\n", tok->lexeme);
     leaf->parent = parent;
-    leaf->left = NULL;
-    leaf->right = NULL;
+    leaf->left = malloc(sizeof(t_leaf));
+	leaf->left->terminal = NULL;
+    leaf->right = malloc(sizeof(t_leaf));
+	leaf->right->terminal = NULL;
 
     tok->token = TRASH; // Mark token as processed
     return (leaf);
