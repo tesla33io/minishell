@@ -52,31 +52,34 @@ char *match_alternative(t_lex *lexer, t_token *token_stream, char **alternatives
 }
 
 //input for token stream is head of lexer, parent input is null at first
-void	ft_parse(t_shell_data *shell_data, char *production, t_leaf **parent, t_token *token_stream)
+void ft_parse(t_shell_data *shell_data, char *production, t_leaf **parent, t_token *token_stream)
 {
-	char *alternative;	//within a production rule, when theres multiple possibilities that are valid for a production rule, they are called alternatives
-	char *symbol;
+    char *alternative;
+    char *symbol;
 
-	printf("production selected: %s\n", production);
-	alternative = NULL;
-	if (!token_stream && !production && !shell_data->lexer->unmatched) //condition to end recursion
-		return ;
-	while (contains_c(production, '|')) // keep launching match on next part of grammar
-		alternative = match_alternative(shell_data->lexer, token_stream, (char *[]){alternative, ft_chop(production, '|')}); 
-	printf("alternative selected: %s\n", alternative);
-	if (!alternative) 
-	{
-		if (*parent == shell_data->ast->root)
-			printf("Syntax Error\n"); 
-		else
-			printf("Syntax Error near token %s\n", token_stream->lexeme);
-		return ;
-	}
-	*parent = terminal_to_leaf(shell_data->ast, *parent, token_stream);
-	while (contains_c(alternative, ' '))
-	{
-		symbol = ft_chop(alternative, ' ');
-		if (contains_non_terminal(symbol))
-			return (ft_parse(shell_data, get_production(symbol), parent, split_stream(&token_stream)));
-	}
+    printf("production selected: %s\n", production);
+    alternative = NULL;
+    if (!token_stream && !production && !shell_data->lexer->unmatched)
+        return;
+
+    while (contains_c(production, '|'))
+        alternative = match_alternative(shell_data->lexer, token_stream, (char *[]){alternative, ft_chop(production, '|')});
+
+    printf("alternative selected: %s\n", alternative);
+    if (!alternative)
+    {
+        if (*parent == shell_data->ast->root)
+            printf("Syntax Error\n");
+        else
+            printf("Syntax Error near token %s\n", token_stream->lexeme);
+        return;
+    }
+
+    *parent = terminal_to_leaf(shell_data->ast, *parent, token_stream);
+    while (contains_c(alternative, ' '))
+    {
+        symbol = ft_chop(alternative, ' ');
+        if (contains_non_terminal(symbol))
+            return (ft_parse(shell_data, get_production(symbol), parent, split_stream(&token_stream)));
+    }
 }

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 char	*ft_chop(char *str, char c)
 {
@@ -84,41 +84,52 @@ char	*contains_non_terminal(char *production)
 	return(ft_substr(production, i, len));
 }
 
-t_leaf	*terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
+t_leaf *terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
 {
-	t_token	*travel;
+    t_token *travel;
 
-	travel = token_stream;
-	while (travel)
-	{
-		if (travel->matched)
-		{
-			if (!parent)
-				parent = append_leaf(ast->root, parent, travel);
-			else if (!parent->left)
-				parent = append_leaf(parent->left, parent, travel);
-			else
-				parent = append_leaf(parent->right, parent, travel);
-		}
-		travel = travel->next;
-	}
-	return (parent);
+    travel = token_stream;
+    while (travel)
+    {
+        if (travel->matched)
+        {
+            if (!parent)
+            {
+                parent = append_leaf(NULL, parent, travel); // Create root if no parent
+                ast->root = parent; // Assign the root to the AST
+            }
+            else
+            {
+                if (!parent->left)
+                    parent->left = append_leaf(NULL, parent, travel);
+                else if (!parent->right)
+                    parent->right = append_leaf(NULL, parent, travel);
+                else
+                    printf("Parent node already has two children, which should not happen in binary tree logic.\n");
+            }
+        }
+        travel = travel->next;
+    }
+    return (parent);
 }
 
-t_leaf	*append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
+t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
 {
-	leaf = malloc(sizeof(t_leaf));
-	leaf->token = tok->token;
-	leaf->terminal = tok->lexeme;
-	printf("appending : %s\n", tok->lexeme);
-	if (parent)
-		leaf->parent = parent;
-	else
-		leaf->parent = NULL;
-	leaf->left = NULL;
-	leaf->right = NULL;
-	tok->token = TRASH;
-	return (leaf);
+    leaf = malloc(sizeof(t_leaf));
+    if (!leaf)
+    {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
+    leaf->token = tok->token;
+    leaf->terminal = tok->lexeme;
+    printf("appending : %s\n", tok->lexeme);
+    leaf->parent = parent;
+    leaf->left = NULL;
+    leaf->right = NULL;
+
+    tok->token = TRASH; // Mark token as processed
+    return (leaf);
 }
 
 char *get_production(char *production)
