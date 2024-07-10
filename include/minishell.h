@@ -6,15 +6,15 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/10 01:29:08 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/07/10 16:20:51 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../../lib/ft_printf/includes/ft_printf.h"
-# include "../../lib/libft/libft.h"
+# include "../lib/ft_printf/includes/ft_printf.h"
+# include "../lib/libft/libft.h"
 # include "grammar.h"
 # include <curses.h>
 # include <dirent.h>
@@ -30,6 +30,9 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+
+# undef NULL
+# define NULL (void*)0
 
 typedef struct s_lex		t_lex;
 typedef struct s_token		t_token;
@@ -133,6 +136,6 @@ int count_words(char *s, char c);
 int count_tokens(t_token *head);
 
 
-void	print_ast_leafs(t_leaf *l);
+void	print_ast_leafs(t_leaf *l, int i);
 
 #endif
