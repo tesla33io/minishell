@@ -57,7 +57,7 @@ void ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
     char *alternative;
     char *symbol;
 
-    printf("production selected: %s\n", production);
+    // printf("production selected: %s\n", production);
     alternative = NULL;
     if (!token_stream && !production && !shell_data->lexer->unmatched)
         return;
@@ -65,7 +65,7 @@ void ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
     while (contains_c(production, '|'))
         alternative = match_alternative(shell_data->lexer, token_stream, (char *[]){alternative, ft_chop(production, '|')});
 
-    printf("alternative selected: %s\n", alternative);
+    // printf("alternative selected: %s\n", alternative);
     if (!alternative)
     {
         if (parent == shell_data->ast->root)

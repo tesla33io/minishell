@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/09 20:08:52 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:11:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	*gc_malloc(size_t size)
 		ft_putstr_fd("Error (gc_malloc): memory allocation failed.\n", 2);
 	new_node = ft_lstnew(ret);
 	ft_lstadd_back(gc_get_storage(), new_node);
-	printf("Debug:: new ptr added: %p\n", gc_get_storage());
 	return (ret);
 }
 

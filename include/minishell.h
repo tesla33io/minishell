@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/10 21:03:25 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/07/13 19:25:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ enum						e_tkntype
 	SSPACE = ' ',
 	TTAB = '\t',
 	NNEWLINE = '\n',
-	STR,
+	STR, // 11
 	HEREDOC,
 	APPEND,
 	AND,
@@ -135,6 +135,7 @@ char *get_production(char *production);
 int count_words(char *s, char c);
 int count_tokens(t_token *head);
 
+int							adapt(t_leaf *ast_root);
 
 void	print_ast_leafs(t_leaf *l, int i);
 

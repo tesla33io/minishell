@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Crelted: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/07/10 22:13:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:11:39 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,6 @@ void	lexer(t_lex *lexer)
 		lexer->tkn_count++;
 	}
 	merge_tokens(lexer);
-	print_tokens(lexer);
+	// print_tokens(lexer);
 	lexer->unmatched = lexer->tkn_count++;
 }

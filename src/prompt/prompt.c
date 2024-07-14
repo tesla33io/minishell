@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/10 22:11:34 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:13:53 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	render_prompt(t_shell_data *shd)
 	if (rlret && *rlret == 0)
 		return (render_prompt(shd));
 	shd->lexer->cmd_line = rlret;
-	printf(">> cmd_line: {%s}\n", shd->lexer->cmd_line);
+	// printf(">> cmd_line: {%s}\n", shd->lexer->cmd_line);
 	if (!shd->lexer->cmd_line)
 		return (0);
 	return (1);
