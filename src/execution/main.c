@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:01:11 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/24 21:41:58 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:21:42 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,9 @@ int	main(int ac, char *av[], char *envp[])
 	(void)envp;
 
 	int		exit_status = 0;
+	// t_deque	*gc_storage;
 
-	t_Command	cd = {"cd", (char *[]) {"cd", "/usr/bin", NULL},
-		envp, 0, 1};
-
-	pwd_builtin(NULL);
-	cd_builtin(&cd);
-	pwd_builtin(NULL);
+	// gc_storage = gc_init();
 
 	/*char	**envpv = malloc(sizeof(char *) * (ft_strarray_len(envp) + 1));
 
@@ -63,34 +59,35 @@ int	main(int ac, char *av[], char *envp[])
 	exit_status = echo_builtin(&echo);
 	*/
 
-	/* CMD + PIPE
+	/*
 	int	openfd = open(av[1], O_RDONLY);
 	if (openfd < 0)
 		return (printf("open call [%s:%d] error\n", __FILE__, __LINE__));
-	*/
-	/*
 	int openfd = start_heredoc(av[1]);
+	*/
 	int	dev_nullfd = open("/dev/null", O_RDONLY);
 	if (dev_nullfd < 0)
 		return (printf("open call [%s:%d] error\n", __FILE__, __LINE__));
 
-	char	*v1[] = {"grep", "1", NULL};
-	char	*v2[] = {"grep", "2", NULL};
-	char	*v3[] = {"grep", "3", NULL};
+	char	*v1[] = {"echo", "Hello, World!", NULL};
+	char	*v2[] = {"tr", " ", "\n", NULL};
+	char	*v3[] = {"sort", NULL};
+	char	*v4[] = {"uniq", NULL};
 
-	t_Command	cmd1 = {v1[0], v1, envp, openfd, 1};
+	t_Command	cmd1 = {v1[0], v1, envp, 0, 1};
 	t_Command	cmd2 = {v2[0], v2, envp, 0, 1};
 	t_Command	cmd3 = {v3[0], v3, envp, 0, 1};
+	t_Command	cmd4 = {v4[0], v4, envp, 0, 1};
 
-	t_Command	*cmds[] = {&cmd1, &cmd2, &cmd3};
+	t_Command	*cmds[] = {&cmd1, &cmd2, &cmd3, &cmd4};
 
-	t_Pipeline pip = {cmds, 3};
+	t_Pipeline pip = {cmds, 4};
 
-	execute_pipeline(&pip);
+	execute_pipeline(&pip, NULL);
 
-	close(openfd);
+	// close(openfd);
 	close(dev_nullfd);
-	*/
+	gc_free_gc();
 
 	return (exit_status);
 }

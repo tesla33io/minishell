@@ -6,37 +6,62 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/03/14 15:29:23 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:11:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 #include <stdlib.h>
 
+#include <stdio.h> /* TODO: DELETE */
+
 /***************************************/
 /* Primitive Garbage Collection System */
 /***************************************/
+
+/**
+ * Retrieves the static garbage collector storage.
+ * 
+ * This function returns a pointer to a static `t_list` structure that acts
+ * as the garbage collector (GC) storage. If the storage has not been 
+ * initialized yet, it initializes it.
+ *
+ * Returns:
+ * - A pointer to the static `t_list` storage.
+ */
+t_list	**gc_get_storage(void)
+{
+	static t_list	*gc = NULL;
+
+	if (!gc)
+	{
+		gc = malloc(sizeof(*gc));
+		gc->content = NULL;
+		gc->next = NULL;
+	}
+	return (&gc);
+}
 
 /* 
  * Custom memory allocation function that saves a pointer to the allocated
  * memory and handles allocation failures gracefully.
  *
  * Parameters:
- * - gc: Pointer to the deque structure where allocated pointers are stored.
  * - size: Size of memory to allocate.
  *
  * Returns:
  * - A pointer to the allocated memory.
  */
-void	*ft_malloc(t_deque *gc, size_t size)
+void	*gc_malloc(size_t size)
 {
 	void	*ret;
+	t_list	*new_node;
 
 	ret = malloc(size);
 	if (!ret)
-		ft_putstr_fd("Error (ft_malloc): memory allocation failed.\n", 2);
-	if (gc)
-		deque_emplace_back(gc, ret);
+		ft_putstr_fd("Error (gc_malloc): memory allocation failed.\n", 2);
+	new_node = ft_lstnew(ret);
+	ft_lstadd_back(gc_get_storage(), new_node);
 	return (ret);
 }
 
@@ -48,7 +73,7 @@ void	*ft_malloc(t_deque *gc, size_t size)
  * Parameters:
  * - ptr: Address of the pointer to be freed.
  */
-void	ft_free_ptr(void *ptr)
+void	gc_free_ptr(void *ptr)
 {
 	void	**ref;
 
@@ -67,22 +92,23 @@ void	ft_free_ptr(void *ptr)
  * along with the deque itself.
  * This function assumes that the data stored in the deque are pointers
  * to dynamically allocated memory.
- *
- * Parameters:
- * - gc: Pointer to the deque structure containing pointers to be freed.
  */
-void	ft_free_gc(t_deque *gc)
+void	gc_free_gc(void)
 {
-	t_deque_node	*node;
+	t_list		*node;
+	t_list		*tmp;
+	t_list		**gc;
 
-	if (!gc)
-		return ;
-	while (gc->size > 0)
+	gc = gc_get_storage();
+	node = *gc;
+	while (node->next)
 	{
-		node = deque_pop_front(gc);
-		if (node->data)
-			free(node->data);
-		free(node);
+		if (node->content)
+			free(node->content);
+		tmp = node;
+		node = node->next;
+		free(tmp);
 	}
-	free(gc);
+	free(node->content);
+	free(node);
 }

@@ -1,10 +1,23 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
+#    Updated: 2024/07/13 19:26:54 by astavrop         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #### MAIN SETTINGS ####
 
 # Compiler to be used
 CC				:= cc
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra -pedantic -O3
+CFLAGS			:= -Wall -Werror -Wextra 
+
 
 # Libraries to be linked (if any)
 LIBS			:= -L./lib/libft/ -lft
@@ -22,7 +35,7 @@ TARGET			:= minishell
 SRC_DIR			:= src/
 
 # Source files
-SRC_FILES		+= execution/main.c
+# SRC_FILES		+= execution/main.c
 SRC_FILES		+= execution/command.c
 SRC_FILES		+= execution/pipeline.c
 SRC_FILES		+= execution/heredoc.c
@@ -38,6 +51,18 @@ SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
 SRC_FILES		+= utils/misc.c
 SRC_FILES		+= utils/cmd_misc_utils.c
+
+SRC_FILES		+= adapter/adapter.c
+
+SRC_FILES		+= main.c						# Main
+SRC_FILES		+= prompt/prompt.c				# Main
+SRC_FILES		+= init.c						# Main
+SRC_FILES		+= lexer/lexer.c                                    # Lexer
+SRC_FILES		+= lexer/lexer_utils.c                                          #Lexer
+SRC_FILES		+= lexer/merge.c                                          #Lexer
+SRC_FILES		+= parser/parser.c					#Parser
+SRC_FILES		+= parser/parser_utils.c				#Parser
+SRC_FILES		+= parser/utils.c				#Parser
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -135,7 +160,7 @@ help: ## Show help info
 rclear: ## Clear the terminal and run `make`
 	echo -ne "\033c" && make
 
-.PHONY: all re clean fclean help test rclear
+.PHONY: all re clean fclean help test rclear ftprintf libft
 
 #### COLORS ####
 # Color codes

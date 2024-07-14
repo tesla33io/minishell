@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/02 21:12:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/02 17:25:13 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*find_executable_on_path(char *path, char *bin_name)
 			return (tmp_bin_name);
 		}
 		else
-			ft_free_ptr(tmp_bin_name);
+			gc_free_ptr(tmp_bin_name);
 		i++;
 	}
 	return (printf("[REPLACE] %s: programm not found\n", bin_name), NULL);

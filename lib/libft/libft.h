@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:29:54 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/24 21:18:33 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/09 19:57:22 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,10 @@ void			ht_clear(t_kv ht[TABLE_SIZE]);
 
 /* MEMORY */
 
-void			*ft_malloc(t_deque *gc, size_t size);
-void			ft_free_gc(t_deque *gc);
-void			ft_free_ptr(void *ptr);
+t_list			**gc_get_storage(void);
+void			*gc_malloc(size_t size);
+void			gc_free_gc(void);
+void			gc_free_ptr(void *ptr);
 
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);

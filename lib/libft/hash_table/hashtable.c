@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 17:37:08 by astavrop          #+#    #+#             */
-/*   Updated: 2024/05/24 22:10:08 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/04 23:07:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ht_set(t_kv ht[TABLE_SIZE], char *key, void *value)
 	}
 	else
 	{
-		new_kv = ft_malloc(NULL, sizeof(*new_kv));
+		new_kv = gc_malloc(sizeof(*new_kv));
 		new_kv->k = key;
 		new_kv->v = value;
 		new_kv->n = ht[idx].n;
@@ -74,7 +74,7 @@ t_kv	*ht_init(void)
 {
 	t_kv	*ht;
 
-	ht = ft_malloc(NULL, sizeof(*ht) * TABLE_SIZE);
+	ht = gc_malloc(sizeof(*ht) * TABLE_SIZE);
 	return (ht);
 }
 
@@ -94,12 +94,12 @@ void	ht_destroy(t_kv ht[TABLE_SIZE])
 		j = 0;
 		while (kv)
 		{
-			ft_free_ptr(kv->k);
-			// ft_free_ptr(kv->v);
+			gc_free_ptr(kv->k);
+			// gc_free_ptr(kv->v);
 			prev = kv;
 			kv = kv->n;
 			if (j > 0)
-				ft_free_ptr(prev);
+				gc_free_ptr(prev);
 			++j;
 		}
 	}
