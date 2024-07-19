@@ -2,24 +2,30 @@
 
 //TODO handle pair terminals
 
+//should: return stoken stream up until trash, move pointer for token stream
 t_token *split_stream(t_token **token_stream)
 {
         t_token *travel;
-        t_token *ret;
+	t_token *ret;
 
         travel = (*token_stream);
+	if (!contains_token(*(token_stream), TRASH))
+		return (*(token_stream));
         while (travel && travel->token && travel->token == TRASH)
                 travel = travel->next;
         if (!travel)
                 return (NULL);
-        ret = travel;
-        *token_stream = travel;
-        while (travel && travel->next && travel->next->token != TRASH)
-                travel = travel->next;
-        *token_stream = travel;
+        (*token_stream) = travel;
+        while (*token_stream && (*token_stream)->token != TRASH)
+                *token_stream = (*token_stream)->next;
         while (*token_stream && (*token_stream)->token == TRASH)
-                (*token_stream) = (*token_stream)->next;
+                *token_stream = (*token_stream)->next;
+	ret = travel;
+	while (travel && travel->next && travel->next->token != TRASH)
+		travel = travel->next;
+	take_out_trash(*(token_stream));
         travel->next = NULL;
+	printf("this is return of split stream: %s\n", travel->lexeme);
         return (ret);
 }
 
@@ -48,7 +54,7 @@ char *match_alternative(t_lex *lexer, t_token *token_stream, char **alternatives
 	//if (travel && (travel->token == tok2int(symbol) || !contains_terminal(alternatives[1])))
 	return (alternatives[1]);
 	//else
-	//	return (alternatives[0]);
+		//return (alternatives[0]);
 }
 
 //input for token stream is head of lexer, parent input is null at first
@@ -57,7 +63,8 @@ void ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
     char *alternative;
     char *symbol;
 
-    // printf("production selected: %s\n", production);
+     printf("production selected: %s\n", production);
+     printf("head token passed: %s\n", token_stream->lexeme);
     alternative = NULL;
     if (!token_stream && !production && !shell_data->lexer->unmatched)
         return;
@@ -65,7 +72,7 @@ void ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
     while (contains_c(production, '|'))
         alternative = match_alternative(shell_data->lexer, token_stream, (char *[]){alternative, ft_chop(production, '|')});
 
-    // printf("alternative selected: %s\n", alternative);
+     printf("alternative selected: %s\n", alternative);
     if (!alternative)
     {
         if (parent == shell_data->ast->root)
@@ -80,6 +87,9 @@ void ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
     {
         symbol = ft_chop(alternative, ' ');
         if (contains_non_terminal(symbol))
-            return (ft_parse(shell_data, get_production(symbol), parent, split_stream(&token_stream)));
+	{
+		printf("launching production: %s\n", symbol);
+            ft_parse(shell_data, get_production(symbol), parent, split_stream(&token_stream));
+	}
     }
 }

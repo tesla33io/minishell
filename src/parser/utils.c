@@ -18,6 +18,8 @@ int contains_c(char *str, char c)
     int i;
     
     i = 0;
+    if (!str)
+	    return (0);
     while (str[i])
     {   
         if (str[i] == c)

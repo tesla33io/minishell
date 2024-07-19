@@ -3,7 +3,7 @@
 
 #define COMPLETE_COMMAND "pipe_sequence |pipe_sequence AND complete_command |pipe_sequence OR complete_command |"
 
-#define PIPE_SEQUENCE "command |command PIPE pipesequence |"
+#define PIPE_SEQUENCE "command |command PIPE pipe_sequence |"
 
 #define COMMAND "simple_command |L_BRACE complete_command R_BRACE |"
 

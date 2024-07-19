@@ -94,7 +94,7 @@ LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 #### DEBUG SETTINGS ####
 
 ifeq ($(DEBUG), 1)
-	CFLAGS		+= -g3 -O0
+	CFLAGS		+= -g3 -Og
 endif
 
 #### TARGET COMPILATION ####

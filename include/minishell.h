@@ -134,7 +134,8 @@ t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok);
 char *get_production(char *production);
 int count_words(char *s, char c);
 int count_tokens(t_token *head);
-
+t_token *split_stream(t_token **token_stream);
+int     contains_token(t_token *head, t_tkntype type);
 int							adapt(t_leaf *ast_root);
 
 void	print_ast_leafs(t_leaf *l, int i);

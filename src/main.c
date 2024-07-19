@@ -15,7 +15,7 @@
 int	main(void)
 {
 	t_shell_data *shell_data;
-	// static int	i = 0;
+	 static int	i = 0;
 
 	shell_data = malloc(sizeof(t_shell_data));
 	while (1)
@@ -27,11 +27,11 @@ int	main(void)
 			lexer(shell_data->lexer);
 			// printf("lexer done\n___________\n\n");
 			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND), shell_data->ast->root, shell_data->lexer->head); 
-			// printf("\n\033[33;3m*** *** *** Parsing DONE! *** *** ***\033[0m\n\n");
-			// i = 0;
-			// print_ast_leafs(shell_data->ast->root, i);
+			 printf("\n\033[33;3m*** *** *** Parsing DONE! *** *** ***\033[0m\n\n");
+			i = 0;
+			 print_ast_leafs(shell_data->ast->root, i);
 			// printf(" -*- ADAPTER -*- \n");
-			adapt(shell_data->ast->root);
+			//adapt(shell_data->ast->root);
 		}
 			//GC CLEAN
 	}
