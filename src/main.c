@@ -25,7 +25,7 @@ int	main(void)
 		{
 			// printf("%d\n", STR);
 			lexer(shell_data->lexer);
-			// printf("lexer done\n___________\n\n");
+			 printf("lexer done\n___________\n\n");
 			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND), shell_data->ast->root, shell_data->lexer->head); 
 			 printf("\n\033[33;3m*** *** *** Parsing DONE! *** *** ***\033[0m\n\n");
 			i = 0;

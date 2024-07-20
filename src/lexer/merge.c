@@ -29,6 +29,7 @@ void	group_tokens(t_lex *lexer)
 
 void	remove_quotations(char *str)
 {
+	printf("token is: %s\n", str);
 	int dest;
 	int src;
 
@@ -51,25 +52,27 @@ void	remove_quotations(char *str)
 
 }
 
-void	merge_strings(t_lex *lexer)
+void	merge_strings(t_lex *lexer) //needs to be fixed bc merges 2 consecutive strings max
 {
 	t_token *travel;
 
 	travel = lexer->head;
 	while (travel)
 	{
-		remove_quotations(travel->lexeme);
 		if (travel->token == D_QUOTE || travel->token == S_QUOTE)
 			travel->token = STR;
-		if (travel->token == STR && travel->next)
-		{
-			if (travel->next->token == STR || travel->next->token == D_QUOTE || travel->next->token == S_QUOTE)
-			{
-				travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
-				travel->next->token = TRASH;
-				take_out_trash(lexer->head);
-			}
+		travel = travel->next;
+	}
+	travel = lexer->head;
+	while (travel)
+	{
+		while (travel && travel->next && travel->token == STR && travel->next->token == STR)
+		{	
+			travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
+			travel->next->token = TRASH;
+			take_out_trash(lexer->head);
 		}
+		remove_quotations(travel->lexeme);
 		travel = travel->next;
 	}
 }
