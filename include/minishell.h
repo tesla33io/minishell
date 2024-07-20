@@ -137,6 +137,8 @@ int count_tokens(t_token *head);
 t_token *split_stream(t_token **token_stream);
 int     contains_token(t_token *head, t_tkntype type);
 int							adapt(t_leaf *ast_root);
+void    remove_quotations(char *str);
+
 
 void	print_ast_leafs(t_leaf *l, int i);
 

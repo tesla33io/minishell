@@ -2,7 +2,7 @@
 
 //TODO handle pair terminals
 
-//should: return stoken stream up until trash, move pointer for token stream
+//return stoken stream up until trash, move pointer for token stream
 t_token *split_stream(t_token **token_stream)
 {
         t_token *travel;
@@ -29,6 +29,7 @@ t_token *split_stream(t_token **token_stream)
         return (ret);
 }
 
+//helper function to find the correct alternative of a given production rule
 char *match_alternative(t_lex *lexer, t_token *token_stream, char **alternatives) //alternative is null at first, wont change in case of no match
 {
 	char *tmp;
@@ -57,6 +58,7 @@ char *match_alternative(t_lex *lexer, t_token *token_stream, char **alternatives
 		//return (alternatives[0]);
 }
 
+//main parser function
 //input for token stream is head of lexer, parent input is null at first
 void ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_token *token_stream)
 {

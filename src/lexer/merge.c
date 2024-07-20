@@ -27,6 +27,30 @@ void	group_tokens(t_lex *lexer)
 	}
 }
 
+void	remove_quotations(char *str)
+{
+	int dest;
+	int src;
+
+	dest = 0;
+	src = 0;
+	while (str[src])
+	{
+		if (!(str[src] == '"' || str[src] == '\''))
+		{	
+			ft_memmove(str + dest, str + src, 1);
+			dest++;
+		}
+		src++;
+	}
+	while (str[dest])
+	{
+		ft_bzero(str + dest, 1);
+		dest++;
+	}
+
+}
+
 void	merge_strings(t_lex *lexer)
 {
 	t_token *travel;
@@ -34,6 +58,7 @@ void	merge_strings(t_lex *lexer)
 	travel = lexer->head;
 	while (travel)
 	{
+		remove_quotations(travel->lexeme);
 		if (travel->token == D_QUOTE || travel->token == S_QUOTE)
 			travel->token = STR;
 		if (travel->token == STR && travel->next)
