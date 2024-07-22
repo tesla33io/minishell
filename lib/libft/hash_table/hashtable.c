@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 17:37:08 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/04 23:07:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:24:56 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ void	ht_destroy(t_kv ht[TABLE_SIZE])
 		j = 0;
 		while (kv)
 		{
-			gc_free_ptr(kv->k);
+			gc_free_ptr((void **) &kv->k);
 			// gc_free_ptr(kv->v);
 			prev = kv;
 			kv = kv->n;
 			if (j > 0)
-				gc_free_ptr(prev);
+				gc_free_ptr((void **) &prev);
 			++j;
 		}
 	}

@@ -6,28 +6,36 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/14 18:09:08 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:07:06 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
 #include "../../include/minishell.h"
 #include <fcntl.h>
+#include <sys/wait.h>
 
 static t_Command	*extract_command(t_leaf *cmd_root);
 
 int	adapt(t_leaf *ast_root)
 {
 	t_Command	*cmd;
+	int			exit_code;
+	pid_t		cmd_pid;
 
+	exit_code = 0;
 	if (ast_root->token == STR || ast_root->token == OUT_REDIRECT
 			|| ast_root->token == IN_REDIRECT)
 	{
 		cmd = extract_command(ast_root);
 		// print_cmd(cmd);
-		execute_command_in_child(cmd, (int [2][2]){{-1, -1}, {-1, -1}}, 0, 1);
+		cmd_pid = fork();
+		if (cmd_pid == 0)
+			execute_command_in_child(cmd, (int [2][2]){{-1, -1}, {-1, -1}}, 0, 1);
+		else
+			waitpid(cmd_pid, &exit_code, 0);
 	}
-	return (0);
+	return (exit_code);
 }
 
 /* TODO: access check, open err handling */
@@ -63,7 +71,7 @@ static t_Command	*extract_command(t_leaf *cmd_root)
 	ret_cmd->out_fd = 1;
 	while (next)
 	{
-		if (next->token == STR)
+		if (next->token && next->token == STR)
 			ret_cmd->args = ft_strarray_append(ret_cmd->args, next->terminal);
 		else if (next->token == OUT_REDIRECT)
 		{

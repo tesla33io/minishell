@@ -29,7 +29,7 @@ void	group_tokens(t_lex *lexer)
 
 void	remove_quotations(char *str)
 {
-	printf("token is: %s\n", str);
+	// printf("token is: %s\n", str);
 	int dest;
 	int src;
 

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:33:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/13 23:14:06 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:48:42 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	**ft_strarray_alloc(int	str_num)
 	if (!str_array)
 		return (NULL);
 	str_array[str_num] = NULL;
+	while (--str_num)
+		str_array[str_num] = NULL;
 	return (str_array);
 }
 
@@ -34,10 +36,10 @@ void	ft_strarray_free(char **array)
 	i = 0;
 	while (array[i] != NULL)
 	{
-		gc_free_ptr(array[i]);
+		gc_free_ptr((void **) &array[i]);
 		i++;
 	}
-	gc_free_ptr(array);
+	gc_free_ptr((void **) &array);
 }
 
 size_t	ft_strarray_len(char **array)
@@ -45,7 +47,7 @@ size_t	ft_strarray_len(char **array)
 	size_t	len;
 
 	len = 0;
-	while (array[len] != NULL)
+	while (array != NULL && array[len] != NULL)
 		len++;
 	return (len);
 }
@@ -63,7 +65,7 @@ int	ft_strarray_dup(char **src_array, char **dest_array)
 			while (i > 0)
 			{
 				i--;
-				gc_free_ptr(dest_array[i]);
+				gc_free_ptr((void **) &dest_array[i]);
 			}
 			return (-1);
 		}
@@ -90,7 +92,7 @@ char	**ft_strarray_append(char **array, char *new_str)
 		duped = ft_strarray_dup(array, new_array);
 		if (duped < 0)
 		{
-			gc_free_ptr(new_array);
+			gc_free_ptr((void **) &new_array);
 			return (NULL);
 		}
 	}
@@ -99,17 +101,16 @@ char	**ft_strarray_append(char **array, char *new_str)
 	new_array[duped] = ft_strdup(new_str);
 	if (!new_array[duped])
 	{
-		// Free already duplicated strings
 		while (duped > 0)
 		{
 			duped--;
-			gc_free_ptr(new_array[duped]);
+			gc_free_ptr((void **) &new_array[duped]);
 		}
-		gc_free_ptr(new_array);
+		gc_free_ptr((void **) &new_array);
 		return (NULL);
 	}
 	new_array[duped + 1] = NULL;
-	if (array != NULL)
-		ft_strarray_free(array);  // Free the old array
+	// if (array != NULL)
+	// 	ft_strarray_free(array);  // Free the old array
 	return (new_array);
 }

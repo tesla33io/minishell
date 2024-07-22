@@ -15,7 +15,7 @@ char	*ft_chop(char *str, char c)
 	//if (str[len] == ' ' && !str[len + 1])
 	//	bzero(str + len, 2);
 	//return (ft_strdup(str));
-	chop = malloc((len + 1) * sizeof(char));
+	chop = gc_malloc((len + 1) * sizeof(char));
 	while (str[i] && i < len)
 	{
 		chop[i] = str[i];
@@ -111,17 +111,17 @@ t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
 {
 	if (!leaf)
 		printf("issue, not malloced leaf when appending\n");
-    leaf->token = tok->token;
-    leaf->terminal = tok->lexeme;
-     printf("appending : %s\n\n", tok->lexeme);
-    leaf->parent = parent;
-    leaf->left = malloc(sizeof(t_leaf));
+	leaf->token = tok->token;
+	leaf->terminal = tok->lexeme;
+	// printf("appending : %s\n\n", tok->lexeme);
+	leaf->parent = parent;
+	leaf->left = gc_malloc(sizeof(t_leaf));
 	leaf->left->terminal = NULL;
-    leaf->right = malloc(sizeof(t_leaf));
+	leaf->right = gc_malloc(sizeof(t_leaf));
 	leaf->right->terminal = NULL;
 
-    tok->token = TRASH; // Mark token as processed
-    return (leaf);
+	tok->token = TRASH; // Mark token as processed
+	return (leaf);
 }
 
 char *get_production(char *production)
