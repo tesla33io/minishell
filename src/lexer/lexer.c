@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Crelted: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/07/14 18:11:39 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:29:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_tkntype	get_token(char c)
 //fill in the token data with lexeme and token
 void get_token_data(t_token *tok, char *str, int len, int backslash)
 {
-	tok->lexeme = malloc((len + 1) * sizeof(char));
+	tok->lexeme = gc_malloc((len + 1) * sizeof(char));
 	if (!tok->lexeme)
 		return ; //TODO error message		
     ft_strlcpy(tok->lexeme, str + backslash, len + 1); 
@@ -64,7 +64,7 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 		backslash = 0;
 	if (lexer->head)
 	{
-		lexer->tail = malloc(sizeof(*lexer->tail));
+		lexer->tail = gc_malloc(sizeof(*lexer->tail));
 		if (!lexer->tail)
 			return ; //TODO error message
 		t_token *travel;
@@ -77,7 +77,7 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 	}
 	else
 	{
-		lexer->head = malloc(sizeof(*lexer->head)); 
+		lexer->head = gc_malloc(sizeof(*lexer->head)); 
 		if (!lexer->head)
 			return ; //TODO error message
 		lexer->head->next = NULL;

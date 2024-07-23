@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/23 17:11:49 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:18:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include "../../include/minishell.h"
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <stdio.h>
 
-int	adapt(t_leaf *ast_root)
+int	adapt(t_leaf *ast_root, t_shell_data *shd)
 {
 	t_Command	*cmd;
 	int			exit_code;
@@ -26,12 +27,18 @@ int	adapt(t_leaf *ast_root)
 			|| ast_root->token == IN_REDIRECT)
 	{
 		cmd = extract_command(ast_root);
-		// print_cmd(cmd);
-		cmd_pid = fork();
-		if (cmd_pid == 0)
-			execute_command_in_child(cmd, (int [2][2]){{-1, -1}, {-1, -1}}, 0, 1);
+		cmd->envpv = shd->envpv;
+		if (is_builtin(cmd->bin_name))
+			run_builtin(cmd);
 		else
-			waitpid(cmd_pid, &exit_code, 0);
+		{
+			cmd_pid = fork();
+			if (cmd_pid == 0)
+				execute_command_in_child(cmd, (int [2][2]){{-1, -1}, {-1, -1}}, 0, 1);
+			else
+				waitpid(cmd_pid, &exit_code, 0);
+		}
+		shd->envpv = cmd->envpv;
 	}
 	return (exit_code);
 }

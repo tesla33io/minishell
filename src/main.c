@@ -6,18 +6,23 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/22 18:37:24 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:28:23 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(void)
+int	main(int ac, char *av[], char *envp[])
 {
+	(void)ac;
+	(void)av;
 	t_shell_data *shell_data;
 	// static int	i = 0;
 
 	shell_data = malloc(sizeof(t_shell_data));
+	shell_data->envpv = ft_strarray_alloc(ft_strarray_len(envp));
+	if (ft_strarray_dup(envp, shell_data->envpv) < 0)
+		return (dprintf(2, "minishell: fatal error: can't duplicate env"));
 	while (1)
 	{
 		init(shell_data);
@@ -31,7 +36,7 @@ int	main(void)
 			// i = 0;
 			// print_ast_leafs(shell_data->ast->root, i);
 			// printf(" -*- ADAPTER -*- \n");
-			adapt(shell_data->ast->root);
+			adapt(shell_data->ast->root, shell_data);
 		}
 		gc_free_gc();
 	}

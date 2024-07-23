@@ -6,11 +6,13 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:15:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/22 19:46:43 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:25:11 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
+
+#include <stdlib.h>
 
 char	**ft_strarray_remove_by_value(char **array, char *str)
 {
@@ -20,7 +22,7 @@ char	**ft_strarray_remove_by_value(char **array, char *str)
 	char	**new_array;
 
 	len = ft_strarray_len(array);
-	new_array = gc_malloc((sizeof(char *)) * (len + 1));
+	new_array = malloc((sizeof(char *)) * (len + 1));
 	if (!new_array)
 		return (NULL);
 	i = 0;
@@ -55,7 +57,7 @@ char	**ft_strarray_remove_by_index(char **array, size_t index)
 	if (index >= len)
 		return (array);
 
-	new_array = gc_malloc((sizeof(char *)) * (len + 1));
+	new_array = malloc((sizeof(char *)) * (len + 1));
 	if (!new_array)
 		return (NULL);
 

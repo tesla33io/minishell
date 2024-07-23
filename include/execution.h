@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/23 16:41:36 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:31:27 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int					start_heredoc(const char *del);
 
 char				*ft_getenv(char **envp, char *name);
 char				*check_exec_binary(char *path, char *bin_name);
+int					is_builtin(char *bin_name);
+int					run_builtin(t_Command *cmd);
 
 /* DEPRECATED
 char				**generate_envpv(t_kv envp_ht[TABLE_SIZE]);

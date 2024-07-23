@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/22 20:18:13 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:55:50 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	*gc_malloc(size_t size)
 	new_node = ft_lstnew(ret);
 	if (!new_node)
 		return ((void *)42);
+	ft_memset(ret, 0, size);
 	ft_lstadd_back(gc, new_node);
 	return (ret);
 }
