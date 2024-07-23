@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/13 19:25:00 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:12:32 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "../lib/ft_printf/includes/ft_printf.h"
 # include "../lib/libft/libft.h"
 # include "grammar.h"
+# include "execution.h"
+
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
@@ -136,7 +138,10 @@ int count_words(char *s, char c);
 int count_tokens(t_token *head);
 t_token *split_stream(t_token **token_stream);
 int     contains_token(t_token *head, t_tkntype type);
+
 int							adapt(t_leaf *ast_root);
+t_Command					*extract_command(t_leaf *cmd_root);
+
 void    remove_quotations(char *str);
 
 

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/22 19:07:06 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:11:49 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "../../include/minishell.h"
 #include <fcntl.h>
 #include <sys/wait.h>
-
-static t_Command	*extract_command(t_leaf *cmd_root);
 
 int	adapt(t_leaf *ast_root)
 {
@@ -36,57 +34,4 @@ int	adapt(t_leaf *ast_root)
 			waitpid(cmd_pid, &exit_code, 0);
 	}
 	return (exit_code);
-}
-
-/* TODO: access check, open err handling */
-static t_Command	*extract_command(t_leaf *cmd_root)
-{
-	t_leaf		*next;
-	t_Command	*ret_cmd;
-
-	ret_cmd = gc_malloc(sizeof(*ret_cmd));
-	if (!ret_cmd)
-		return (NULL);
-	next = cmd_root;
-	if (next->token == OUT_REDIRECT)
-	{
-		next = next->left;
-		ret_cmd->out_fd = open(next->terminal,
-				O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		next = next->left;
-		/* TODO: what if open fails? */
-	}
-	else if (next->token == IN_REDIRECT)
-	{
-		next = next->left;
-		ret_cmd->in_fd = open(next->terminal, O_RDONLY);
-		next = next->left;
-		/* TODO: what if open fails? */
-	}
-	if (next->token == STR)
-		ret_cmd->bin_name = next->terminal;
-	ret_cmd->args = ft_strarray_alloc(1);
-	ret_cmd->envpv = NULL;
-	ret_cmd->in_fd = 0;
-	ret_cmd->out_fd = 1;
-	while (next)
-	{
-		if (next->token && next->token == STR)
-			ret_cmd->args = ft_strarray_append(ret_cmd->args, next->terminal);
-		else if (next->token == OUT_REDIRECT)
-		{
-			next = next->left;
-			ret_cmd->out_fd = open(next->terminal,
-					O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			/* TODO: what if open fails? */
-		}
-		else if (next->token == IN_REDIRECT)
-		{
-			next = next->left;
-			ret_cmd->in_fd = open(next->terminal, O_RDONLY);
-			/* TODO: what if open fails? */
-		}
-		next = next->left;
-	}
-	return (ret_cmd);
 }

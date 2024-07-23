@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/07/13 19:26:54 by astavrop         ###   ########.fr        #
+#    Updated: 2024/07/23 17:08:09 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC_FILES		+= utils/misc.c
 SRC_FILES		+= utils/cmd_misc_utils.c
 
 SRC_FILES		+= adapter/adapter.c
+SRC_FILES		+= adapter/single_command.c
 
 SRC_FILES		+= main.c						# Main
 SRC_FILES		+= prompt/prompt.c				# Main

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/22 19:28:44 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:50:42 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 /* TODO: Handle Ctrl+d => exit */
 int	render_prompt(t_shell_data *shd)
 {
-	char	cwd[PATH_MAX];
+	// char	cwd[PATH_MAX];
 	char	*rlret;
 
-	getcwd(cwd, sizeof(cwd));
-	if (cwd[0] == 0)
-		return (-1);
-	printf("%s", cwd);
+	// getcwd(cwd, sizeof(cwd));
+	// if (cwd[0] == 0)
+	// 	return (-1);
+	// printf("%s", cwd);
 	rlret = readline(" \033[32;1m$$\033[0m ");
 	if (rlret && *rlret == 0)
 		return (render_prompt(shd));

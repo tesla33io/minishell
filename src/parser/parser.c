@@ -80,7 +80,7 @@ void ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_toke
 		if (parent == shell_data->ast->root)
 			printf("Syntax Error\n");
 		else
-			printf("Syntax Error near token %s\n", token_stream->lexeme);
+			printf("Syntax Error near token %p\n", (void *) token_stream->lexeme);
 		return;
 	}
 

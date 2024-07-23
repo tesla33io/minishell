@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/02 16:40:12 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:41:19 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	execute_command_in_child(t_Command *command, int pipefd[2][2],
 	char	*bin;
 
 	setup_ipc(command, i, pipefd, num_cmds);
-	bin = find_executable_on_path(getenv("PATH"), command->bin_name);
+	/* TODO: replace getenv with ft_getenv */
+	bin = check_exec_binary(getenv("PATH"), command->bin_name);
 	if (execve(bin, command->args, command->envpv) < 0)
 		execve_fail();
 }

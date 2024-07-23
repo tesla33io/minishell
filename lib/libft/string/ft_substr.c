@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:53:05 by astavrop          #+#    #+#             */
-/*   Updated: 2023/11/28 16:18:09 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:23:19 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*alloc(char const *s, unsigned int start, size_t len)
 	s_len = ft_strlen(s);
 	if (s_len <= start)
 	{
-		new_s = (char *)malloc(sizeof(char));
+		new_s = gc_malloc(sizeof(char));
 		if (!new_s)
 			return (NULL);
 		new_s[0] = '\0';
@@ -39,7 +39,7 @@ static char	*alloc(char const *s, unsigned int start, size_t len)
 	{
 		if ((s_len <= len) || (s_len < start + len))
 			len = s_len - start;
-		new_s = (char *)malloc((len + 1) * sizeof(char));
+		new_s = gc_malloc((len + 1) * sizeof(char));
 	}
 	return (new_s);
 }
