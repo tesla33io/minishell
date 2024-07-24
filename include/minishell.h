@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/23 19:41:52 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:07:34 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ void						init(t_shell_data *shell_data);
 void						init_lexer(t_shell_data *shell_data);
 void						lexer(t_lex *lexer);
 void						append_token(t_lex *lexer, char *str, int len,
-								int backslash);
+		int backslash);
 void						get_token_data(t_token *tok, char *str, int len,
-								int backslash);
+		int backslash);
 enum e_tkntype				get_token(char c);
 int							special_char(char c);
 int							find_match(char *str, char c);
@@ -124,7 +124,8 @@ void						take_out_trash(t_token *head);
 void						merge_strings(t_lex *lexer);
 int							contains_c(char *str, char c);
 char						*ft_chop(char *str, char c);
-void						ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent, t_token *token_stream);
+void						ft_parse(t_shell_data *shell_data,
+		char *production, t_leaf *parent, t_token *token_stream);
 int							is_upper(char c);
 int							is_lower(char c);
 void						print_tokens(t_lex *lexer);
@@ -132,19 +133,22 @@ char						*contains_non_terminal(char *production);
 char						*contains_terminal(char *production);
 t_tkntype					tok2int(char *symbol);
 char						*capitalize(char *str);
-t_leaf  *terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream);
-t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok);
-char *get_production(char *production);
-int count_words(char *s, char c);
-int count_tokens(t_token *head);
-t_token *split_stream(t_token **token_stream);
-int     contains_token(t_token *head, t_tkntype type);
+t_leaf						*terminal_to_leaf(t_ast *ast, t_leaf *parent,
+		t_token *token_stream);
+t_leaf						*append_leaf(t_leaf *leaf, t_leaf *parent,
+		t_token *tok);
+char						*get_production(char *production);
+int							count_words(char *s, char c);
+int							count_tokens(t_token *head);
+t_token						*split_stream(t_token **token_stream);
+int							contains_token(t_token *head, t_tkntype type);
 
 int							adapt(t_leaf *ast_root, t_shell_data *shd);
 t_Command					*extract_command(t_leaf *cmd_root);
+void						extract_args(t_leaf *next, t_Command *cmd);
+t_Pipeline					*extract_pipeline(t_leaf *pl_root);
 
 void    remove_quotations(char *str);
-
 
 void	print_ast_leafs(t_leaf *l, int i);
 

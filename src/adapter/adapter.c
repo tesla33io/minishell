@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/23 20:18:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:09:10 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 int	adapt(t_leaf *ast_root, t_shell_data *shd)
 {
 	t_Command	*cmd;
+	t_Pipeline	*pl;
 	int			exit_code;
 	pid_t		cmd_pid;
 
@@ -39,6 +40,12 @@ int	adapt(t_leaf *ast_root, t_shell_data *shd)
 				waitpid(cmd_pid, &exit_code, 0);
 		}
 		shd->envpv = cmd->envpv;
+	}
+	else if (ast_root->token == PIPE || ast_root->token == OUT_REDIRECT
+			|| ast_root->token == IN_REDIRECT)
+	{
+		pl = extract_pipeline(ast_root);
+		execute_pipeline(pl, NULL);
 	}
 	return (exit_code);
 }

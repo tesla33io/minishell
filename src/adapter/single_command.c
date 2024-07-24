@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/23 17:10:48 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:59:15 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 static t_Command *init_command();
 static int handle_out_redirect(t_leaf **next, t_Command *cmd);
 static int handle_in_redirect(t_leaf **next, t_Command *cmd);
-static void extract_args(t_leaf *next, t_Command *cmd);
 
 /* Main function */
 /* Not sure about returning NULL on redirect fail */
@@ -82,7 +81,7 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd) {
     return(0);
 }
 
-static void	extract_args(t_leaf *next, t_Command *cmd) {
+void	extract_args(t_leaf *next, t_Command *cmd) {
     while (next) {
         if (next->token == STR)
             cmd->args = ft_strarray_append(cmd->args, next->terminal);
