@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/23 18:31:45 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:54:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,22 @@ static void	setup_ipc(t_Command *cmd, int i, int pipefd[2][2], int num_cmds)
 		dup2(cmd->in_fd, STDIN_FILENO);
 	else if (i > 0)
 		dup2(pipefd[(i - 1) % 2][0], STDIN_FILENO);
+	if (cmd->out_fd != 1)
+		dup2(cmd->out_fd, STDOUT_FILENO);
+	else if (i < num_cmds - 1)
+		dup2(pipefd[i % 2][1], STDOUT_FILENO);
 	if (i > 0)
 	{
 		close(pipefd[(i - 1) % 2][0]);
 		close(pipefd[(i - 1) % 2][1]);
 	}
-	if (cmd->out_fd != 1)
-		dup2(cmd->out_fd, STDOUT_FILENO);
-	else if (i < num_cmds - 1)
-		dup2(pipefd[i % 2][1], STDOUT_FILENO);
 	if (i < num_cmds - 1)
 	{
 		close(pipefd[i % 2][0]);
 		close(pipefd[i % 2][1]);
 	}
+	if (cmd->in_fd != 0)
+		close(cmd->in_fd);
+	if (cmd->out_fd != 1)
+		close(cmd->out_fd);
 }

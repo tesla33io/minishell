@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/24 18:09:10 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:58:27 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	adapt(t_leaf *ast_root, t_shell_data *shd)
 			|| ast_root->token == IN_REDIRECT)
 	{
 		pl = extract_pipeline(ast_root);
-		execute_pipeline(pl, NULL);
+		if (pl)
+			execute_pipeline(pl);
 	}
 	return (exit_code);
 }

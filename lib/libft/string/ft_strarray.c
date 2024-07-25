@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:33:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/23 20:22:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:44:56 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ char	**ft_strarray_alloc(int	str_num)
 	str_array = malloc(sizeof(char *) * (str_num + 1));
 	if (!str_array)
 		return (NULL);
-	str_array[str_num] = NULL;
-	while (--str_num)
+	while (str_num--)
 		str_array[str_num] = NULL;
 	return (str_array);
 }

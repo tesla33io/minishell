@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/24 17:59:15 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:47:44 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ static int handle_in_redirect(t_leaf **next, t_Command *cmd);
 /* Main function */
 /* Not sure about returning NULL on redirect fail */
 /* TODO: look into it later :D */
-t_Command	*extract_command(t_leaf *cmd_root) {
+t_Command	*extract_command(t_leaf *cmd_root)
+{
     t_Command	*cmd;
     t_leaf		*next;
 
 	cmd = init_command();
+    cmd->args = ft_strarray_alloc(0);
 	next = cmd_root;
 	if (!cmd)
         return(NULL);
@@ -49,21 +51,23 @@ t_Command	*extract_command(t_leaf *cmd_root) {
 }
 
 /* Helper functions */
-static t_Command	*init_command() {
+static t_Command	*init_command()
+{
     t_Command *cmd;
 
 	cmd = gc_malloc(sizeof(*cmd));
     if (!cmd)
         return(NULL);
     cmd->bin_name = NULL;
-    cmd->args = ft_strarray_alloc(1);
+    cmd->args = ft_strarray_alloc(0);
     cmd->envpv = NULL;
     cmd->in_fd = 0;
     cmd->out_fd = 1;
     return(cmd);
 }
 
-static int	handle_out_redirect(t_leaf **next, t_Command *cmd) {
+static int	handle_out_redirect(t_leaf **next, t_Command *cmd)
+{
     *next = (*next)->left;
     cmd->out_fd = open((*next)->terminal, O_CREAT | O_WRONLY | O_TRUNC, 0644);
     if (cmd->out_fd == -1)
@@ -72,7 +76,8 @@ static int	handle_out_redirect(t_leaf **next, t_Command *cmd) {
     return(0);
 }
 
-static int	handle_in_redirect(t_leaf **next, t_Command *cmd) {
+static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
+{
     *next = (*next)->left;
     cmd->in_fd = open((*next)->terminal, O_RDONLY);
     if (cmd->in_fd == -1)
@@ -81,8 +86,10 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd) {
     return(0);
 }
 
-void	extract_args(t_leaf *next, t_Command *cmd) {
-    while (next) {
+void	extract_args(t_leaf *next, t_Command *cmd)
+{
+    while (next)
+	{
         if (next->token == STR)
             cmd->args = ft_strarray_append(cmd->args, next->terminal);
         else if (next->token == OUT_REDIRECT)
