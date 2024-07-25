@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/07/24 18:07:50 by astavrop         ###   ########.fr        #
+#    Updated: 2024/07/25 22:18:19 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ TARGET			:= minishell
 SRC_DIR			:= src/
 
 # Source files
+# SRC_FILES		+= execution/main.c
 # SRC_FILES		+= execution/main.c
 SRC_FILES		+= execution/command.c
 SRC_FILES		+= execution/pipeline.c
