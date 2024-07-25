@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 20:53:12 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ void						init(t_shell_data *shell_data);
 void						init_lexer(t_shell_data *shell_data);
 void						lexer(t_lex *lexer);
 void						append_token(t_lex *lexer, char *str, int len,
-								int backslash);
+		int backslash);
 void						get_token_data(t_token *tok, char *str, int len,
-								int backslash);
+		int backslash);
 enum e_tkntype				get_token(char c);
 int							special_char(char c);
 int							find_match(char *str, char c);
