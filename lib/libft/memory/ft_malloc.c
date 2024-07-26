@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 22:13:56 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:39:35 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void gc_free_ptr(void **ptr)
 void	gc_free_gc(void)
 {
 	t_list		*node;
-	// t_list		*tmp;
 	t_list		**gc;
 
 	gc = gc_get_storage();
@@ -108,9 +107,7 @@ void	gc_free_gc(void)
 	{
 		if (node->content)
 			gc_free_ptr((void **) &node->content);
-		// tmp = node;
 		node = node->next;
-		// free(tmp);
 	}
 	gc_free_ptr((void **) &node->content);
 	gc_free_ptr((void **) &node);

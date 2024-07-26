@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 22:21:12 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/26 18:34:51 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,9 @@
 
 # include "../lib/libft/libft.h"
 
-/* Macros to make ht access code more readable */
-# define KEY 0
-# define VALUE 1
 # define RD 0
 # define WR 1
 
-typedef struct s_Ast t_Ast;
-typedef union u_AstNode t_AstNode;
 typedef struct s_Command t_Command;
 typedef struct s_Pipeline t_Pipeline;
 
@@ -45,33 +40,8 @@ struct	s_Command
 
 struct	s_Pipeline
 {
-	t_Command	**commands; // TODO: find a better name
+	t_Command	**commands;
 	int			num_cmds;
-};
-
-
-enum	e_AstNodeType
-{
-	COMMAND,
-	PIPELINE,
-	REDIRECTION,
-	L_AND,
-	L_OR
-};
-
-typedef enum e_AstNodeType t_AstNodeType;
-
-union	u_AstNode
-{
-	t_Command		command;
-	t_Pipeline		pipeline;
-};
-
-
-struct	s_Ast
-{
-	t_AstNodeType	node_type;
-	t_AstNode		node;
 };
 
 /* Core functions */
@@ -88,22 +58,14 @@ char				*check_exec_binary(char *path, char *bin_name);
 int					is_builtin(char *bin_name);
 int					run_builtin(t_Command *cmd);
 
-/* DEPRECATED
-char				**generate_envpv(t_kv envp_ht[TABLE_SIZE]);
-void				generate_envp_ht(t_kv envp_ht[TABLE_SIZE], char **envpv);*/
-
 /* Error utility functions */
 
 int					fork_fail(void);
 int					execve_fail(void);
+int					cmd_not_found(char *name);
 
 /* Misc functions */
   
 char				*ft_path_join(char *path1, char *path2);
-void				print_cmd(t_Command *cmd);
-
-/* DELETE */
-void				print_strarray(char **arr);
-void				print_hashtable(t_kv ht[TABLE_SIZE]);
 
 #endif /* EXECUTION_H */

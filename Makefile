@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/07/25 22:18:19 by astavrop         ###   ########.fr        #
+#    Updated: 2024/07/26 18:40:07 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,6 @@ TARGET			:= minishell
 SRC_DIR			:= src/
 
 # Source files
-# SRC_FILES		+= execution/main.c
-# SRC_FILES		+= execution/main.c
 SRC_FILES		+= execution/command.c
 SRC_FILES		+= execution/pipeline.c
 SRC_FILES		+= execution/heredoc.c
@@ -51,21 +49,20 @@ SRC_FILES		+= builtins/unset.c
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
 SRC_FILES		+= utils/misc.c
-SRC_FILES		+= utils/cmd_misc_utils.c
 
 SRC_FILES		+= adapter/adapter.c
 SRC_FILES		+= adapter/single_command.c
 SRC_FILES		+= adapter/pipeline.c
 
-SRC_FILES		+= main.c						# Main
-SRC_FILES		+= prompt/prompt.c				# Main
-SRC_FILES		+= init.c						# Main
-SRC_FILES		+= lexer/lexer.c                                    # Lexer
-SRC_FILES		+= lexer/lexer_utils.c                                          #Lexer
-SRC_FILES		+= lexer/merge.c                                          #Lexer
-SRC_FILES		+= parser/parser.c					#Parser
-SRC_FILES		+= parser/parser_utils.c				#Parser
-SRC_FILES		+= parser/utils.c				#Parser
+SRC_FILES		+= main.c
+SRC_FILES		+= prompt/prompt.c
+SRC_FILES		+= init.c
+SRC_FILES		+= lexer/lexer.c
+SRC_FILES		+= lexer/lexer_utils.c
+SRC_FILES		+= lexer/merge.c
+SRC_FILES		+= parser/parser.c
+SRC_FILES		+= parser/parser_utils.c
+SRC_FILES		+= parser/utils.c
 
 # Object files directory
 OBJ_DIR			:= obj/
@@ -112,12 +109,10 @@ all: $(TARGET) ## Build this project
 # Compilation rule for object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(MKDIR) $(@D)
-	@echo -n "[build] "
 	$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o, %.d, $@) $(INCLUDES) -c $< -o $@
 
 # Rule for linking the target executable
 $(TARGET): $(OBJ_FILES) $(LIBFT_LIB) $(FT_PRINTF_LIB)
-	@echo -n "[link] "
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ_FILES) $(INCLUDES) $(LIBS)
 	-@echo -n "$(MAGENTA)" && ls -lah $(TARGET) && echo -n "$(RESET)"
 
@@ -132,38 +127,25 @@ $(LIBFT_LIB):
 #### ADDITIONAL RULES ####
 
 clean: ## Clean objects and dependencies
-	@echo -n "[clean] "
 	$(RM) $(OBJ_FILES)
-	@echo -n "[clean] "
 	$(RM) -r $(OBJ_DIR)
-	@echo -n "[clean] "
 	$(RM) $(DEPENDS)
-	@echo -n "[clean] "
 	$(RM) -r $(DEP_DIR)
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) clean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) clean) ||:
 
 fclean: clean ## Restore project to initial state
-	@echo -n "[clean] "
 	$(RM) $(TARGET)
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
-	@(test -d test/ && $(MAKE) -C test/ fclean) ||:
 
 re: fclean all ## Rebuild project
-
-test: ## Run tests
-	@(test ! -d test/ && echo "$(RED)There were no tests that I could find.$(RESET)") ||:
-	@$(MAKE) -C test/
 
 help: ## Show help info
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "$(CYAN)%-30s$(RESET) %s\n", $$1, $$2}'
 
-rclear: ## Clear the terminal and run `make`
-	echo -ne "\033c" && make
-
-.PHONY: all re clean fclean help test rclear ftprintf libft
+.PHONY: all re clean fclean help
 
 #### COLORS ####
 # Color codes

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 22:15:40 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/26 18:23:26 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	main(int ac, char *av[], char *envp[])
 	(void)ac;
 	(void)av;
 	t_shell_data *shell_data;
-	// static int	i = 0;
 
 	shell_data = malloc(sizeof(t_shell_data));
 	shell_data->envpv = ft_strarray_alloc(ft_strarray_len(envp));
@@ -28,14 +27,8 @@ int	main(int ac, char *av[], char *envp[])
 		init(shell_data);
 		if (render_prompt(shell_data))
 		{
-			// printf("%d\n", STR);
 			lexer(shell_data->lexer);
-			// printf("lexer done\n___________\n\n");
 			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND), shell_data->ast->root, shell_data->lexer->head); 
-			// printf("\n\033[33;3m*** *** *** Parsing DONE! *** *** ***\033[0m\n\n");
-			// i = 0;
-			// print_ast_leafs(shell_data->ast->root, i);
-			// printf(" -*- ADAPTER -*- \n");
 			adapt(shell_data->ast->root, shell_data);
 		}
 		gc_free_gc();

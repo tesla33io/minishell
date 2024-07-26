@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 22:16:26 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/26 18:32:49 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*check_exec_binary(char *path, char *bin_name)
 	while (path_entries[i] != NULL)
 	{
 		tmp_bin_name = ft_path_join(path_entries[i], bin_name);
-		if (!bin_name)
+		if (!tmp_bin_name)
 			return (printf("ft_path_join failed.\n"), NULL);
 		if (access(tmp_bin_name, F_OK) == 0 && access(tmp_bin_name, X_OK) == 0)
 		{
@@ -63,13 +63,14 @@ char	*check_exec_binary(char *path, char *bin_name)
 		}
 		i++;
 	}
-	return (printf("[REPLACE] %s: programm not found\n", bin_name), NULL);
+	cmd_not_found(bin_name);
+	return (NULL);
 }
 
 static int	check_if_path_to_bin(char *bin_name)
 {
 	return ((ft_strncmp(bin_name, "../", 3) == 0
-		|| ft_strncmp(bin_name, "./", 2) == 0
-		|| ft_strncmp(bin_name, "/", 1) == 0)
+			|| ft_strncmp(bin_name, "./", 2) == 0
+			|| ft_strncmp(bin_name, "/", 1) == 0)
 		&& access(bin_name, X_OK) == 0);
 }
