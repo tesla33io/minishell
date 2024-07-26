@@ -6,11 +6,12 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 18:23:26 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:56:35 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <signal.h>
 
 int	main(int ac, char *av[], char *envp[])
 {
@@ -18,6 +19,7 @@ int	main(int ac, char *av[], char *envp[])
 	(void)av;
 	t_shell_data *shell_data;
 
+	signal(SIGINT, sh_sigint_handler);
 	shell_data = malloc(sizeof(t_shell_data));
 	shell_data->envpv = ft_strarray_alloc(ft_strarray_len(envp));
 	if (ft_strarray_dup(envp, shell_data->envpv) < 0)

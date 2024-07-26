@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   sh_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 22:13:19 by astavrop         ###   ########.fr       */
+/*   Created: 2024/07/26 21:52:38 by astavrop          #+#    #+#             */
+/*   Updated: 2024/07/26 21:58:06 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+/* Signals handling in the shell */
 
-#include <linux/limits.h>
-#include <unistd.h>
+#include <signal.h>
 #include <readline/readline.h>
-#include <readline/history.h>
+#include <unistd.h>
 
-/* TODO: Handle Ctrl+d => exit */
-int	render_prompt(t_shell_data *shd)
+void	sh_sigint_handler(int signum)
 {
-	char	*rlret;
+	(void)signum;
 
-	rlret = readline("\033[32;1m€\033[0m ");
-	if (!rlret)
-	 	rlret = ft_strdup("");
-	shd->lexer->cmd_line = rlret;
-	if (ft_strncmp(rlret, "", 1) != 0)
-		add_history(rlret);
-	if (!shd->lexer->cmd_line)
-		return (0);
-	return (1);
+	write(STDOUT_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }

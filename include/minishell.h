@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 22:13:16 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:55:44 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,10 @@ int							adapt(t_leaf *ast_root, t_shell_data *shd);
 t_Command					*extract_command(t_leaf *cmd_root);
 void						extract_args(t_leaf *next, t_Command *cmd);
 t_Pipeline					*extract_pipeline(t_leaf *pl_root);
+
+/* Signals */
+
+void						sh_sigint_handler(int signum);
 
 void    remove_quotations(char *str);
 

@@ -6,34 +6,32 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 16:54:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:14:02 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
-#include "../../include/colors.h"
 #include "../../include/builtins.h"
 
 #include <curses.h>
-#include <stdio.h> /* DELETE */
 #include <unistd.h>
 #include <stdlib.h> /* getenv() */
 
 static void	setup_ipc(t_Command *cmd, int i, int pipefd[2][2], int num_cmds);
 
-void	execute_command_in_child(t_Command *command, int pipefd[2][2],
+void	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 		int i, int num_cmds)
 {
 	char	*bin;
 
-	setup_ipc(command, i, pipefd, num_cmds);
+	setup_ipc(cmd, i, pipefd, num_cmds);
 	/* TODO: replace getenv with ft_getenv */
-	if (is_builtin(command->bin_name))
-		run_builtin(command);
+	if (is_builtin(cmd->bin_name))
+		run_builtin(cmd);
 	else
-		bin = check_exec_binary(getenv("PATH"), command->bin_name);
-	if (execve(bin, command->args, command->envpv) < 0)
-		execve_fail();
+		bin = check_exec_binary(ft_getenv(cmd->envpv, "PATH"), cmd->bin_name);
+	if (execve(bin, cmd->args, cmd->envpv) < 0)
+		exit(execve_fail());
 }
 
 int	is_builtin(char *bin_name)

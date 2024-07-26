@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/07/26 18:40:07 by astavrop         ###   ########.fr        #
+#    Updated: 2024/07/26 21:57:02 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC_FILES		+= builtins/cd.c
 SRC_FILES		+= builtins/env.c
 SRC_FILES		+= builtins/export.c
 SRC_FILES		+= builtins/unset.c
+SRC_FILES		+= builtins/exit.c
 
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
@@ -53,6 +54,8 @@ SRC_FILES		+= utils/misc.c
 SRC_FILES		+= adapter/adapter.c
 SRC_FILES		+= adapter/single_command.c
 SRC_FILES		+= adapter/pipeline.c
+
+SRC_FILES		+= signals/sh_signals.c
 
 SRC_FILES		+= main.c
 SRC_FILES		+= prompt/prompt.c
@@ -94,7 +97,7 @@ LIBFT_LIB		:= $(LIBFT_PATH)libft.a
 #### DEBUG SETTINGS ####
 
 ifeq ($(DEBUG), 1)
-	CFLAGS		+= -g3 -Og
+	CFLAGS		+= -g3
 endif
 
 #### TARGET COMPILATION ####
@@ -139,7 +142,7 @@ fclean: clean ## Restore project to initial state
 	@(test -s $(LIBFT_LIB) && $(MAKE) -C $(LIBFT_PATH) fclean) ||:
 	@(test -s $(FT_PRINTF_LIB) && $(MAKE) -C $(FT_PRINTF_PATH) fclean) ||:
 
-re: fclean all ## Rebuild project
+re: fclean quick ## Rebuild project
 
 help: ## Show help info
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \

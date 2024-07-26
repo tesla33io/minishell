@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 20:15:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 21:17:52 by astavrop         ###   ########.fr       */
+/*   Created: 2024/07/26 21:15:07 by astavrop          #+#    #+#             */
+/*   Updated: 2024/07/26 21:17:29 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../../include/execution.h"
 
-# include "./execution.h"
+#include <stdlib.h>
 
-int		echo_builtin(t_Command *echo);
-int		pwd_builtin(t_Command *pwd);
-int		env_builtin(t_Command *env);
-int		export_builtin(t_Command *exprt);
-int		unset_builtin(t_Command *unset);
-int		cd_builtin(t_Command *cd);
-int		exit_builtin(t_Command *e);
-
-#endif /* BUILTINS_H */
+int	exit_builtin(t_Command *e)
+{
+	gc_free_gc();
+	ft_strarray_free(e->envpv);
+	if (e->args && e->args[1])
+		exit(ft_atoi(e->args[1]));
+	return (ft_atoi(e->args[1]));
+}
