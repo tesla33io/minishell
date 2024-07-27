@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 22:19:12 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:38:32 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	adapt(t_leaf *ast_root, t_shell_data *shd)
 	if (ast_root->token == STR || ast_root->token == OUT_REDIRECT
 			|| ast_root->token == IN_REDIRECT)
 	{
-		cmd = extract_command(ast_root);
+		cmd = extract_command(ast_root, shd);
 		cmd->envpv = shd->envpv;
 		if (is_builtin(cmd->bin_name))
 			run_builtin(cmd);
@@ -44,7 +44,7 @@ int	adapt(t_leaf *ast_root, t_shell_data *shd)
 	else if (ast_root->token == PIPE || ast_root->token == OUT_REDIRECT
 			|| ast_root->token == IN_REDIRECT)
 	{
-		pl = extract_pipeline(ast_root);
+		pl = extract_pipeline(ast_root, shd);
 		if (pl)
 			execute_pipeline(pl);
 	}

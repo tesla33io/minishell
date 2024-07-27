@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 21:14:02 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:40:28 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../include/builtins.h"
 
 #include <curses.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h> /* getenv() */
 

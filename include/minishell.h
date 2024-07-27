@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 21:55:44 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:37:47 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,9 @@ t_token						*split_stream(t_token **token_stream);
 int							contains_token(t_token *head, t_tkntype type);
 
 int							adapt(t_leaf *ast_root, t_shell_data *shd);
-t_Command					*extract_command(t_leaf *cmd_root);
+t_Command					*extract_command(t_leaf *cmd_root, t_shell_data *shd);
 void						extract_args(t_leaf *next, t_Command *cmd);
-t_Pipeline					*extract_pipeline(t_leaf *pl_root);
+t_Pipeline					*extract_pipeline(t_leaf *pl_root, t_shell_data *shd);
 
 /* Signals */
 

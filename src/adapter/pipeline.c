@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 17:52:46 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 21:42:47 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:38:16 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 static t_leaf	*get_first_pipe_cmd(t_leaf *pl_root);
 static int		count_pipe_elements(t_leaf *node);
 
-t_Pipeline	*extract_pipeline(t_leaf *pl_root)
+t_Pipeline	*extract_pipeline(t_leaf *pl_root, t_shell_data *shd)
 {
 	t_Pipeline	*pl;
 	t_leaf		*cur;
@@ -57,7 +57,7 @@ t_Pipeline	*extract_pipeline(t_leaf *pl_root)
 	{
 		// PRINT_LEAF(cur);
 		if (cur->token == STR)
-			pl->commands[i++] = extract_command(cur);
+			pl->commands[i++] = extract_command(cur, shd);
 		if (cur->parent && cur->parent->right)
 			cur = get_first_pipe_cmd(cur->parent->right);
 	//	if (cur->parent && cur->parent->token == PIPE)
