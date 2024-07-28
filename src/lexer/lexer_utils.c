@@ -1,11 +1,12 @@
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-//ft to find the matching character for an enclosed section, such as a double quoted string, that starts with the first member of the pair
+//ft to find the matching character for an enclosed section, such as a
+//double quoted string, that starts with the first member of the pair
 int	find_match(char *str, char c)
 {
-	int i;
+	int	i;
 
-	i = 1; //0 positin is where the first part of the pair is
+	i = 1;
 	if (!str)
 		return (0);
 	if (!str[1])
@@ -20,25 +21,22 @@ int	find_match(char *str, char c)
 
 int	contains_token(t_token *head, t_tkntype type)
 {
-	// t_token	*travel;
-
-	// travel = head;
 	while (head && head->token != type)
 		head = head->next;
 	if (!head)
 		return (0);
-	else 
+	else
 		return (1);
-}	
+}
 
 //TODO recode bc of change of list type
 //take out the trash token, should keep tokenstream seemlessly connected
-
 void	take_out_trash(t_token *head)
 {
-	t_token *current;
-	t_token *previous;
-	current  = head;
+	t_token		*current;
+	t_token		*previous;
+
+	current = head;
 	previous = NULL;
 	if (head && head->token == TRASH)
 		head = head->next;
@@ -54,13 +52,13 @@ void	take_out_trash(t_token *head)
 	if (contains_token(head, TRASH))
 		return (take_out_trash(head));
 	else
-		return ;	
+		return ;
 }
 
-int count_tokens(t_token *head)
+int	count_tokens(t_token *head)
 {
-	t_token *travel;
-	int count;
+	t_token	*travel;
+	int		count;
 
 	travel = head;
 	count = 0;
@@ -68,32 +66,3 @@ int count_tokens(t_token *head)
 		travel = travel->next;
 	return (count);
 }
-	
-
-/*
-void	take_out_trash(t_lex *lexer) //TODO should have condition for when nothing is left/one token is left/etc - error handling
-{
-	int i;
-
-	i = 0;
-	while (i < lexer->tkn_count) //this is not perfect yet, incrementing and decrementing for while condition at the same time can go wrong, TODO find better way
-	{
-		if (lexer->head->token == TRASH)
-		{
-			lexer->tail->next = lexer->head->next;
-			lexer->head->next->prev = lexer->tail;
-			lexer->head = lexer->tail->next;
-			lexer->tkn_count--;
-		}
-		lexer->tail = lexer->head;
-		lexer->head = lexer->tail->next;
-		i++;
-	}
-	while (i--)
-	{
-		lexer->head = lexer->tail;
-		lexer->tail = lexer->tail->prev;
-	}
-}
-*/
-

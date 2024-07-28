@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:00:09 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 22:22:13 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:41:28 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@
 static int	look_after_children(int num_cmds, int *pids);
 static void	destroy_pipe(int pipefd[2][2], int i);
 
-int	execute_pipeline(t_Pipeline *pipeline)
+int	execute_pipeline(t_Pipeline *pl)
 {
 	pid_t	*pids;
 	int		pipefd[2][2];
 	int		i;
 
-	pids = gc_malloc(sizeof(pid_t) * pipeline->num_cmds);
+	pids = gc_malloc(sizeof(pid_t) * pl->num_cmds);
 	if (!pids)
 		return (-1);
-	i = 0;
-	while (i < pipeline->num_cmds)
+	i = -1;
+	while (++i < pl->num_cmds)
 	{
-		if (i < pipeline->num_cmds - 1)
+		if (i < pl->num_cmds - 1)
 		{
 			if (pipe(pipefd[i % 2]) == -1)
 				return (perror("pipe"), -1);
@@ -43,13 +43,11 @@ int	execute_pipeline(t_Pipeline *pipeline)
 		if (pids[i] < 0)
 			return (perror("fork"), -1);
 		else if (pids[i] == 0)
-			execute_command_in_child(pipeline->commands[i], pipefd, i, pipeline->num_cmds);
+			execute_command_in_child(pl->commands[i], pipefd, i, pl->num_cmds);
 		if (i > 0)
 			destroy_pipe(pipefd, (i - 1) % 2);
-		i++;
 	}
-	// destroy_pipe(pipefd, (i - 1) % 2);
-	look_after_children(pipeline->num_cmds, pids);
+	look_after_children(pl->num_cmds, pids);
 	return (0);
 }
 

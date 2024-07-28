@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:52:38 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 21:58:06 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:51:52 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 void	sh_sigint_handler(int signum)
 {
 	(void)signum;
-
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

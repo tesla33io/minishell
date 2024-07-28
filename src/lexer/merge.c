@@ -1,44 +1,43 @@
-#include "minishell.h"
-
+#include "../../include/minishell.h"
 
 // find doubles of <, >, |, & and group them as &&, ||, <<, >>
 void	group_tokens(t_lex *lexer)
 {
-	t_token *travel;
+	t_token	*trvl;
 
-	travel = lexer->head;
-	while (travel->next)
+	trvl = lexer->head;
+	while (trvl->next)
 	{
-		if (travel->token == IN_REDIRECT && travel->next->token == IN_REDIRECT)
-			travel->token = HEREDOC;
-		if (travel->token == OUT_REDIRECT && travel->next->token == OUT_REDIRECT)
-                        travel->token = APPEND;
-		if (travel->token == AMPERSAND && travel->next->token == AMPERSAND)
-                        travel->token = AND;
-		if (travel->token == PIPE && travel->next->token == PIPE)
-                        travel->token = OR;
-		if (travel->token == HEREDOC || travel->token == APPEND || travel->token == AND || travel->token == OR)
+		if (trvl->token == IN_REDIRECT && trvl->next->token == IN_REDIRECT)
+			trvl->token = HEREDOC;
+		if (trvl->token == OUT_REDIRECT && trvl->next->token == OUT_REDIRECT)
+			trvl->token = APPEND;
+		if (trvl->token == AMPERSAND && trvl->next->token == AMPERSAND)
+			trvl->token = AND;
+		if (trvl->token == PIPE && trvl->next->token == PIPE)
+			trvl->token = OR;
+		if (trvl->token == HEREDOC || trvl->token == APPEND
+			|| trvl->token == AND || trvl->token == OR)
 		{
-			travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
-			travel->next->token = TRASH;
+			trvl->lexeme = ft_strjoin(trvl->lexeme, trvl->next->lexeme);
+			trvl->next->token = TRASH;
 			take_out_trash(lexer->head);
 		}
-		travel = travel->next;
+		trvl = trvl->next;
 	}
 }
 
 void	remove_quotations(char *str)
 {
-	// printf("token is: %s\n", str);
-	int dest;
-	int src;
+	int	dest;
+	int	src;
 
 	dest = 0;
 	src = 0;
 	while (str[src])
 	{
 		if (!(str[src] == '"' || str[src] == '\''))
-		{	
+		{
 			ft_memmove(str + dest, str + src, 1);
 			dest++;
 		}
@@ -49,12 +48,12 @@ void	remove_quotations(char *str)
 		ft_bzero(str + dest, 1);
 		dest++;
 	}
-
 }
 
-void	merge_strings(t_lex *lexer) //needs to be fixed bc merges 2 consecutive strings max
+//needs to be fixed bc merges 2 consecutive strings max
+void	merge_strings(t_lex *lexer)
 {
-	t_token *travel;
+	t_token	*travel;
 
 	travel = lexer->head;
 	while (travel)
@@ -66,8 +65,9 @@ void	merge_strings(t_lex *lexer) //needs to be fixed bc merges 2 consecutive str
 	travel = lexer->head;
 	while (travel)
 	{
-		while (travel && travel->next && travel->token == STR && travel->next->token == STR)
-		{	
+		while (travel && travel->next && travel->token == STR
+			&& travel->next->token == STR)
+		{
 			travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
 			travel->next->token = TRASH;
 			take_out_trash(lexer->head);
@@ -77,9 +77,9 @@ void	merge_strings(t_lex *lexer) //needs to be fixed bc merges 2 consecutive str
 	}
 }
 
-void remove_spaces(t_lex *lexer)
+void	remove_spaces(t_lex *lexer)
 {
-	t_token *travel;
+	t_token	*travel;
 
 	travel = lexer->head;
 	while (travel)
@@ -91,14 +91,10 @@ void remove_spaces(t_lex *lexer)
 	take_out_trash(lexer->head);
 }
 
-
-
 // optimizing tokenstream for parser
 void	merge_tokens(t_lex *lexer)
 {
 	group_tokens(lexer);
-	//insert_placeholder(lexer);
 	merge_strings(lexer);
 	remove_spaces(lexer);
 }
-	

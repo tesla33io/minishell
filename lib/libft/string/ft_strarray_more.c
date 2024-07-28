@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:15:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/28 18:33:02 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:36:50 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,15 @@ char	**ft_strarray_remove_by_index(char **array, size_t index)
 	new_array = gc_malloc((sizeof(char *)) * (len + 1));
 	if (!new_array)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (array[i])
+	i = -1;
+	j = -1;
+	while (array[++i])
 	{
 		if (i != index)
 		{
-			if (dup_str(new_array, array, i, j) < 0)
+			if (dup_str(new_array, array, i, ++j) < 0)
 				return (NULL);
-			j++;
 		}
-		i++;
 	}
 	new_array[j] = NULL;
 	ft_strarray_free(array);

@@ -10,13 +10,8 @@ char	*ft_chop(char *str, char c)
 	i = 0;
 	len = 0;
 	chop = NULL;
-	//printf("initial str to chop: %s\n", str);
 	while (str[len] && str[len] != c)
-		len++;	
-	//if (str[len] == ' ' && !str[len + 1])
-	//	bzero(str + len, 2);
-	//return (ft_strdup(str));
-	// printf("%s:%d (%s) >> GC (%d)\n", __FILE__, __LINE__, __FUNCTION__, gc_set_storage('g'));
+		len++;
 	chop = gc_malloc((len + 1) * sizeof(char));
 	while (str[i] && i < len)
 	{
@@ -24,11 +19,6 @@ char	*ft_chop(char *str, char c)
 		i++;
 	}
 	chop[i++] = '\0';
-	//if (!str[i])
-	//	write(1, "HERE\n", 5);
-	//printf("str at len pos now: %c\n", str[len + 1]);
-	//if (!str[len + 1])
-	//	return (chop);
 	len = i;
 	i = 0;
 	ft_memmove(str, str + len, (ft_strlen(str) - len));
@@ -83,12 +73,12 @@ char	*contains_non_terminal(char *production)
 	i = -1;
 	while (production[++i] && !is_lower(production[i]))
 		;
-	return(ft_substr(production, i, len));
+	return (ft_substr(production, i, len));
 }
 
-t_leaf *terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
+t_leaf	*terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
 {
-    t_token *travel;
+	t_token	*travel;
 
 	travel = token_stream;
 	while (travel)
@@ -102,33 +92,34 @@ t_leaf *terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
 			else if (!parent->right->terminal)
 				parent = append_leaf(parent->right, parent, travel);
 			else
-				printf("parent already has 2 children, error in terminal to leaf\n");
+			{
+				printf("%s:%d (%s): parent already has 2 children\n",
+					__FILE__, __LINE__, __FUNCTION__);
+			}
 		}
 		travel = travel->next;
 	}
 	return (parent);
 }
 
-t_leaf *append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
+t_leaf	*append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
 {
 	if (!leaf)
 		printf("issue, not malloced leaf when appending\n");
 	leaf->token = tok->token;
 	leaf->terminal = tok->lexeme;
-	// printf("appending : %s\n\n", tok->lexeme);
 	leaf->parent = parent;
 	leaf->left = gc_malloc(sizeof(t_leaf));
 	leaf->left->terminal = NULL;
 	leaf->right = gc_malloc(sizeof(t_leaf));
 	leaf->right->terminal = NULL;
-
-	tok->token = TRASH; // Mark token as processed
+	tok->token = TRASH;
 	return (leaf);
 }
 
-char *get_production(char *production)
+char	*get_production(char *production)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (production[i])

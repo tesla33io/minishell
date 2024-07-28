@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 23:14:35 by ltreser           #+#    #+#             */
-/*   Updated: 2024/07/27 17:52:45 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:38:41 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	init_lexer(t_shell_data *shell_data)
 	shell_data->lexer->start = 0;
 	shell_data->lexer->end = 0;
 	shell_data->lexer->tkn_count = 0;
-	
 }
 
 void	init(t_shell_data *shell_data)

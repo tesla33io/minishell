@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:08:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/06/24 21:20:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:51:01 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	unset_builtin(t_Command *unset)
 	{
 		j = 0;
 		while (unset->envpv[j]
-				&& ft_strncmp(unset->envpv[j], unset->args[i],
-					ft_strlen(unset->args[i])) != 0)
+			&& ft_strncmp(unset->envpv[j], unset->args[i],
+				ft_strlen(unset->args[i])) != 0)
 			j++;
 		if (!unset->envpv[j] && ++i)
 			continue ;

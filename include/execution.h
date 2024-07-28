@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 21:12:19 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:39:13 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # define RD 0
 # define WR 1
 
-typedef struct s_Command t_Command;
-typedef struct s_Pipeline t_Pipeline;
+typedef struct s_Command	t_Command;
+typedef struct s_Pipeline	t_Pipeline;
 
 enum	e_CommandType
 {
@@ -27,7 +27,7 @@ enum	e_CommandType
 	BUILTIN
 };
 
-typedef enum e_CommandType t_CommandType;
+typedef enum e_CommandType	t_CommandType;
 
 struct	s_Command
 {
@@ -47,7 +47,7 @@ struct	s_Pipeline
 /* Core functions */
 
 void				execute_command_in_child(t_Command *cmd,
-		int pipefd[2][2], int i, int num_cmds);
+						int pipefd[2][2], int i, int num_cmds);
 int					execute_pipeline(t_Pipeline *pipeline);
 int					start_heredoc(const char *del);
 
@@ -65,7 +65,7 @@ int					execve_fail(void);
 int					cmd_not_found(char *name);
 
 /* Misc functions */
-  
+
 char				*ft_path_join(char *path1, char *path2);
 
 #endif /* EXECUTION_H */
