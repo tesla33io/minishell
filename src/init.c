@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 23:14:35 by ltreser           #+#    #+#             */
-/*   Updated: 2024/07/25 22:15:35 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:52:45 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ void	init_lexer(t_shell_data *shell_data)
 
 void	init(t_shell_data *shell_data)
 {
+	gc_set_storage(5);
 	init_lexer(shell_data);
 	shell_data->ast = gc_malloc(sizeof(t_ast));
 	shell_data->ast->leafcount = 0;
 	shell_data->ast->root = gc_malloc(sizeof(t_leaf));
 	shell_data->ast->root->terminal = NULL;
+	gc_set_storage(0);
 }

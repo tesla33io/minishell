@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:29:54 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/25 22:13:25 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:29:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,10 @@ void			ht_clear(t_kv ht[TABLE_SIZE]);
 
 /* MEMORY */
 
-t_list			**gc_get_storage(void);
+t_list			**gc_get_storage(int i);
+int				gc_set_storage(int flag);
 void			*gc_malloc(size_t size);
-void			gc_free_gc(void);
+void			gc_free_gc(int flag);
 void			gc_free_ptr(void **ptr);
 
 int				ft_isdigit(int c);
@@ -136,7 +137,7 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 /* String array functions */
 
 void			ft_strarray_free(char **array);
-char			**ft_strarray_alloc(int	str_num);
+char			**ft_strarray_alloc(int str_num);
 size_t			ft_strarray_len(char **array);
 int				ft_strarray_dup(char **src_array, char **dest_array);
 char			**ft_strarray_append(char **array, char *new_str);

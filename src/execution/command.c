@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/27 15:40:28 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:35:57 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ void	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 	if (is_builtin(cmd->bin_name))
 		run_builtin(cmd);
 	else
+	{
 		bin = check_exec_binary(ft_getenv(cmd->envpv, "PATH"), cmd->bin_name);
-	if (execve(bin, cmd->args, cmd->envpv) < 0)
-		exit(execve_fail());
+		if (execve(bin, cmd->args, cmd->envpv) < 0)
+			exit(execve_fail());
+	}
 }
 
 int	is_builtin(char *bin_name)

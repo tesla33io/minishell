@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 21:56:35 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:35:12 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	main(int ac, char *av[], char *envp[])
 	t_shell_data *shell_data;
 
 	signal(SIGINT, sh_sigint_handler);
-	shell_data = malloc(sizeof(t_shell_data));
+	gc_set_storage(5);
+	shell_data = gc_malloc(sizeof(t_shell_data));
 	shell_data->envpv = ft_strarray_alloc(ft_strarray_len(envp));
 	if (ft_strarray_dup(envp, shell_data->envpv) < 0)
 		return (dprintf(2, "minishell: fatal error: can't duplicate env"));
@@ -30,10 +31,11 @@ int	main(int ac, char *av[], char *envp[])
 		if (render_prompt(shell_data))
 		{
 			lexer(shell_data->lexer);
-			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND), shell_data->ast->root, shell_data->lexer->head); 
+			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND),
+					shell_data->ast->root, shell_data->lexer->head); 
 			adapt(shell_data->ast->root, shell_data);
 		}
-		gc_free_gc();
+		gc_free_gc(0);
 	}
 	return (0);
 }

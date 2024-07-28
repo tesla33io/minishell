@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:33:36 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 18:22:29 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:54:15 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup(const char *s)
 	int		i;
 
 	s_len = ft_strlen((char *) s) + 1;
-	new_s = malloc(s_len * sizeof(char));
+	new_s = gc_malloc(s_len * sizeof(char));
 	if (new_s != NULL)
 	{
 		i = 0;

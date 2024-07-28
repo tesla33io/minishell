@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:33:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 21:07:32 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:06:33 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_strarray_alloc(int	str_num)
 
 	if (str_num < 0)
 		return (NULL);
-	str_array = ft_calloc(str_num + 1, sizeof(*str_array));
+	str_array = gc_malloc((str_num + 1) * sizeof(*str_array));
 	if (!str_array)
 		return (NULL);
 	return (str_array);
@@ -81,7 +81,7 @@ char	**ft_strarray_append(char **array, char *new_str)
 		len = 0;
 	else
 		len = ft_strarray_len(array);
-	new_array = malloc((sizeof(char *)) * (len + 2));
+	new_array = gc_malloc((sizeof(char *)) * (len + 2));
 	if (!new_array)
 		return (NULL);
 	if (array != NULL)
@@ -107,7 +107,7 @@ char	**ft_strarray_append(char **array, char *new_str)
 		return (NULL);
 	}
 	new_array[duped + 1] = NULL;
-	if (array != NULL)
-		ft_strarray_free(array);  // Free the old array
+// 	if (array != NULL)
+// 		ft_strarray_free(array);  // Free the old array
 	return (new_array);
 }

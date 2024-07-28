@@ -1,4 +1,5 @@
 #include "../../include/minishell.h"
+#include <stdio.h>
 
 char	*ft_chop(char *str, char c)
 {
@@ -15,6 +16,7 @@ char	*ft_chop(char *str, char c)
 	//if (str[len] == ' ' && !str[len + 1])
 	//	bzero(str + len, 2);
 	//return (ft_strdup(str));
+	// printf("%s:%d (%s) >> GC (%d)\n", __FILE__, __LINE__, __FUNCTION__, gc_set_storage('g'));
 	chop = gc_malloc((len + 1) * sizeof(char));
 	while (str[i] && i < len)
 	{

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/26 21:08:10 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:19:51 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,29 @@
  * Returns:
  * - A pointer to the static `t_list` storage.
  */
-t_list	**gc_get_storage(void)
+t_list	**gc_get_storage(int i)
 {
-	static t_list	*gc = NULL;
+	static t_list	*gc[10] = {NULL};
 
-	if (!gc)
+	if (i < 0 || i > 9)
+		i = gc_set_storage('g');
+	if (!gc[i])
 	{
-		gc = ft_calloc(1, sizeof(*gc));
-		gc->content = NULL;
-		gc->next = NULL;
+		gc[i] = ft_calloc(1, sizeof(*gc[i]));
+		gc[i]->content = NULL;
+		gc[i]->next = NULL;
 	}
-	return (&gc);
+	return (&gc[i]);
+}
+
+int	gc_set_storage(int flag)
+{
+	static int	storage;
+
+	if (flag == 'g')
+		return (storage);
+	storage = flag;
+	return (storage);
 }
 
 /* 
@@ -61,7 +73,7 @@ void	*gc_malloc(size_t size)
 	ret = ft_calloc(1, size);
 	if (!ret)
 		ft_putstr_fd("Error (gc_malloc): memory allocation failed.\n", 2);
-	gc = gc_get_storage();
+	gc = gc_get_storage(-1);
 	if (!gc || !*gc)
 		return ((void *)42);
 	new_node = ft_lstnew(ret);
@@ -83,7 +95,7 @@ void	*gc_malloc(size_t size)
 void gc_free_ptr(void **ptr)
 {
     if (ptr == NULL || *ptr == NULL)
-        return;
+        return ;
     free(*ptr);
     *ptr = NULL;
 }
@@ -94,12 +106,12 @@ void gc_free_ptr(void **ptr)
  * This function assumes that the data stored in the deque are pointers
  * to dynamically allocated memory.
  */
-void	gc_free_gc(void)
+void	gc_free_gc(int flag)
 {
 	t_list		*node;
 	t_list		**gc;
 
-	gc = gc_get_storage();
+	gc = gc_get_storage(flag);
 	if (gc == NULL || *gc == NULL)
 		return ;
 	node = *gc;

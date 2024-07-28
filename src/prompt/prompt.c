@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/27 15:21:54 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:39:26 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,15 @@ int	render_prompt(t_shell_data *shd)
 
 	rlret = readline("\033[32;1m€\033[0m ");
 	if (!rlret)
+	{
+		printf("0: %p\n", (*gc_get_storage(0))->next);
+		gc_free_gc(0);
+		printf("0: %p\n", (*gc_get_storage(0))->next);
+		printf("5: %p\n", (*gc_get_storage(5))->next);
+		gc_free_gc(5);
+		printf("5: %p\n", (*gc_get_storage(5))->next);
 		exit (1);
+	}
 	shd->lexer->cmd_line = rlret;
 	if (ft_strncmp(rlret, "", 1) != 0)
 		add_history(rlret);
