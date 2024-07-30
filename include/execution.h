@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/28 19:39:13 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:08:09 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define EXECUTION_H
 
 # include "../lib/libft/libft.h"
+
+# include <stdbool.h>
 
 # define RD 0
 # define WR 1
@@ -36,6 +38,8 @@ struct	s_Command
 	char			**envpv;
 	int				in_fd;
 	int				out_fd;
+	bool			append;
+	bool			heredoc;
 };
 
 struct	s_Pipeline

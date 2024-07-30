@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:18:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/28 18:42:19 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:18:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,8 @@
 #include <readline/readline.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <signal.h>
 
-void	read_heredoc(const char *delim, int wrfd)
-{
-	char	*line_buffer;
-
-	line_buffer = readline("> ");
-	while (line_buffer != NULL)
-	{
-		if (strncmp(line_buffer, delim, strlen(delim)) == 0)
-			break ;
-		write(wrfd, line_buffer, strlen(line_buffer));
-		write(wrfd, "\n", 1);
-		free(line_buffer);
-		line_buffer = readline("> ");
-	}
-	free(line_buffer);
-}
+static void	read_heredoc(const char *delim, int wrfd);
 
 int	start_heredoc(const char *delim)
 {
@@ -59,4 +43,21 @@ int	start_heredoc(const char *delim)
 		return (pipefd[0]);
 	}
 	return (-1);
+}
+
+static void	read_heredoc(const char *delim, int wrfd)
+{
+	char	*line_buffer;
+
+	line_buffer = readline("> ");
+	while (line_buffer != NULL)
+	{
+		if (strncmp(line_buffer, delim, strlen(delim)) == 0)
+			break ;
+		write(wrfd, line_buffer, strlen(line_buffer));
+		write(wrfd, "\n", 1);
+		free(line_buffer);
+		line_buffer = readline("> ");
+	}
+	free(line_buffer);
 }
