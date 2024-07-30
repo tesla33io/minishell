@@ -74,12 +74,9 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent,
 		alternative = match_alternative(shell_data->lexer, token_stream,
 				(char *[]){alternative, ft_chop(production, '|')});
 	}
-	if (!alternative)
+	if (!alternative && token_stream)
 	{
-		if (parent == shell_data->ast->root)
-			printf("Syntax Error\n");
-		else
-			printf("Syntax Error near token\n");
+		printf("Syntax Error\n");
 		return ;
 	}
 	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);

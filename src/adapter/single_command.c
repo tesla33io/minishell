@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/30 18:23:17 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:38:13 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,7 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
 	if (!heredoc)
 		cmd->in_fd = open((*next)->terminal, O_RDONLY);
 	else if (heredoc)
-	{
-		*next = (*next)->left;
 		cmd->in_fd = start_heredoc((*next)->terminal);
-	}
 	if (cmd->in_fd == -1)
 		return (-1);
 	*next = (*next)->left;
