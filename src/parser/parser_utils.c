@@ -129,7 +129,7 @@ char	*get_production(char *production)
 	else if (!ft_strncmp(production, "pipe_sequence", i))
 		return (ft_strdup(PIPE_SEQUENCE));
 	else if (!ft_strncmp(production, "command", i))
-		return (ft_strdup(CMD));
+		return (ft_strdup(COMMAND));
 	else if (!ft_strncmp(production, "simple_command", i))
 		return (ft_strdup(SIMPLE_COMMAND));
 	else

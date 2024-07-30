@@ -6,7 +6,7 @@
 
 # define PIPE_SEQUENCE "command |command PIPE pipe_sequence |"
 
-# define CMD "simple_command |L_BRACE complete_command R_BRACE |"
+# define COMMAND "simple_command |L_BRACE complete_command R_BRACE |"
 
 # define SIMPLE_COMMAND "STR |HEREDOC STR |APPEND STR |IN_REDIRECT STR \
 |OUT_REDIRECT STR |STR simple_command |HEREDOC STR simple_command |APPEND \

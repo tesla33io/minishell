@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/28 18:46:10 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:53:30 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ static int	handle_command(t_leaf *ast_root, t_shell_data *shd);
 
 int	adapt(t_leaf *ast_root, t_shell_data *shd)
 {
-	t_Command	*cmd;
 	t_Pipeline	*pl;
 	int			exit_code;
-	pid_t		cmd_pid;
 
 	exit_code = 0;
 	if (ast_root->token == STR || ast_root->token == OUT_REDIRECT
