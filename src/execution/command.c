@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/27 18:35:57 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:06:30 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ void	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 	char	*bin;
 
 	setup_ipc(cmd, i, pipefd, num_cmds);
-	/* TODO: replace getenv with ft_getenv */
 	if (is_builtin(cmd->bin_name))
-		run_builtin(cmd);
+		exit(run_builtin(cmd));
 	else
 	{
 		bin = check_exec_binary(ft_getenv(cmd->envpv, "PATH"), cmd->bin_name);
@@ -68,22 +67,20 @@ static void	setup_ipc(t_Command *cmd, int i, int pipefd[2][2], int num_cmds)
 {
 	if (cmd->in_fd != 0)
 		dup2(cmd->in_fd, STDIN_FILENO);
-	else if (i > 0)
+	else if (i > 0 && pipefd[(i - 1) % 2][0] > 0)
 		dup2(pipefd[(i - 1) % 2][0], STDIN_FILENO);
 	if (cmd->out_fd != 1)
 		dup2(cmd->out_fd, STDOUT_FILENO);
-	else if (i < num_cmds - 1)
+	else if (i < num_cmds - 1 && pipefd[i % 2][1] > 0)
 		dup2(pipefd[i % 2][1], STDOUT_FILENO);
-	if (i > 0)
-	{
+	if (i > 0 && pipefd[(i - 1) % 2][0] > 0)
 		close(pipefd[(i - 1) % 2][0]);
+	if (i > 0 && pipefd[(i - 1) % 2][1] > 0)
 		close(pipefd[(i - 1) % 2][1]);
-	}
-	if (i < num_cmds - 1)
-	{
+	if (i < num_cmds - 1 && pipefd[i % 2][0] > 0)
 		close(pipefd[i % 2][0]);
+	if (i < num_cmds - 1 && pipefd[i % 2][1] > 0)
 		close(pipefd[i % 2][1]);
-	}
 	if (cmd->in_fd != 0)
 		close(cmd->in_fd);
 	if (cmd->out_fd != 1)

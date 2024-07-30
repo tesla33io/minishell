@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/30 16:53:30 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:43:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <stdio.h>
+#include <unistd.h>
 
 static int	handle_command(t_leaf *ast_root, t_shell_data *shd);
 
@@ -46,21 +47,20 @@ static int	handle_command(t_leaf *ast_root, t_shell_data *shd)
 	int			exit_code;
 
 	exit_code = 0;
-	cmd = extract_command(ast_root, shd);
-	cmd->envpv = shd->envpv;
-	if (is_builtin(cmd->bin_name))
-		run_builtin(cmd);
-	else
+	cmd_pid = fork();
+	cmd = NULL;
+	if (cmd_pid == 0)
 	{
-		cmd_pid = fork();
-		if (cmd_pid == 0)
-		{
-			execute_command_in_child(cmd,
+		cmd = extract_command(ast_root, shd);
+		cmd->envpv = shd->envpv;
+		execute_command_in_child(cmd,
 				(int [2][2]){{-1, -1}, {-1, -1}}, 0, 1);
-		}
-		else
-			waitpid(cmd_pid, &exit_code, 0);
 	}
-	shd->envpv = cmd->envpv;
+	else
+		waitpid(cmd_pid, &exit_code, 0);
+	if (cmd && cmd->out_fd > 0)
+		(close(cmd->out_fd), dup2(1, STDOUT_FILENO));
+	if (cmd)
+		shd->envpv = cmd->envpv;
 	return (exit_code);
 }

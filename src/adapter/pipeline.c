@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 17:52:46 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/28 18:47:19 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:05:37 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 
 #include <stdio.h>
 
-// #define PRINT_LEAF(node) do { \
-//     if (node == NULL) { \
-// 		printf("------------"); \
-//         printf("Node is NULL\n"); \
-//     } else { \
-// 		printf(">>>>>>>>>>>>>>>>>>>>>\n"); \
-//         printf("Token: %d\n", (node)->token); \
-//         printf("Terminal: %s\n", (node)->terminal ? \
-//         (node)->terminal : "NULL"); \
-//         printf("Parent: %p\n", (void*)(node)->parent); \
-// 		if ((node)->parent) { \
-// 			printf("\tToken: %d\n", (node)->parent->token); \
-// 			printf("\tTerminal: %s\n", (node)->parent->terminal); \
-// 			printf("\tLeft: %s\n", (node)->parent->left->terminal); \
-// 			printf("\tRight: %s\n", (node)->parent->right->terminal); \
-// 		} \
-//         printf("Left: %p\n", (void*)(node)->left); \
-//         printf("Right: %p\n", (void*)(node)->right); \
-//     } \
-// } while (0)
+/*#define PRINT_LEAF(node) do { \
+    if (node == NULL) { \
+		printf("------------"); \
+        printf("Node is NULL\n"); \
+    } else { \
+		printf(">>>>>>>>>>>>>>>>>>>>>\n"); \
+        printf("Token: %d\n", (node)->token); \
+        printf("Terminal: %s\n", (node)->terminal ? \
+        (node)->terminal : "NULL"); \
+        printf("Parent: %p\n", (void*)(node)->parent); \
+		if ((node)->parent) { \
+			printf("\tToken: %d\n", (node)->parent->token); \
+			printf("\tTerminal: %s\n", (node)->parent->terminal); \
+			printf("\tLeft: %s\n", (node)->parent->left->terminal); \
+			printf("\tRight: %s\n", (node)->parent->right->terminal); \
+		} \
+        printf("Left: %p\n", (void*)(node)->left); \
+        printf("Right: %p\n", (void*)(node)->right); \
+    } \
+} while (0) */
 
 static t_leaf	*get_first_pipe_cmd(t_leaf *pl_root);
 static int		count_pipe_elements(t_leaf *node);
