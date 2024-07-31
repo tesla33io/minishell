@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/30 18:38:13 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 00:14:24 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../include/minishell.h"
 
 #include <fcntl.h>  // for open
+#include <stdio.h>
 #include <stdlib.h> // for NULL
 
 /* Function prototypes */
@@ -36,13 +37,13 @@ t_Command	*extract_command(t_leaf *cmd_root, t_shell_data *shd)
 		return (NULL);
 	if (next->token == OUT_REDIRECT || next->token == APPEND)
 	{
-		if (handle_out_redirect(&next, cmd) == -1)
-			return (NULL);
+		handle_out_redirect(&next, cmd);
+		next = next->left;
 	}
 	else if (next->token == IN_REDIRECT || next->token == HEREDOC)
 	{
-		if (handle_in_redirect(&next, cmd) == -1)
-			return (NULL);
+		handle_in_redirect(&next, cmd);
+		next = next->left;
 	}
 	if (next->token == STR)
 		cmd->bin_name = next->terminal;
@@ -83,7 +84,13 @@ static int	handle_out_redirect(t_leaf **n, t_Command *c)
 	else if (append)
 		c->out_fd = open((*n)->terminal, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (c->out_fd == -1)
+	{
+		perror((*n)->terminal);
+		c->out_fd = open("/dev/zero", O_WRONLY);
+		if (c->out_fd == -1)
+			exit ((perror("fatal: open"), -1));
 		return (-1);
+	}
 	*n = (*n)->left;
 	c->append = append;
 	return (0);
@@ -102,7 +109,13 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
 	else if (heredoc)
 		cmd->in_fd = start_heredoc((*next)->terminal);
 	if (cmd->in_fd == -1)
+	{
+		perror((*next)->terminal);
+		cmd->in_fd = open("/dev/null", O_RDONLY);
+		if (cmd->in_fd == -1)
+			exit ((perror("fatal: open"), -1));
 		return (-1);
+	}
 	*next = (*next)->left;
 	cmd->heredoc = heredoc;
 	return (0);
@@ -115,15 +128,9 @@ void	extract_args(t_leaf *next, t_Command *cmd)
 		if (next->token == STR)
 			cmd->args = ft_strarray_append(cmd->args, next->terminal);
 		else if (next->token == OUT_REDIRECT || next->token == APPEND)
-		{
-			if (handle_out_redirect(&next, cmd) == -1)
-				return ;
-		}
+			handle_out_redirect(&next, cmd);
 		else if (next->token == IN_REDIRECT || next->token == HEREDOC)
-		{
-			if (handle_in_redirect(&next, cmd) == -1)
-				return ;
-		}
+			handle_in_redirect(&next, cmd);
 		next = next->left;
 	}
 }

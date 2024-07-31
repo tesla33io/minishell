@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/30 18:06:30 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/31 23:52:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 	else
 	{
 		bin = check_exec_binary(ft_getenv(cmd->envpv, "PATH"), cmd->bin_name);
+		if (!bin)
+			exit (127);
 		if (execve(bin, cmd->args, cmd->envpv) < 0)
 			exit(execve_fail());
 	}
