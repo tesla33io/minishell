@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 00:14:24 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 00:25:31 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ static int	handle_out_redirect(t_leaf **n, t_Command *c)
 			exit ((perror("fatal: open"), -1));
 		return (-1);
 	}
-	*n = (*n)->left;
 	c->append = append;
 	return (0);
 }
@@ -116,7 +115,6 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
 			exit ((perror("fatal: open"), -1));
 		return (-1);
 	}
-	*next = (*next)->left;
 	cmd->heredoc = heredoc;
 	return (0);
 }
