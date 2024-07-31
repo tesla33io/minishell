@@ -35,6 +35,7 @@ char	*match_alternative(t_lex *lexer, t_token *token_stream,
 	char	*tmp;
 	char	*symbol;
 	t_token	*travel;
+	int		i = 0;
 
 	if ((count_words(alternatives[1], ' ') > count_tokens(token_stream))
 		|| (!contains_non_terminal(alternatives[1])
@@ -47,13 +48,15 @@ char	*match_alternative(t_lex *lexer, t_token *token_stream,
 		travel = token_stream;
 		while (travel && contains_terminal(symbol))
 		{
-			if (travel->token == tok2int(symbol) && !travel->matched
+			if (travel->token == tok2int(symbol) && (i || (!i && travel == token_stream))
+				&& !travel->matched
 				&& ++travel->matched && lexer->unmatched--)
 				break ;
 			travel = travel->next;
 		}
 		if (!travel && contains_terminal(symbol))
 			return (alternatives[0]);
+		i++;
 	}
 	return (alternatives[1]);
 }
@@ -74,7 +77,7 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent,
 		alternative = match_alternative(shell_data->lexer, token_stream,
 				(char *[]){alternative, ft_chop(production, '|')});
 	}
-	if (!alternative && token_stream)
+	if (!alternative)
 	{
 		printf("Syntax Error\n");
 		return ;

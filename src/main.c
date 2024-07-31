@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/28 18:39:50 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:40:02 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char *av[], char *envp[])
 	while (1)
 	{
 		init(shell_data);
-		if (render_prompt(shell_data))
+		if (render_prompt(shell_data) != -1)
 		{
 			lexer(shell_data->lexer);
 			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND),
