@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/30 17:43:03 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 19:32:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ int	adapt(t_leaf *ast_root, t_shell_data *shd)
 
 	exit_code = 0;
 	if (ast_root->token == STR || ast_root->token == OUT_REDIRECT
-		|| ast_root->token == IN_REDIRECT)
+		|| ast_root->token == IN_REDIRECT || ast_root->token == APPEND
+		|| ast_root->token == HEREDOC)
 	{
 		exit_code = handle_command(ast_root, shd);
 	}
 	else if (ast_root->token == PIPE || ast_root->token == OUT_REDIRECT
-		|| ast_root->token == IN_REDIRECT)
+		|| ast_root->token == IN_REDIRECT || ast_root->token == APPEND
+		|| ast_root->token == HEREDOC)
 	{
 		pl = extract_pipeline(ast_root, shd);
 		if (pl)

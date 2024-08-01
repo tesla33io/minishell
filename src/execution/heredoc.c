@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:18:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/30 18:18:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 19:26:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	start_heredoc(const char *delim)
 		close(pipefd[0]);
 		read_heredoc(delim, pipefd[1]);
 		close(pipefd[1]);
+		gc_free_gc(0);
+		gc_free_gc(5);
 		exit(0);
 	}
 	else if (cpid > 0 && (close(pipefd[1]), 1))
