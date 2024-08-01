@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 23:44:30 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,16 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
 	return (0);
 }
 
-void	extract_args(t_leaf *next, t_Command *cmd)
+void	extract_args(t_leaf *node, t_Command *cmd)
 {
-	while (next)
+	while (node)
 	{
-		if (next->token == STR)
-			cmd->args = ft_strarray_append(cmd->args, next->terminal);
-		else if (next->token == OUT_REDIRECT || next->token == APPEND)
-			handle_out_redirect(&next, cmd);
-		else if (next->token == IN_REDIRECT || next->token == HEREDOC)
-			handle_in_redirect(&next, cmd);
-		next = next->left;
+		if (node->token == STR)
+			cmd->args = ft_strarray_append(cmd->args, node->terminal);
+		else if (node->token == OUT_REDIRECT || node->token == APPEND)
+			handle_out_redirect(&node, cmd);
+		else if (node->token == IN_REDIRECT || node->token == HEREDOC)
+			handle_in_redirect(&node, cmd);
+		node = node->left;
 	}
 }
