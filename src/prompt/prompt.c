@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/31 23:13:36 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:40:22 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	render_prompt(t_shell_data *shd)
 {
 	char	*rlret;
 
-	rlret = readline("\033[32;1m€\033[0m ");
+	rlret = readline("\033[32;1m₳\033[0m ");
 	if (!rlret)
 	{
 		printf("0: %p\n", (*gc_get_storage(0))->next);

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:18:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 19:26:03 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:39:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	read_heredoc(const char *delim, int wrfd)
 {
 	char	*line_buffer;
 
-	line_buffer = readline("> ");
+	line_buffer = readline("\033[33;3m₿\033[0m ");
 	while (line_buffer != NULL)
 	{
 		if (strncmp(line_buffer, delim, strlen(delim)) == 0)
@@ -59,7 +59,7 @@ static void	read_heredoc(const char *delim, int wrfd)
 		write(wrfd, line_buffer, strlen(line_buffer));
 		write(wrfd, "\n", 1);
 		free(line_buffer);
-		line_buffer = readline("> ");
+		line_buffer = readline("\033[33;3m₿\033[0m ");
 	}
 	free(line_buffer);
 }

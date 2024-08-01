@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 19:32:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:44:59 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static int	handle_command(t_leaf *ast_root, t_shell_data *shd)
 	if (cmd_pid == 0)
 	{
 		cmd = extract_command(ast_root, shd);
+		if (!cmd)
+			return (0);
 		cmd->envpv = shd->envpv;
 		execute_command_in_child(cmd,
 				(int [2][2]){{-1, -1}, {-1, -1}}, 0, 1);

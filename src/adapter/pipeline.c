@@ -6,13 +6,14 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 17:52:46 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/30 17:05:37 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:02:55 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
 #include "../../include/minishell.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 
 /*#define PRINT_LEAF(node) do { \
@@ -36,7 +37,7 @@
     } \
 } while (0) */
 
-static t_leaf	*get_first_pipe_cmd(t_leaf *pl_root);
+static t_leaf	*get_pipe_cmd(t_leaf *pl_root, int i);
 static int		count_pipe_elements(t_leaf *node);
 
 t_Pipeline	*extract_pipeline(t_leaf *pl_root, t_shell_data *shd)
@@ -48,43 +49,51 @@ t_Pipeline	*extract_pipeline(t_leaf *pl_root, t_shell_data *shd)
 	pl = gc_malloc(sizeof(*pl));
 	if (!pl)
 		return (NULL);
-	pl->num_cmds = count_pipe_elements(pl_root);
+	pl->num_cmds = count_pipe_elements(pl_root) + 1;
 	pl->commands = gc_malloc(sizeof(t_Command *) * pl->num_cmds);
 	if (!pl->commands)
 		return (NULL);
 	i = 0;
-	cur = get_first_pipe_cmd(pl_root);
 	while (i < pl->num_cmds && cur != NULL)
 	{
-		if (cur->token == STR)
-			pl->commands[i++] = extract_command(cur, shd);
-		if (cur->parent && cur->parent->right)
-			cur = get_first_pipe_cmd(cur->parent->right);
+		cur = get_pipe_cmd(pl_root, i);
+		if (cur->token == STR || cur->token == IN_REDIRECT
+			|| cur->token == OUT_REDIRECT || cur->token == APPEND
+			|| cur->token == HEREDOC)
+			pl->commands[i] = extract_command(cur, shd);
+		i++;
 	}
 	return (pl);
 }
 
-static t_leaf	*get_first_pipe_cmd(t_leaf *pl_root)
+static t_leaf	*get_pipe_cmd(t_leaf *pl_root, int i)
 {
-	t_leaf	*left_most;
+	int		j;
 
-	left_most = pl_root;
-	while (left_most && left_most->token == PIPE)
-		left_most = left_most->left;
-	return (left_most);
+	j = 0;
+	while (j < i)
+	{
+		if (pl_root->right && pl_root->right->token == PIPE)
+			pl_root = pl_root->right;
+		else if (pl_root->right && pl_root->right->token != PIPE)
+			return (pl_root->right);
+		j++;
+	}
+	return (pl_root->left);
 }
 
 static int	count_pipe_elements(t_leaf *node)
 {
-	int	count;
-
-	count = 0;
-	if (node->token == STR)
-		count = 1;
+	if (node == NULL)
+		return (0);
 	if (node->token == PIPE)
 	{
-		count += count_pipe_elements(node->left);
-		count += count_pipe_elements(node->right);
+		return (1 + count_pipe_elements(node->left)
+			+ count_pipe_elements(node->right));
 	}
-	return (count);
+	else
+	{		
+		return (count_pipe_elements(node->left)
+			+ count_pipe_elements(node->right));
+	}
 }

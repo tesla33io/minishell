@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 00:32:24 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:49:52 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ t_Command	*extract_command(t_leaf *cmd_root, t_shell_data *shd)
 		handle_in_redirect(&next, cmd);
 		next = next->left;
 	}
+	if (next && next->token == 0)
+		return (NULL);
 	extract_args(next, cmd);
 	cmd->bin_name = cmd->args[0];
 	return (cmd);
