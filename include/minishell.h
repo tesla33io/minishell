@@ -147,6 +147,7 @@ t_Command					*extract_command(t_leaf *cmd_root,
 void						extract_args(t_leaf *next, t_Command *cmd);
 t_Pipeline					*extract_pipeline(t_leaf *pl_root,
 								t_shell_data *shd);
+void	insert_placeholder(t_lex *lexer);
 
 /* Signals */
 

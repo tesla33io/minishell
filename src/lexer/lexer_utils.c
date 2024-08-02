@@ -66,3 +66,17 @@ int	count_tokens(t_token *head)
 		travel = travel->next;
 	return (count);
 }
+
+
+//TODO redecide which char it should be
+//single quotes are not expanded nor globbed
+//double quptes are expanded but not globbed
+//str is expanded and globbed
+void	insert_placeholder(t_lex *lexer);
+{
+	t_token *travel;
+
+	travel = lexer->head;
+	while (travel)
+	{
+		

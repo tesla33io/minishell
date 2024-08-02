@@ -120,16 +120,22 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
 	return (0);
 }
 
-void	extract_args(t_leaf *next, t_Command *cmd)
+void	extract_args(t_leaf *node, t_Command *cmd)
 {
-	while (next)
+	while (node)
 	{
-		if (next->token == STR)
-			cmd->args = ft_strarray_append(cmd->args, next->terminal);
-		else if (next->token == OUT_REDIRECT || next->token == APPEND)
+		if (node->token == STR)
+		{
+			//if (contains_c(node->terminal, '*'))
+			//	glober(&node);
+			//if (contains_c(node->terminal, '$'))
+			//	var_expand(&node->terminal);
+			cmd->args = ft_strarray_append(cmd->args, node->terminal);
+		}
+		else if (node->token == OUT_REDIRECT || node->token == APPEND)
 			handle_out_redirect(&next, cmd);
-		else if (next->token == IN_REDIRECT || next->token == HEREDOC)
-			handle_in_redirect(&next, cmd);
-		next = next->left;
+		else if (node->token == IN_REDIRECT || node->token == HEREDOC)
+			handle_in_redirect(&node, cmd);
+		node = node->left;
 	}
 }
