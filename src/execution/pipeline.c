@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:00:09 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:14:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	execute_pipeline(t_Pipeline *pl)
 		if (i > 0)
 			destroy_pipe(pipefd, (i - 1) % 2);
 	}
-	look_after_children(pl->num_cmds, pids);
+	set_last_exit_code(look_after_children(pl->num_cmds, pids), 's');
 	return (0);
 }
 

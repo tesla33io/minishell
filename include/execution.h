@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:57:49 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../lib/libft/libft.h"
 
 # include <stdbool.h>
+# include <unistd.h>
 
 # define RD 0
 # define WR 1
@@ -71,5 +72,7 @@ int					cmd_not_found(char *name);
 /* Misc functions */
 
 char				*ft_path_join(char *path1, char *path2);
+unsigned char		set_last_exit_code(int code, int flag);
+int					get_exit_code(pid_t pid);
 
 #endif /* EXECUTION_H */
