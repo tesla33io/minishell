@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/02 18:59:24 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:52:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,25 @@ static int	handle_command(t_leaf *ast_root, t_shell_data *shd)
 	int			exit_code;
 
 	exit_code = 1;
-	cmd_pid = fork();
-	cmd = NULL;
-	if (cmd_pid == 0)
+	cmd = extract_command(ast_root, shd);
+	if (!cmd)
+		return (1);
+	cmd->envpv = shd->envpv;
+	if (is_builtin(cmd->bin_name))
 	{
-		cmd = extract_command(ast_root, shd);
-		if (!cmd)
-			return (1);
-		cmd->envpv = shd->envpv;
-		execute_command_in_child(cmd,
-				(int [2][2]){{-1, -1}, {-1, -1}}, 0, 1);
+		setup_ipc(cmd, 0, (int [2][2]) {{-1}}, 1);
+		exit_code = run_builtin(cmd);
 	}
 	else
-		exit_code = get_exit_code(cmd_pid);
-	if (cmd && cmd->out_fd > 0)
-		(close(cmd->out_fd), dup2(1, STDOUT_FILENO));
-	if (cmd)
-		shd->envpv = cmd->envpv;
+	{
+		cmd_pid = fork();
+		if (cmd_pid == 0)
+			execute_command_in_child(cmd, (int [2][2]){{-1}}, 0, 1);
+		else
+			exit_code = get_exit_code(cmd_pid);
+	}
+	if (exit_code == 11)
+		ft_putendl_fd("Segmentaion fault :(", 2);
+	shd->envpv = cmd->envpv;
 	return (exit_code);
 }

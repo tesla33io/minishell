@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:31:25 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,24 @@ static int	check_if_path_to_bin(char *bin_name)
 			|| ft_strncmp(bin_name, "./", 2) == 0
 			|| ft_strncmp(bin_name, "/", 1) == 0)
 		&& access(bin_name, X_OK) == 0);
+}
+
+char	**get_environment(char **envp)
+{
+	static char	**envi = {NULL};
+
+	if (envp)
+	{
+		if (envi)
+			ft_strarray_free(envi);
+		envi = ft_strarray_alloc(ft_strarray_len(envp));
+		if (ft_strarray_dup(envp, envi) < 0)
+		{
+			return (ret_null("ENVP duplication failed.", (char *) __FUNCTION__,
+				__LINE__));
+		}
+	}
+	else if (!envi && !envp)
+		envi = ft_strarray_alloc(0);
+	return (envi);
 }

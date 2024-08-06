@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/02 18:12:09 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:22:27 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ struct						s_shell_data
 	t_lex					*lexer;
 	t_ast					*ast;
 	char					**envpv;
+	int						stdoutcp;
+	int						stdincp;
 };
 
 struct						s_ast

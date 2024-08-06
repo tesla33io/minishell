@@ -1,0 +1,55 @@
+#!/bin/bash
+
+nm -u minishell \
+	| grep --colour=auto -v readline \
+	| grep --colour=auto -v rl_clear_history \
+	| grep --colour=auto -v rl_on_new_line \
+	| grep --colour=auto -v rl_replace_line \
+	| grep --colour=auto -v rl_redisplay \
+	| grep --colour=auto -v add_history \
+	| grep --colour=auto -v printf \
+	| grep --colour=auto -v malloc \
+	| grep --colour=auto -v free \
+	| grep --colour=auto -v write \
+	| grep --colour=auto -v access \
+	| grep --colour=auto -v open \
+	| grep --colour=auto -v read \
+	| grep --colour=auto -v close \
+	| grep --colour=auto -v fork \
+	| grep --colour=auto -v wait \
+	| grep --colour=auto -v waitpid \
+	| grep --colour=auto -v wait3 \
+	| grep --colour=auto -v wait4 \
+	| grep --colour=auto -v signal \
+	| grep --colour=auto -v sigaction \
+	| grep --colour=auto -v sigemptyset \
+	| grep --colour=auto -v sigaddset \
+	| grep --colour=auto -v kill \
+	| grep --colour=auto -v exit \
+	| grep --colour=auto -v getcwd \
+	| grep --colour=auto -v chdir \
+	| grep --colour=auto -v stat \
+	| grep --colour=auto -v fstat \
+	| grep --colour=auto -v unlink \
+	| grep --colour=auto -v execve \
+	| grep --colour=auto -v dup2 \
+	| grep --colour=auto -v pipe \
+	| grep --colour=auto -v opendir \
+	| grep --colour=auto -v closedir \
+	| grep --colour=auto -v strerror \
+	| grep --colour=auto -v perror \
+	| grep --colour=auto -v ttyname \
+	| grep --colour=auto -v ttyslot \
+	| grep --colour=auto -v ioctl \
+	| grep --colour=auto -v getenv \
+	| grep --colour=auto -v tcsetattr \
+	| grep --colour=auto -v tcgetattr \
+	| grep --colour=auto -v tgetent \
+	| grep --colour=auto -v tgetflag \
+	| grep --colour=auto -v tgetnum \
+	| grep --colour=auto -v tgetstr \
+	| grep --colour=auto -v tgoto \
+	| grep --colour=auto -v tputs \
+	| grep --colour=auto -v "w " \
+	| grep --colour=auto -v "__" \
+	| sort

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:33:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:29:20 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	**ft_strarray_append(char **array, char *new_str)
 		len = 0;
 	else
 		len = ft_strarray_len(array);
-	new_array = malloc((sizeof(char *)) * (len + 2));
+	new_array = gc_malloc((sizeof(char *)) * (len + 2));
 	if (!new_array)
 		return (NULL);
 	if (array != NULL)

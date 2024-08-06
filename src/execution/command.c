@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:33 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:21:32 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 #include "../../include/builtins.h"
 
 #include <curses.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h> /* getenv() */
 
-static void	setup_ipc(t_Command *cmd, int i, int pipefd[2][2], int num_cmds);
-
-void	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
+int	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 		int i, int num_cmds)
 {
 	char	*bin;
+	int		exit_code;
 
+	exit_code = 1;
 	setup_ipc(cmd, i, pipefd, num_cmds);
 	if (is_builtin(cmd->bin_name))
-		exit(run_builtin(cmd));
+		exit_code = run_builtin(cmd);
 	else
 	{
 		bin = check_exec_binary(ft_getenv(cmd->envpv, "PATH"), cmd->bin_name);
@@ -36,6 +37,8 @@ void	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 		if (execve(bin, cmd->args, cmd->envpv) < 0)
 			exit(execve_fail());
 	}
+	exit(exit_code);
+	return (1);
 }
 
 int	is_builtin(char *bin_name)
@@ -65,7 +68,7 @@ int	run_builtin(t_Command *cmd)
 		return (0);
 }
 
-static void	setup_ipc(t_Command *cmd, int i, int pipefd[2][2], int num_cmds)
+void	setup_ipc(t_Command *cmd, int i, int pipefd[2][2], int num_cmds)
 {
 	if (cmd->in_fd != 0)
 		dup2(cmd->in_fd, STDIN_FILENO);
