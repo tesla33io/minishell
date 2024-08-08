@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:56:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,15 @@ void	*gc_malloc(size_t size)
 	t_list	*new_node;
 	t_list	**gc;
 
-	ret = ft_calloc(1, size);
+	ret = malloc(size);
 	if (!ret)
 		ft_putstr_fd("Error (gc_malloc): memory allocation failed.\n", 2);
 	gc = gc_get_storage(-1);
 	if (!gc || !*gc)
-		return ((void *)42);
+		return (NULL);
 	new_node = ft_lstnew(ret);
 	if (!new_node)
-		return ((void *)42);
+		return (NULL);
 	ft_memset(ret, 0, size);
 	ft_lstadd_back(gc, new_node);
 	return (ret);
@@ -109,6 +109,7 @@ void gc_free_ptr(void **ptr)
 void	gc_free_gc(int flag)
 {
 	t_list		*node;
+	t_list		*tmp;
 	t_list		**gc;
 
 	gc = gc_get_storage(flag);
@@ -119,7 +120,9 @@ void	gc_free_gc(int flag)
 	{
 		if (node->content)
 			gc_free_ptr((void **) &node->content);
+		tmp = node;
 		node = node->next;
+		gc_free_ptr((void **) &tmp);
 	}
 	gc_free_ptr((void **) &node->content);
 	gc_free_ptr((void **) &node);

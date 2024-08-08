@@ -6,11 +6,13 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 23:14:35 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:28:12 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+#include <unistd.h>
 
 void	init_lexer(t_shell_data *shell_data)
 {

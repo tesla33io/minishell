@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:37:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,13 @@ static t_Command	*init_command(t_shell_data *shd)
 {
 	t_Command	*cmd;
 
+	(void)shd;
 	cmd = gc_malloc(sizeof(*cmd));
 	if (!cmd)
 		return (NULL);
 	cmd->bin_name = NULL;
 	cmd->args = ft_strarray_alloc(0);
-	cmd->envpv = NULL;
-	if (shd->envpv)
-		cmd->envpv = shd->envpv;
+	cmd->envpv = shd->envpv;
 	cmd->in_fd = 0;
 	cmd->out_fd = 1;
 	cmd->append = false;

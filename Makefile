@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr        #
+#    Updated: 2024/08/05 16:33:40 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC_FILES		+= builtins/exit.c
 
 SRC_FILES		+= utils/envp_utils.c
 SRC_FILES		+= utils/cmd_error_utils.c
+SRC_FILES		+= utils/error_utils.c
 SRC_FILES		+= utils/misc.c
 
 SRC_FILES		+= adapter/adapter.c

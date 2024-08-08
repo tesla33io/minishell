@@ -6,12 +6,17 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/08 22:07:51 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <signal.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+static void	restore_stdfd(int stdoutcp, int stdincp);
 
 int	main(int ac, char *av[], char *envp[])
 {
@@ -20,11 +25,15 @@ int	main(int ac, char *av[], char *envp[])
 	(void)ac;
 	(void)av;
 	signal(SIGINT, sh_sigint_handler);
+	sigaction(SIGQUIT, &(struct sigaction){.sa_handler = SIG_IGN}, NULL);
 	gc_set_storage(5);
 	shell_data = gc_malloc(sizeof(t_shell_data));
 	shell_data->envpv = ft_strarray_alloc(ft_strarray_len(envp));
-	if (ft_strarray_dup(envp, shell_data->envpv) < 0)
-		return (dprintf(2, "minishell: fatal error: can't duplicate env"));
+	ft_strarray_dup(envp, shell_data->envpv);
+	if (!shell_data->envpv)
+		return (1);
+	shell_data->stdoutcp = dup(STDOUT_FILENO);
+	shell_data->stdincp = dup(STDIN_FILENO);
 	while (1)
 	{
 		init(shell_data);
@@ -34,29 +43,15 @@ int	main(int ac, char *av[], char *envp[])
 			ft_parse(shell_data, ft_strdup(COMPLETE_COMMAND),
 				shell_data->ast->root, shell_data->lexer->head);
 			adapt(shell_data->ast->root, shell_data);
+			restore_stdfd(shell_data->stdoutcp, shell_data->stdincp);
 		}
 		gc_free_gc(0);
 	}
 	return (0);
 }
 
-void	print_ast_leafs(t_leaf *l, int i)
+static void	restore_stdfd(int stdoutcp, int stdincp)
 {
-	printf("=== LEAF [%d] (%p) ===\n", i++, (void *) l);
-	printf("[%d] TERM: %s\n", l->token, l->terminal);
-	printf("Parent: %p\nLeft: %p\nRight: %p\n",
-		(void *) l->parent, (void *) l->left, (void *) l->right);
-	if (l->left && l->left->terminal)
-	{
-		printf("=== =================== ===\n");
-		printf("LEFT NODE of %i (%p)\n", i - 1, (void *) l);
-		print_ast_leafs(l->left, i);
-	}
-	if (l->right && l->right->terminal)
-	{
-		printf("=== =================== ===\n");
-		printf("RIGHT NODE of %i (%p)\n", i - 1, (void *) l);
-		print_ast_leafs(l->right, i);
-	}
-	printf("=== =================== ===\n");
+	dup2(stdoutcp, STDOUT_FILENO);
+	dup2(stdincp, STDIN_FILENO);
 }

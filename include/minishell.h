@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:22:27 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ struct						s_shell_data
 	t_lex					*lexer;
 	t_ast					*ast;
 	char					**envpv;
+	int						stdoutcp;
+	int						stdincp;
 };
 
 struct						s_ast
@@ -145,7 +147,7 @@ int							count_tokens(t_token *head);
 t_token						*split_stream(t_token **token_stream);
 int							contains_token(t_token *head, t_tkntype type);
 
-int							adapt(t_leaf *ast_root, t_shell_data *shd);
+void						adapt(t_leaf *ast_root, t_shell_data *shd);
 t_Command					*extract_command(t_leaf *cmd_root,
 								t_shell_data *shd);
 void						extract_args(t_leaf *next, t_Command *cmd);
