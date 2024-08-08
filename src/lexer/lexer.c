@@ -52,14 +52,13 @@ void	get_token_data(t_token *tok, char *str, int len, int backslash)
 	ft_strlcpy(tok->lexeme, str + backslash, len + 1);
 	tok->token = get_token(str[0]);
 	tok->matched = 0;
-	if (tok->token == L_PARENTHESIS || tok->token == R_PARENTHESIS)
-		tok->pair_token = 1;
-	else
-		tok->pair_token = 0;
+	tok->var = NULL;
+	//if (tok->token == L_PARENTHESIS || tok->token == R_PARENTHESIS)
+	//	tok->pair_token = 1;
+	//else
+	//	tok->pair_token = 0;
 }
 
-//add a token to the tokenstream, for now singly linked, maybe double link
-//later | TODO refactor
 void	append_token(t_lex *lexer, char *str, int len, int backslash)
 {
 	t_token	*travel;

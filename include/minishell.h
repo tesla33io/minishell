@@ -66,7 +66,9 @@ struct						s_token
 {
 	enum e_tkntype			token;
 	char					*lexeme;
-	int						pair_token;
+	char					*var;
+	char 					*glob;
+//	int						pair_token;
 	int						matched;
 	t_token					*next;
 };
@@ -101,6 +103,8 @@ struct						s_leaf
 {
 	enum e_tkntype			token;
 	char					*terminal;
+	char 					*var;
+	char 					*glob;
 	t_leaf					*parent;
 	t_leaf					*left;
 	t_leaf					*right;
@@ -149,6 +153,9 @@ t_Command					*extract_command(t_leaf *cmd_root,
 void						extract_args(t_leaf *next, t_Command *cmd);
 t_Pipeline					*extract_pipeline(t_leaf *pl_root,
 								t_shell_data *shd);
+void	set_varflag(t_lex *lexer);
+void set_globflag(t_lex *lexer);
+
 
 /* Signals */
 
@@ -157,5 +164,9 @@ void						sh_sigint_handler(int signum);
 void						remove_quotations(char *str);
 
 void						print_ast_leafs(t_leaf *l, int i);
+void    var_expand(t_leaf *leaf);
+char *var_name(char *str, char *flag);
+char *get_value(char *variable);
+char *insert_var(char *str, char *value, int start);
 
 #endif

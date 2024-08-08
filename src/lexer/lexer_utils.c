@@ -29,8 +29,6 @@ int	contains_token(t_token *head, t_tkntype type)
 		return (1);
 }
 
-//TODO recode bc of change of list type
-//take out the trash token, should keep tokenstream seemlessly connected
 void	take_out_trash(t_token *head)
 {
 	t_token		*current;
@@ -42,6 +40,8 @@ void	take_out_trash(t_token *head)
 		head = head->next;
 	if (!head)
 		return ;
+	current = head;
+        previous = NULL;
 	while (current)
 	{
 		if (current->token == TRASH)
@@ -66,3 +66,61 @@ int	count_tokens(t_token *head)
 		travel = travel->next;
 	return (count);
 }
+
+
+//TODO redecide which char it should be
+//single quotes are not expanded nor globbed
+//double quptes are expanded but not globbed
+//str is expanded and globbed
+// char *var;
+
+void	set_varflag(t_lex *lexer)
+{
+	int len;
+	t_token *travel;
+
+	len = 0;
+	travel = lexer->head;
+	while (travel)
+	{
+		if (travel->token == STR || travel->token == D_QUOTE)
+		{
+			len = ft_strlen(travel->lexeme) + 1 - 2 * (travel->token == D_QUOTE);
+			travel->var = ft_memset(gc_malloc(len), 'Y', len);
+			travel->var[len - 1] = '\0';
+		}
+		else
+		{
+			len = ft_strlen(travel->lexeme) + 1 - 2 * (travel->token == S_QUOTE);
+			travel->var = ft_memset(gc_malloc(len), 'N', len);
+			travel->var[len - 1] = '\0';
+		}
+		travel = travel->next;
+	}
+}
+
+void	set_globflag(t_lex *lexer)
+{
+        int len;
+        t_token *travel;
+
+        len = 0;
+        travel = lexer->head;
+        while (travel)
+        {   
+                if (travel->token == STR)
+                {   
+                        len = ft_strlen(travel->lexeme) + 1;
+                        travel->glob = ft_memset(gc_malloc(len), 'Y', len);
+                        travel->glob[len - 1] = '\0';
+                }   
+                else
+                {   
+                        len = ft_strlen(travel->lexeme) + 1 - 2 * (travel->token == S_QUOTE || travel->token == D_QUOTE);
+                        travel->glob = ft_memset(gc_malloc(len), 'N', len);
+                        travel->glob[len - 1] = '\0';
+                }   
+                travel = travel->next;
+        }   
+}
+

@@ -108,6 +108,8 @@ t_leaf	*append_leaf(t_leaf *leaf, t_leaf *parent, t_token *tok)
 		printf("issue, not malloced leaf when appending\n");
 	leaf->token = tok->token;
 	leaf->terminal = tok->lexeme;
+	leaf->var = tok->var;
+	leaf->glob = tok->glob;
 	leaf->parent = parent;
 	leaf->left = gc_malloc(sizeof(t_leaf));
 	leaf->left->terminal = NULL;
