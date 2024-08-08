@@ -60,12 +60,16 @@ SRC_FILES		+= signals/sh_signals.c
 SRC_FILES		+= main.c
 SRC_FILES		+= prompt/prompt.c
 SRC_FILES		+= init.c
+
 SRC_FILES		+= lexer/lexer.c
 SRC_FILES		+= lexer/lexer_utils.c
 SRC_FILES		+= lexer/merge.c
+
 SRC_FILES		+= parser/parser.c
 SRC_FILES		+= parser/parser_utils.c
 SRC_FILES		+= parser/utils.c
+
+SRC_FILES		+= expander/expander.c
 
 # Object files directory
 OBJ_DIR			:= obj/

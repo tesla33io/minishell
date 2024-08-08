@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 #include <stdlib.h>
 
 static int	count_digits(long n)
@@ -66,7 +66,7 @@ char	*ft_itoa(int n)
 	digits = count_digits(nbr);
 	if (nbr < 0)
 		digits += 1;
-	str = (char *)malloc((digits + 1) * sizeof(char));
+	str = gc_malloc((digits + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	fill_string(str, nbr, digits);

@@ -128,12 +128,12 @@ void	extract_args(t_leaf *node, t_Command *cmd)
 		{
 			//if (contains_c(node->terminal, '*'))
 			//	glober(&node);
-			//if (contains_c(node->terminal, '$'))
-			//	var_expand(&node->terminal);
+			if (contains_c(node->terminal, '$'))
+				var_expand(node); //or should it be &node?
 			cmd->args = ft_strarray_append(cmd->args, node->terminal);
 		}
 		else if (node->token == OUT_REDIRECT || node->token == APPEND)
-			handle_out_redirect(&next, cmd);
+			handle_out_redirect(&node, cmd);
 		else if (node->token == IN_REDIRECT || node->token == HEREDOC)
 			handle_in_redirect(&node, cmd);
 		node = node->left;

@@ -50,7 +50,6 @@ void	remove_quotations(char *str)
 	}
 }
 
-//needs to be fixed bc merges 2 consecutive strings max
 void	merge_strings(t_lex *lexer)
 {
 	t_token	*travel;
@@ -69,6 +68,8 @@ void	merge_strings(t_lex *lexer)
 			&& travel->next->token == STR)
 		{
 			travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
+			travel->var = ft_strjoin(travel->var, travel->next->var);
+			travel->glob = ft_strjoin(travel->glob, travel->next->glob);
 			travel->next->token = TRASH;
 			take_out_trash(lexer->head);
 		}
@@ -95,6 +96,8 @@ void	remove_spaces(t_lex *lexer)
 void	merge_tokens(t_lex *lexer)
 {
 	group_tokens(lexer);
+	set_varflag(lexer);
+	set_globflag(lexer);
 	merge_strings(lexer);
 	remove_spaces(lexer);
 }
