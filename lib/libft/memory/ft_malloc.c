@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/05 19:13:17 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:56:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,15 @@ void	*gc_malloc(size_t size)
 	t_list	*new_node;
 	t_list	**gc;
 
-	ret = ft_calloc(1, size);
+	ret = malloc(size);
 	if (!ret)
 		ft_putstr_fd("Error (gc_malloc): memory allocation failed.\n", 2);
 	gc = gc_get_storage(-1);
 	if (!gc || !*gc)
-		return ((void *)42);
+		return (NULL);
 	new_node = ft_lstnew(ret);
 	if (!new_node)
-		return ((void *)42);
+		return (NULL);
 	ft_memset(ret, 0, size);
 	ft_lstadd_back(gc, new_node);
 	return (ret);

@@ -37,7 +37,7 @@ void	take_out_trash(t_token *head)
 	t_token		*previous;
 
 	current = head;
-	previous = NULL;
+	previous = head;
 	if (head && head->token == TRASH)
 		head = head->next;
 	if (!head)

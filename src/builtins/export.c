@@ -6,14 +6,12 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 20:04:55 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 17:29:56 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/08 21:09:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/execution.h"
-
-#include <stdio.h> /* DELETE */
 
 int	export_builtin(t_Command *exprt)
 {

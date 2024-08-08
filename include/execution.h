@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 17:52:27 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:51:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdbool.h>
 # include <unistd.h>
 
+# define MAX_N_FDS 1024
 # define RD 0
 # define WR 1
 # define BUILTIN_FAILED "builtin failed to execute."
@@ -81,5 +82,6 @@ int					ret_int(char *msg, char *func, int line, int code);
 char				*ft_path_join(char *path1, char *path2);
 unsigned char		set_last_exit_code(int code, int flag);
 int					get_exit_code(pid_t pid);
+int					close_extra_fds(void);
 
 #endif /* EXECUTION_H */

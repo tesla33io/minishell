@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 18:21:32 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:50:32 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include <curses.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h> /* getenv() */
 
@@ -31,9 +30,14 @@ int	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 		exit_code = run_builtin(cmd);
 	else
 	{
+		close_extra_fds();
 		bin = check_exec_binary(ft_getenv(cmd->envpv, "PATH"), cmd->bin_name);
 		if (!bin)
-			exit (127);
+		{
+			gc_free_gc(0);
+			gc_free_gc(5);
+			exit(127);
+		}
 		if (execve(bin, cmd->args, cmd->envpv) < 0)
 			exit(execve_fail());
 	}
@@ -64,6 +68,8 @@ int	run_builtin(t_Command *cmd)
 		return (unset_builtin(cmd));
 	else if (ft_strcmp(cmd->bin_name, "cd") == 0)
 		return (cd_builtin(cmd));
+	else if (ft_strcmp(cmd->bin_name, "exit") == 0)
+		return (exit_builtin(cmd));
 	else
 		return (0);
 }
