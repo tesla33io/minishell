@@ -32,6 +32,6 @@ void	init(t_shell_data *shell_data)
 	shell_data->ast->leafcount = 0;
 	shell_data->ast->root = gc_malloc(sizeof(t_leaf));
 	shell_data->ast->root->terminal = NULL;
-	shell_data->parse_success = 1;
+	shell_data->parse_success = 0;
 	gc_set_storage(0);
 }
