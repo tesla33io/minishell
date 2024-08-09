@@ -72,12 +72,13 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent,
 	alternative = NULL;
 	if (!shell_data->parse_success || (!token_stream && !production && !shell_data->lexer->unmatched))
 		return ;
+	}
 	while (contains_c(production, '|'))
 	{
 		alternative = match_alternative(shell_data->lexer, token_stream,
 				(char *[]){alternative, ft_chop(production, '|')});
 	}
-	if (!alternative && ft_printf(2, "Syntax Error near token %s\n", token_stream->lexeme) && shell_data->parse_success--)
+	if (!alternative && ft_dprintf(2, "Syntax Error near token %s\n", token_stream->lexeme) && shell_data->parse_success--)
 		return ;
 	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);
 	while (contains_c(alternative, ' '))
@@ -87,4 +88,5 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent,
 			ft_parse(shell_data, get_production(symbol), parent,
 				split_stream(&token_stream));
 	}
+	return ;
 }
