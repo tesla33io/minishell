@@ -83,10 +83,9 @@ void	var_expand(t_leaf *leaf)
 			if (!variable)
 				continue;
 			value = get_value(variable);
-			if (!value)
-				continue;
 			leaf->terminal = ft_strjoin(ft_substr(leaf->terminal, 0, i), leaf->terminal + i + 1 + ft_strlen(variable));
-			leaf->terminal = insert_var(leaf->terminal, value, i);
+			if (value)
+				leaf->terminal = insert_var(leaf->terminal, value, i);
 		}
 	}	
 }
