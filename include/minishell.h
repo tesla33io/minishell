@@ -91,6 +91,7 @@ struct						s_shell_data
 	char					**envpv;
 	int						stdoutcp;
 	int						stdincp;
+	int					parse_success;
 };
 
 struct						s_ast

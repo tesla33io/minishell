@@ -1,20 +1,6 @@
 #include "../../include/minishell.h"
 #include "../../include/execution.h"
 
-//! if variable name not found, its just a normal str
-//names of variables are sequences of letters, numbers and underscores
-//the first symbol cant be a digit XXX
-//$? is not an environment variable but still needs to be expanded
-//heredocs are also being expanded
-
-//TODO
-//extract name XXX
-//loop through env vars and check if matching XXX
-//if no match, replace non-ascii char with $ and continue
-//if matching, insert the expansion result into the correct place of the str
-//keep looping for potential further expansions 
-
-
 char *insert_var(char *str, char *value, int start)
 {
 	int i;
