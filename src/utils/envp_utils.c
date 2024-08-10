@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 16:31:25 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 21:31:50 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ char	*ft_getenv(char **envp, char *name)
 	{
 		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0)
 		{
-			var = envp[i] + 5;
+			if (envp[i][ft_strlen(name)] != '=' && ++i)
+				continue ;
+			var = envp[i] + ft_strlen(name) + 1;
 			break ;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 17:37:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 20:12:28 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	extract_args(t_leaf *node, t_Command *cmd)
 			//if (contains_c(node->terminal, '*'))
 			//	glober(&node);
 			if (contains_c(node->terminal, '$'))
-				var_expand(node); //or should it be &node?
+				var_expand(node, cmd); //or should it be &node?
 			cmd->args = ft_strarray_append(cmd->args, node->terminal);
 		}
 		else if (node->token == OUT_REDIRECT || node->token == APPEND)

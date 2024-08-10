@@ -6,11 +6,11 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:53:05 by astavrop          #+#    #+#             */
-/*   Updated: 2024/07/23 17:23:19 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 21:00:19 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 #include <stdlib.h>
 
 /*

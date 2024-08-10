@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:54:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 17:32:32 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:57:57 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	env_builtin(t_Command *env)
 	i = 0;
 	while (env->envpv[i])
 	{
+		if (ft_strcmp("null", env->envpv[i]) == 0 && ++i)
+			continue ;
 		ft_putendl_fd(env->envpv[i], 1);
 		i++;
 	}

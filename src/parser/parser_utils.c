@@ -93,7 +93,7 @@ t_leaf	*terminal_to_leaf(t_ast *ast, t_leaf *parent, t_token *token_stream)
 				parent = append_leaf(parent->right, parent, travel);
 			else
 			{
-				printf("%s:%d (%s): parent already has 2 children\n",
+				ft_dprintf(2, "%s:%d (%s): parent already has 2 children\n",
 					__FILE__, __LINE__, __FUNCTION__);
 			}
 		}

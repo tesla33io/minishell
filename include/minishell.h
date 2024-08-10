@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/09 16:44:52 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 20:11:22 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,9 @@ void						sh_sigint_handler(int signum);
 void						remove_quotations(char *str);
 
 void						print_ast_leafs(t_leaf *l, int i);
-void    var_expand(t_leaf *leaf);
-char *var_name(char *str, char *flag);
-char *get_value(char *variable);
-char *insert_var(char *str, char *value, int start);
+void						var_expand(t_leaf *leaf, t_Command *cmd);
+char						*var_name(char *str, char *flag);
+char						*get_value(char *variable, char **envp);
+char						*insert_var(char *str, char *value, int start);
 
 #endif

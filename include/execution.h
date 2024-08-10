@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/07 22:51:00 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 20:04:43 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 # define RD 0
 # define WR 1
 # define BUILTIN_FAILED "builtin failed to execute."
+
+#include <stdio.h>
+
+#define PRINT_STRING_ARRAY(arr)					\
+    do {										\
+        printf("[ ");							\
+        for (int i = 0; arr[i] != NULL; i++)	\
+            printf(" <%s> ", arr[i]);			\
+        printf(" ]\n");							\
+    } while(0)
 
 typedef struct s_Command	t_Command;
 typedef struct s_Pipeline	t_Pipeline;

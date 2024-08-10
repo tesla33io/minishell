@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/08 16:56:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:55:26 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void	*gc_malloc(size_t size)
 void gc_free_ptr(void **ptr)
 {
     if (ptr == NULL || *ptr == NULL)
-        return ;
-    free(*ptr);
+		return ;
+	free(*ptr);
     *ptr = NULL;
 }
 
