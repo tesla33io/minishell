@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/10 20:13:06 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 22:25:35 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int ac, char *av[], char *envp[])
 			lexer(shd->lexer);
 			ft_parse(shd, ft_strdup(COMPLETE_COMMAND),
 				shd->ast->root, shd->lexer->head);
-			if (shd->parse_success == 0)
+			if (shd->parse_fail == 0)
 				adapt(shd->ast->root, shd);
 			restore_stdfd(shd->stdoutcp, shd->stdincp);
 		}

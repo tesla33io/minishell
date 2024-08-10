@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/10 20:11:22 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/10 22:19:05 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ struct						s_token
 	char					*var;
 	char 					*glob;
 //	int						pair_token;
+	int						parse_fail;
 	int						matched;
 	t_token					*next;
 };
