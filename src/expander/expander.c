@@ -39,7 +39,7 @@ char *var_name(char *str, char *flag)
 	int i;
 
 	i = 1;
-	if (ft_isdigit(str[i]))
+	if (ft_isdigit(str[i]) || !str[i])
 		return (NULL);
 	if (str[i] == '?')
 		return (ft_strdup("?"));
