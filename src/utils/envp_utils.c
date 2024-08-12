@@ -6,17 +6,17 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/10 21:31:50 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:41:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _POSIX_C_SOURCE 200809L
 #include "../../include/execution.h"
-#include "../../include/colors.h"
 
 #include <stddef.h>
-#include <stdio.h> /* DELETE */
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 static int	check_if_path_to_bin(char *bin_name);
 
@@ -58,7 +58,8 @@ char	*check_exec_binary(char *path, char *bin_name)
 		tmp_bin_name = ft_path_join(path_entries[i], bin_name);
 		if (!tmp_bin_name)
 			return (printf("ft_path_join failed.\n"), NULL);
-		if (access(tmp_bin_name, F_OK) == 0 && access(tmp_bin_name, X_OK) == 0)
+		if (access(tmp_bin_name, F_OK) == 0 && access(tmp_bin_name, X_OK) == 0
+			&& open(tmp_bin_name, O_DIRECTORY) < 0)
 		{
 			ft_strarray_free(path_entries);
 			return (tmp_bin_name);
@@ -74,7 +75,8 @@ static int	check_if_path_to_bin(char *bin_name)
 	return ((ft_strncmp(bin_name, "../", 3) == 0
 			|| ft_strncmp(bin_name, "./", 2) == 0
 			|| ft_strncmp(bin_name, "/", 1) == 0)
-		&& access(bin_name, X_OK) == 0);
+		&& access(bin_name, X_OK) == 0
+		&& open(bin_name, O_DIRECTORY) < 0);
 }
 
 char	**get_environment(char **envp)
@@ -89,7 +91,7 @@ char	**get_environment(char **envp)
 		if (ft_strarray_dup(envp, envi) < 0)
 		{
 			return (ret_null("ENVP duplication failed.", (char *) __FUNCTION__,
-				__LINE__));
+					__LINE__));
 		}
 	}
 	else if (!envi && !envp)
