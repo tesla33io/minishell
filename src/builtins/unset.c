@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:08:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/10 21:40:27 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:05:43 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,14 @@
 int	unset_builtin(t_Command *unset)
 {
 	int		i;
-	int		ret;
 
 	if (!unset)
-		return (builtin_failed(BUILTIN_FAILED, "unset", 1));
+		return (builtin_failed(BUILTIN_FAILED, "unset"));
 	gc_set_storage(5);
 	i = 1;
 	while (unset->args[i])
 	{
-		ret = remove_env_var(unset->envpv, unset->args[i]);
-		if (ret && ++i)
-			continue ;
+		remove_env_var(unset->envpv, unset->args[i]);
 		i++;
 	}
 	gc_set_storage(0);
@@ -41,12 +38,9 @@ int	remove_env_var(char **envp, char *var)
 	if (!envp || !var)
 		return (1);
 	j = 0;
+	var = ft_strjoin(var, "=");
 	while (envp[j] && ft_strncmp(envp[j], var, ft_strlen(var)) != 0)
-	{
-		if (envp[j][ft_strlen(var)] != '=' && ++j)
-			continue ;
 		j++;
-	}
 	if (!envp[j])
 		return (0);
 	envp[j] = ft_strdup("null");

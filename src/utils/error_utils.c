@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:30:56 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/05 20:45:15 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:55:17 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	ret_int(char *msg, char *func, int line, int code)
 	return (code);
 }
 
-int	builtin_failed(char *msg, char *func, int code)
+int	builtin_failed(char *msg, char *func)
 {
 	ft_putstr_fd(func, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(msg, 2);
-	return (code);
+	return (2);
 }

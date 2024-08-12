@@ -6,13 +6,13 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:52:38 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/08 20:15:15 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:51:23 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* Signals handling in the shell */
 
-#include <signal.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <unistd.h>
 

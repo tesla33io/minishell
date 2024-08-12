@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/10 20:04:43 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:55:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void				setup_ipc(t_Command *cmd, int i, int pipefd[2][2],
 
 int					fork_fail(void);
 int					execve_fail(void);
-int					builtin_failed(char *msg, char *func, int code);
+int					builtin_failed(char *msg, char *func);
 int					cmd_not_found(char *name);
 void				*ret_null(char *msg, char *func, int line);
 int					ret_int(char *msg, char *func, int line, int code);

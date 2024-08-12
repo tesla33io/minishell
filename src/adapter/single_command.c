@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/10 20:12:28 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:54:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	handle_out_redirect(t_leaf **n, t_Command *c)
 		c->out_fd = open("/dev/zero", O_WRONLY);
 		if (c->out_fd == -1)
 			exit ((perror("fatal: open"), -1));
-		return (-1);
+		return (1);
 	}
 	c->append = append;
 	return (0);

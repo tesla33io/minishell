@@ -6,16 +6,16 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:18:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 20:28:57 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:52:00 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/execution.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <sys/types.h>
 #include <sys/wait.h>
