@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 15:55:38 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:20:25 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ char				*ft_path_join(char *path1, char *path2);
 unsigned char		set_last_exit_code(int code, int flag);
 int					get_exit_code(pid_t pid);
 int					close_extra_fds(void);
+void				reset_signals(int flag);
 
 #endif /* EXECUTION_H */

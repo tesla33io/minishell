@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 15:52:26 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:26:30 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+
+# define SH_SIG_QUIT 1
+# define SH_SIG_INT 2
 
 typedef struct s_lex		t_lex;
 typedef struct s_token		t_token;

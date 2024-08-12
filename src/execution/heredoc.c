@@ -6,12 +6,13 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:18:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 15:52:00 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:26:57 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/execution.h"
+#include "../../include/minishell.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -32,6 +33,7 @@ int	start_heredoc(const char *delim)
 	cpid = fork();
 	if (cpid == 0)
 	{
+		reset_signals(SH_SIG_INT);
 		close(pipefd[0]);
 		read_heredoc(delim, pipefd[1]);
 		close(pipefd[1]);
@@ -44,7 +46,7 @@ int	start_heredoc(const char *delim)
 		waitpid(cpid, NULL, 0);
 		return (pipefd[0]);
 	}
-	return (-1);
+	return (1);
 }
 
 static void	read_heredoc(const char *delim, int wrfd)

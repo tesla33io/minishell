@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 17:52:05 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:16:25 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ static int	handle_command(t_leaf *ast_root, t_shell_data *shd)
 			exit_code = get_exit_code(cmd_pid);
 	}
 	if (exit_code == 11)
-		ft_putendl_fd("Segmentaion fault :(", 2);
+		ft_putendl_fd("Segmentation fault :(", 2);
+	else if (exit_code == 3)
+		ft_putstr_fd("Quit (core ! dumped)\n", 2);
 	shd->envpv = cmd->envpv;
 	return (exit_code);
 }
