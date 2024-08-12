@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 17:20:25 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 21:26:01 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 
 # include <stdbool.h>
 # include <unistd.h>
+#include <stdio.h>
 
 # define MAX_N_FDS 1024
 # define RD 0
 # define WR 1
 # define BUILTIN_FAILED "builtin failed to execute."
-
-#include <stdio.h>
 
 #define PRINT_STRING_ARRAY(arr)					\
     do {										\
@@ -32,6 +31,10 @@
             printf(" <%s> ", arr[i]);			\
         printf(" ]\n");							\
     } while(0)
+
+#define DEBUG(fmt, ...) \
+    fprintf(stderr, "DEBUG: %s:%d:%s(): " fmt "\n",	\
+			__FILE_NAME__, __LINE__, __func__, ##__VA_ARGS__)
 
 typedef struct s_Command	t_Command;
 typedef struct s_Pipeline	t_Pipeline;

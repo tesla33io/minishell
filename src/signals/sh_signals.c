@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:52:38 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 17:24:40 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 21:02:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	sh_sigint_handler(int signum)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	rl_done = 1;
 	set_last_exit_code(130, 's');
 }
 

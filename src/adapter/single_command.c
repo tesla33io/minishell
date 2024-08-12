@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 15:54:38 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 21:29:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_Command	*extract_command(t_leaf *cmd_root, t_shell_data *shd)
 	if (next && next->token == 0)
 		return (NULL);
 	extract_args(next, cmd);
+	if (cmd->in_fd < 0 || cmd->out_fd < 0)
+		return (NULL);
 	cmd->bin_name = cmd->args[0];
 	return (cmd);
 }
@@ -86,10 +88,7 @@ static int	handle_out_redirect(t_leaf **n, t_Command *c)
 	if (c->out_fd == -1)
 	{
 		perror((*n)->terminal);
-		c->out_fd = open("/dev/zero", O_WRONLY);
-		if (c->out_fd == -1)
-			exit ((perror("fatal: open"), -1));
-		return (1);
+		return (2);
 	}
 	c->append = append;
 	return (0);
@@ -110,10 +109,7 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
 	if (cmd->in_fd == -1)
 	{
 		perror((*next)->terminal);
-		cmd->in_fd = open("/dev/null", O_RDONLY);
-		if (cmd->in_fd == -1)
-			exit ((perror("fatal: open"), -1));
-		return (-1);
+		return (2);
 	}
 	cmd->heredoc = heredoc;
 	return (0);
@@ -132,9 +128,15 @@ void	extract_args(t_leaf *node, t_Command *cmd)
 			cmd->args = ft_strarray_append(cmd->args, node->terminal);
 		}
 		else if (node->token == OUT_REDIRECT || node->token == APPEND)
-			handle_out_redirect(&node, cmd);
+		{
+			if (handle_out_redirect(&node, cmd) == 2)
+				break ;
+		}
 		else if (node->token == IN_REDIRECT || node->token == HEREDOC)
-			handle_in_redirect(&node, cmd);
+		{
+			if (handle_in_redirect(&node, cmd) == 2)
+				break ;
+		}
 		node = node->left;
 	}
 }
