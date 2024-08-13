@@ -57,8 +57,8 @@ void	var_expand(t_leaf *leaf, t_Command *cmd)
 	char	*variable;
 	char	*value;
 
-	i = -1;
-	while (leaf->terminal[++i])
+	i = 0;
+	while (leaf && leaf->terminal && leaf->terminal[0] && leaf->terminal[i])
 	{
 		variable = NULL;
 		value = NULL;
@@ -73,5 +73,6 @@ void	var_expand(t_leaf *leaf, t_Command *cmd)
 			if (value)
 				leaf->terminal = insert_var(leaf->terminal, value, i);
 		}
-	}	
+		i++;
+	}
 }
