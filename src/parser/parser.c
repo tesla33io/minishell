@@ -26,38 +26,74 @@ t_token	*split_stream(t_token **token_stream)
 	return (ret);
 }
 
-//helper function to find the correct alternative of a given production rule
-char	*match_alternative(t_lex *lexer, t_token *token_stream,
-	char **alternatives)
+int	terminal_located(t_token *token_stream, char *alternative)
 {
-	char	*tmp;
+	int	position;
 	char	*symbol;
-	t_token	*travel;
-	int		i = 0;
+	char 	*tmp;
+	t_token *travel;
 
-	if ((count_words(alternatives[1], ' ') > count_tokens(token_stream))
-		|| (!contains_non_terminal(alternatives[1])
-			&& count_words(alternatives[1], ' ') < count_tokens(token_stream)))
-		return (alternatives[0]);
-	tmp = ft_strdup(alternatives[1]);
+	position = 0;
+	if (!alternative)
+		return (position);
+	tmp = ft_strdup(alternative);
 	while (contains_c(tmp, ' '))
 	{
 		symbol = ft_chop(tmp, ' ');
 		travel = token_stream;
-		while (travel && contains_terminal(symbol))
+		if (contains_terminal(symbol))
+			position = 0;
+		while (travel && contains_terminal(symbol) && ++position)
 		{
-			if (travel->token == tok2int(symbol) && (i || (!i && travel == token_stream))
-				&& !travel->matched
-				&& ++travel->matched && lexer->unmatched--)
-				break ;
+                        if (travel->token == tok2int(symbol) && (position > 1 || (position == 1 && travel == token_stream)))
+					break ;
 			travel = travel->next;
 		}
 		if (!travel && contains_terminal(symbol))
-			return (alternatives[0]);
-		i++;
+			return (0);
 	}
+	return (position);
+}
+
+
+
+//helper function to find the correct alternative of a given production rule
+char	*match_alternative(t_token *token_stream, char **alternatives)
+{
+	if ((count_words(alternatives[1], ' ') > count_tokens(token_stream))
+		|| (!contains_non_terminal(alternatives[1])
+			&& count_words(alternatives[1], ' ') < count_tokens(token_stream)))
+		return (alternatives[0]);
+	if (!terminal_located(token_stream, alternatives[1]) && contains_terminal(alternatives[1]))
+		return (alternatives[0]);
+	if (terminal_located(token_stream, alternatives[0]) && terminal_located(token_stream, alternatives[1]) > terminal_located(token_stream, alternatives[0]))
+	       return (alternatives[0]);
 	return (alternatives[1]);
 }
+
+void	match_tokens(t_token *token_stream, char *alternative)
+{
+	char    *symbol;
+        char    *tmp;
+        t_token *travel;
+	int i;
+	
+	tmp = ft_strdup(alternative);
+	i = 0;
+        while (contains_c(tmp, ' '))
+        {
+                symbol = ft_chop(tmp, ' ');
+                travel = token_stream;
+                while (travel && contains_terminal(symbol))
+                {
+                        if (travel->token == tok2int(symbol) && (i || (!i && travel == token_stream)) && !travel->matched && ++travel->matched)
+                                        break ;
+                        travel = travel->next;
+                }
+	i++;
+        }
+}
+
 
 //main parser function
 //input for token stream is head of lexer, parent input is null at first
@@ -68,15 +104,15 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent,
 	char	*symbol;
 
 	alternative = NULL;
-	if (shell_data->parse_fail || (!token_stream && ft_dprintf(2, "Syntax Error\n") && shell_data->parse_fail) || (!token_stream && !production && !shell_data->lexer->unmatched))
+	if (shell_data->parse_fail || (!token_stream && ft_dprintf(2, "Syntax Error\n") && shell_data->parse_fail) || (!token_stream && !production))
 		return ;
 	while (contains_c(production, '|'))
 	{
-		alternative = match_alternative(shell_data->lexer, token_stream,
-				(char *[]){alternative, ft_chop(production, '|')});
+		alternative = match_alternative(token_stream, (char *[]){alternative, ft_chop(production, '|')});
 	}
 	if (!alternative && ft_dprintf(2, "Syntax Error near token %s\n", token_stream->lexeme) && shell_data->parse_fail--)
 		return ;
+	match_tokens(token_stream, alternative);
 	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);
 	while (contains_c(alternative, ' '))
 	{

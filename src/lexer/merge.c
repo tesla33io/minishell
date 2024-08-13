@@ -6,7 +6,7 @@ void	group_tokens(t_lex *lexer)
 	t_token	*trvl;
 
 	trvl = lexer->head;
-	while (trvl->next)
+	while (trvl && trvl->next)
 	{
 		if (trvl->token == IN_REDIRECT && trvl->next->token == IN_REDIRECT)
 			trvl->token = HEREDOC;
@@ -36,7 +36,7 @@ void	remove_quotations(char *str)
 	src = 0;
 	while (str[src])
 	{
-		if (!(str[src] == '"' || str[src] == '\''))
+		if (!((str[src] == '"' || str[src] == '\'') && (src == 0 || src == (ft_strlen(str) - 1))))
 		{
 			ft_memmove(str + dest, str + src, 1);
 			dest++;
