@@ -110,7 +110,7 @@ void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent,
 	{
 		alternative = match_alternative(token_stream, (char *[]){alternative, ft_chop(production, '|')});
 	}
-	if (!alternative && ft_dprintf(2, "Syntax Error near token %s\n", token_stream->lexeme) && shell_data->parse_fail--)
+	if (!alternative && ft_dprintf(2, "Syntax Error near token %s\n", token_stream->lexeme) && (shell_data->parse_fail-- || 1))
 		return ;
 	match_tokens(token_stream, alternative);
 	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);
