@@ -6,17 +6,16 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/08 16:50:32 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:27:20 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
 #include "../../include/builtins.h"
+#include "../../include/minishell.h"
 
-#include <curses.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdlib.h> /* getenv() */
 
 int	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 		int i, int num_cmds)
@@ -24,14 +23,15 @@ int	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
 	char	*bin;
 	int		exit_code;
 
+	reset_signals(SH_SIG_INT | SH_SIG_QUIT);
 	exit_code = 1;
 	setup_ipc(cmd, i, pipefd, num_cmds);
 	if (is_builtin(cmd->bin_name))
 		exit_code = run_builtin(cmd);
 	else
 	{
-		close_extra_fds();
 		bin = check_exec_binary(ft_getenv(cmd->envpv, "PATH"), cmd->bin_name);
+		close_extra_fds();
 		if (!bin)
 		{
 			gc_free_gc(0);

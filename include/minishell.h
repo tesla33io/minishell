@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/09 16:44:52 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:26:30 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/ioctl.h>
@@ -32,6 +32,9 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+
+# define SH_SIG_QUIT 1
+# define SH_SIG_INT 2
 
 typedef struct s_lex		t_lex;
 typedef struct s_token		t_token;
@@ -69,6 +72,7 @@ struct						s_token
 	char					*var;
 	char 					*glob;
 //	int						pair_token;
+	int						parse_fail;
 	int						matched;
 	t_token					*next;
 };
@@ -165,9 +169,9 @@ void						sh_sigint_handler(int signum);
 void						remove_quotations(char *str);
 
 void						print_ast_leafs(t_leaf *l, int i);
-void    var_expand(t_leaf *leaf);
-char *var_name(char *str, char *flag);
-char *get_value(char *variable);
-char *insert_var(char *str, char *value, int start);
+void						var_expand(t_leaf *leaf, t_Command *cmd);
+char						*var_name(char *str, char *flag);
+char						*get_value(char *variable, char **envp);
+char						*insert_var(char *str, char *value, int start);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:15:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/08 20:00:16 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:17:02 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	non_numeric(char *arg, int num);
 int	exit_builtin(t_Command *e)
 {
 	int	ecode;
-
 
 	ecode = 0;
 	if (e && e->args && e->args[1])
