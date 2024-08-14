@@ -57,8 +57,8 @@ void	var_expand(t_leaf *leaf, t_Command *cmd)
 	char	*variable;
 	char	*value;
 
-	i = -1;
-	while (leaf->terminal[++i])
+	i = 0;
+	while (leaf && leaf->terminal && leaf->terminal[0] && leaf->terminal[i])
 	{
 		variable = NULL;
 		value = NULL;
@@ -77,5 +77,6 @@ void	var_expand(t_leaf *leaf, t_Command *cmd)
 				leaf->var = insert_var(leaf->var, ft_memset(gc_malloc(ft_strlen(value)), 'N', ft_strlen(value)), i);
 			}
 		}
-	}	
+		i++;
+	}
 }
