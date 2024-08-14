@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 20:04:55 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 21:35:22 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 22:53:43 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	rm_existing(char **envp, char *var);
 static void	not_valid_identifier(char *id);
 static int	check_nvi(char *str);
 
-int	export_builtin(t_Command *exprt)
+int	export_builtin(t_command *exprt)
 {
 	int		i;
 
@@ -31,9 +31,9 @@ int	export_builtin(t_Command *exprt)
 	while (exprt->args[i])
 	{
 		if ((!ft_strchr(exprt->args[i], '=')
-				|| check_nvi(exprt->args[i])) && ++i)
+				|| check_nvi(exprt->args[i])))
 		{
-			not_valid_identifier(exprt->args[i]);
+			not_valid_identifier(exprt->args[i++]);
 			continue ;
 		}
 		if (rm_existing(exprt->envpv, exprt->args[i]))
@@ -70,15 +70,19 @@ static int	check_nvi(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] >= '0' && str[i] <= '9')
+		return (1);
 	while (str[i])
 	{
 		if ((str[i] >= 'A' && str[i] <= 'Z')
 			|| (str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= '0' && str[i] <= '9')
-			|| str[i] == '_' || str[i] == '=')
+			|| (str[i] >= '0' && str[i] <= '9') || str[i] == '\''
+			|| str[i] == '_' || str[i] == '=' || str[i] == '\"')
 			i++;
 		else
 			return (1);
 	}
+	if (str[i - 1] == '=')
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 17:26:30 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:54:57 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ struct						s_token
 	enum e_tkntype			token;
 	char					*lexeme;
 	char					*var;
-	char 					*glob;
-//	int						pair_token;
+	char					*glob;
 	int						parse_fail;
 	int						matched;
 	t_token					*next;
@@ -95,7 +94,7 @@ struct						s_shell_data
 	char					**envpv;
 	int						stdoutcp;
 	int						stdincp;
-	int					parse_fail;
+	int						parse_fail;
 };
 
 struct						s_ast
@@ -108,8 +107,8 @@ struct						s_leaf
 {
 	enum e_tkntype			token;
 	char					*terminal;
-	char 					*var;
-	char 					*glob;
+	char					*var;
+	char					*glob;
 	t_leaf					*parent;
 	t_leaf					*left;
 	t_leaf					*right;
@@ -120,9 +119,9 @@ void						init(t_shell_data *shell_data);
 void						init_lexer(t_shell_data *shell_data);
 void						lexer(t_lex *lexer);
 void						append_token(t_lex *lexer, char *str, int len,
-		int backslash);
+								int backslash);
 void						get_token_data(t_token *tok, char *str, int len,
-		int backslash);
+								int backslash);
 enum e_tkntype				get_token(char c);
 int							special_char(char c);
 int							find_match(char *str, char c);
@@ -153,14 +152,13 @@ t_token						*split_stream(t_token **token_stream);
 int							contains_token(t_token *head, t_tkntype type);
 
 void						adapt(t_leaf *ast_root, t_shell_data *shd);
-t_Command					*extract_command(t_leaf *cmd_root,
+t_command					*extract_command(t_leaf *cmd_root,
 								t_shell_data *shd);
-void						extract_args(t_leaf *next, t_Command *cmd);
-t_Pipeline					*extract_pipeline(t_leaf *pl_root,
+void						extract_args(t_leaf *next, t_command *cmd);
+t_pipeline					*extract_pipeline(t_leaf *pl_root,
 								t_shell_data *shd);
-void	set_varflag(t_lex *lexer);
-void set_globflag(t_lex *lexer);
-
+void						set_varflag(t_lex *lexer);
+void						set_globflag(t_lex *lexer);
 
 /* Signals */
 
@@ -169,7 +167,7 @@ void						sh_sigint_handler(int signum);
 void						remove_quotations(char *str);
 
 void						print_ast_leafs(t_leaf *l, int i);
-void						var_expand(t_leaf *leaf, t_Command *cmd);
+void						var_expand(t_leaf *leaf, t_command *cmd);
 char						*var_name(char *str, char *flag);
 char						*get_value(char *variable, char **envp);
 char						*insert_var(char *str, char *value, int start);

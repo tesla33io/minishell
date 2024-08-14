@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 21:23:15 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:38:50 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,37 @@
 static int	handle_command(t_leaf *ast_root, t_shell_data *shd);
 static void	print_if_signal(int exit_code);
 
-void	adapt(t_leaf *ast_root, t_shell_data *shd)
+void	adapt(t_leaf *ar, t_shell_data *shd)
 {
-	t_Pipeline	*pl;
+	t_pipeline	*pl;
 
-	if (ast_root->token == STR || ast_root->token == OUT_REDIRECT
-		|| ast_root->token == IN_REDIRECT || ast_root->token == APPEND
-		|| ast_root->token == HEREDOC)
+	if (ar->token == STR || ar->token == OUT_REDIRECT
+		|| ar->token == IN_REDIRECT || ar->token == APPEND
+		|| ar->token == HEREDOC)
+		set_last_exit_code(handle_command(ar, shd), 's');
+	else if (ar->token == PIPE)
 	{
-		set_last_exit_code(handle_command(ast_root, shd), 's');
-	}
-	else if (ast_root->token == PIPE)
-	{
-		pl = extract_pipeline(ast_root, shd);
+		pl = extract_pipeline(ar, shd);
 		if (pl)
 			execute_pipeline(pl);
 	}
-	else if (ast_root->token == AND)
+	else if (ar->token == AND)
 	{
-		adapt(ast_root->left, shd);
+		adapt(ar->left, shd);
 		if (set_last_exit_code(0, 'g') == 0)
-			adapt(ast_root->right, shd);
+			adapt(ar->right, shd);
 	}
-	else if (ast_root->token == OR)
+	else if (ar->token == OR)
 	{
-		adapt(ast_root->left, shd);
+		adapt(ar->left, shd);
 		if (set_last_exit_code(0, 'g') != 0)
-			adapt(ast_root->right, shd);
+			adapt(ar->right, shd);
 	}
 }
 
 static int	handle_command(t_leaf *ast_root, t_shell_data *shd)
 {
-	t_Command	*cmd;
+	t_command	*cmd;
 	pid_t		cmd_pid;
 	int			exit_code;
 
@@ -63,7 +61,7 @@ static int	handle_command(t_leaf *ast_root, t_shell_data *shd)
 	cmd->envpv = shd->envpv;
 	if (is_builtin(cmd->bin_name))
 	{
-		setup_ipc(cmd, 0, (int [2][2]) {{-1}}, 1);
+		setup_ipc(cmd, 0, (int [2][2]){{-1}}, 1);
 		exit_code = run_builtin(cmd);
 	}
 	else

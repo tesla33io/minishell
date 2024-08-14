@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:33:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/09 18:12:03 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 22:40:27 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,7 @@
 
 #include <stdlib.h>
 
-char	**ft_strarray_alloc(int str_num)
-{
-	char	**str_array;
-
-	if (str_num < 0)
-		return (NULL);
-	str_array = gc_malloc((str_num + 1) * sizeof(*str_array));
-	if (!str_array)
-		return (NULL);
-	return (str_array);
-}
-
-void	ft_strarray_free(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
-	{
-		gc_free_ptr((void **) &array[i]);
-		i++;
-	}
-	gc_free_ptr((void **) &array);
-}
+static void	*dup_failed(char **new_arr, int duped);
 
 size_t	ft_strarray_len(char **array)
 {
@@ -87,25 +64,25 @@ char	**ft_strarray_append(char **array, char *new_str)
 	if (array != NULL)
 	{
 		duped = ft_strarray_dup(array, new_array);
-		if (duped < 0)
-		{
-			gc_free_ptr((void **) &new_array);
+		if (duped < 0 && (gc_free_ptr((void **) &new_array), 1))
 			return (NULL);
-		}
 	}
 	else
 		duped = 0;
 	new_array[duped] = ft_strdup(new_str);
 	if (!new_array[duped])
-	{
-		while (duped > 0)
-		{
-			duped--;
-			gc_free_ptr((void **) &new_array[duped]);
-		}
-		gc_free_ptr((void **) &new_array);
-		return (NULL);
-	}
+		return (dup_failed(new_array, duped));
 	new_array[duped + 1] = NULL;
 	return (new_array);
+}
+
+static void	*dup_failed(char **new_arr, int duped)
+{
+	while (duped > 0)
+	{
+		duped--;
+		gc_free_ptr((void **) &new_arr[duped]);
+	}
+	gc_free_ptr((void **) &new_arr);
+	return (NULL);
 }

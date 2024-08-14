@@ -6,7 +6,7 @@
 #    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/08/05 16:33:40 by astavrop         ###   ########.fr        #
+#    Updated: 2024/08/14 21:56:45 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 CC				:= cc
 
 # Compiler flags
-CFLAGS			:= -Wall -Werror -Wextra 
+CFLAGS			:= -Wall -Werror -Wextra
 
 
 # Libraries to be linked (if any)

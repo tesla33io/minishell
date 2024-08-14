@@ -6,28 +6,24 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 21:29:38 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:26:48 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
 #include "../../include/minishell.h"
 
-#include <fcntl.h>  // for open
+#include <fcntl.h>
 #include <stdio.h>
-#include <stdlib.h> // for NULL
+#include <stdlib.h>
 
-/* Function prototypes */
-static t_Command	*init_command(t_shell_data *shd);
-static int			handle_out_redirect(t_leaf **next, t_Command *cmd);
-static int			handle_in_redirect(t_leaf **next, t_Command *cmd);
+static t_command	*init_command(t_shell_data *shd);
+static int			handle_out_redirect(t_leaf **next, t_command *cmd);
+static int			handle_in_redirect(t_leaf **next, t_command *cmd);
 
-/* Main function */
-/* Not sure about returning NULL on redirect fail */
-/* TODO: look into it later :D */
-t_Command	*extract_command(t_leaf *cmd_root, t_shell_data *shd)
+t_command	*extract_command(t_leaf *cmd_root, t_shell_data *shd)
 {
-	t_Command	*cmd;
+	t_command	*cmd;
 	t_leaf		*next;
 
 	cmd = init_command(shd);
@@ -55,9 +51,9 @@ t_Command	*extract_command(t_leaf *cmd_root, t_shell_data *shd)
 }
 
 /* Helper functions */
-static t_Command	*init_command(t_shell_data *shd)
+static t_command	*init_command(t_shell_data *shd)
 {
-	t_Command	*cmd;
+	t_command	*cmd;
 
 	(void)shd;
 	cmd = gc_malloc(sizeof(*cmd));
@@ -73,7 +69,7 @@ static t_Command	*init_command(t_shell_data *shd)
 	return (cmd);
 }
 
-static int	handle_out_redirect(t_leaf **n, t_Command *c)
+static int	handle_out_redirect(t_leaf **n, t_command *c)
 {
 	bool	append;
 
@@ -94,7 +90,7 @@ static int	handle_out_redirect(t_leaf **n, t_Command *c)
 	return (0);
 }
 
-static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
+static int	handle_in_redirect(t_leaf **next, t_command *cmd)
 {
 	bool	heredoc;
 
@@ -115,16 +111,14 @@ static int	handle_in_redirect(t_leaf **next, t_Command *cmd)
 	return (0);
 }
 
-void	extract_args(t_leaf *node, t_Command *cmd)
+void	extract_args(t_leaf *node, t_command *cmd)
 {
 	while (node)
 	{
 		if (node->token == STR)
 		{
-			//if (contains_c(node->terminal, '*'))
-			//	glober(&node);
 			if (contains_c(node->terminal, '$'))
-				var_expand(node, cmd); //or should it be &node?
+				var_expand(node, cmd);
 			cmd->args = ft_strarray_append(cmd->args, node->terminal);
 		}
 		else if (node->token == OUT_REDIRECT || node->token == APPEND)

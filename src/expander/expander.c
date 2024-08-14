@@ -51,7 +51,7 @@ char *var_name(char *str, char *flag)
 }
 	
 
-void	var_expand(t_leaf *leaf, t_Command *cmd)
+void	var_expand(t_leaf *leaf, t_command *cmd)
 {
 	int		i;
 	char	*variable;
@@ -65,7 +65,7 @@ void	var_expand(t_leaf *leaf, t_Command *cmd)
 		if (leaf->terminal[i] == '$' && leaf->var[i] == 'Y')
 		{
 			variable = var_name(leaf->terminal + i, leaf->var + i);
-			if (!variable)
+			if (!variable && ++i)
 				continue;
 			value = get_value(variable, cmd->envpv);
 			leaf->terminal = ft_strjoin(ft_substr(leaf->terminal, 0, i),

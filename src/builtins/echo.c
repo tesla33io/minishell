@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:08:16 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/08 21:03:22 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:30:25 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdbool.h>
 
-int	echo_builtin(t_Command *echo)
+int	echo_builtin(t_command *echo)
 {
 	int		i;
 	bool	new_line;

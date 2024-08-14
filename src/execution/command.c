@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 17:27:20 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:34:33 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-int	execute_command_in_child(t_Command *cmd, int pipefd[2][2],
+int	execute_command_in_child(t_command *cmd, int pipefd[2][2],
 		int i, int num_cmds)
 {
 	char	*bin;
@@ -54,7 +54,7 @@ int	is_builtin(char *bin_name)
 		|| ft_strcmp(bin_name, "exit") == 0);
 }
 
-int	run_builtin(t_Command *cmd)
+int	run_builtin(t_command *cmd)
 {
 	if (ft_strcmp(cmd->bin_name, "echo") == 0)
 		return (echo_builtin(cmd));
@@ -74,7 +74,7 @@ int	run_builtin(t_Command *cmd)
 		return (0);
 }
 
-void	setup_ipc(t_Command *cmd, int i, int pipefd[2][2], int num_cmds)
+void	setup_ipc(t_command *cmd, int i, int pipefd[2][2], int num_cmds)
 {
 	if (cmd->in_fd != 0)
 		dup2(cmd->in_fd, STDIN_FILENO);

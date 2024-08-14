@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:10:49 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 16:02:22 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:30:28 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <linux/limits.h>
 #include <unistd.h>
 
-int	pwd_builtin(t_Command *pwd)
+int	pwd_builtin(t_command *pwd)
 {
 	char	*pwd_value;
 

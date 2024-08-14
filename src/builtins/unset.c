@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:08:37 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 16:05:43 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:30:29 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../include/builtins.h"
 #include "../../lib/libft/libft.h"
 
-int	unset_builtin(t_Command *unset)
+int	unset_builtin(t_command *unset)
 {
 	int		i;
 

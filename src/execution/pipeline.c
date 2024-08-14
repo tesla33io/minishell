@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 16:00:09 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/06 22:46:12 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:39:08 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 static int	look_after_children(int num_cmds, int *pids);
 static void	destroy_pipe(int pipefd[2][2], int i);
 
-int	execute_pipeline(t_Pipeline *pl)
+int	execute_pipeline(t_pipeline *pl)
 {
 	pid_t	*pids;
 	int		pipefd[2][2];

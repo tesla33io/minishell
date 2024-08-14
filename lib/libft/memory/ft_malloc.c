@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/10 18:55:26 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:10:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,12 @@ void	*gc_malloc(size_t size)
  * Parameters:
  * - ptr: Address of the pointer to be freed.
  */
-void gc_free_ptr(void **ptr)
+void	gc_free_ptr(void **ptr)
 {
-    if (ptr == NULL || *ptr == NULL)
+	if (ptr == NULL || *ptr == NULL)
 		return ;
 	free(*ptr);
-    *ptr = NULL;
+	*ptr = NULL;
 }
 
 /* 

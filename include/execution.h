@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 21:26:01 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:39:57 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,27 @@
 
 # include <stdbool.h>
 # include <unistd.h>
-#include <stdio.h>
+# include <stdio.h>
 
 # define MAX_N_FDS 1024
 # define RD 0
 # define WR 1
 # define BUILTIN_FAILED "builtin failed to execute."
 
-#define PRINT_STRING_ARRAY(arr)					\
-    do {										\
-        printf("[ ");							\
-        for (int i = 0; arr[i] != NULL; i++)	\
-            printf(" <%s> ", arr[i]);			\
-        printf(" ]\n");							\
-    } while(0)
+//#define PRINT_STRING_ARRAY(arr)					\
+//    do {										\
+//        printf("[ ");							\
+//        for (int i = 0; arr[i] != NULL; i++)	\
+//            printf(" <%s> ", arr[i]);			\
+//        printf(" ]\n");							\
+//    } while(0)
+//
+//#define DEBUG(fmt, ...) \
+//    fprintf(stderr, "DEBUG: %s:%d:%s(): " fmt "\n",	\
+//			__FILE_NAME__, __LINE__, __func__, ##__VA_ARGS__)
 
-#define DEBUG(fmt, ...) \
-    fprintf(stderr, "DEBUG: %s:%d:%s(): " fmt "\n",	\
-			__FILE_NAME__, __LINE__, __func__, ##__VA_ARGS__)
-
-typedef struct s_Command	t_Command;
-typedef struct s_Pipeline	t_Pipeline;
-
-enum	e_CommandType
-{
-	EXTERNAL,
-	BUILTIN
-};
-
-typedef enum e_CommandType	t_CommandType;
+typedef struct s_Command	t_command;
+typedef struct s_Pipeline	t_pipeline;
 
 struct	s_Command
 {
@@ -60,15 +52,15 @@ struct	s_Command
 
 struct	s_Pipeline
 {
-	t_Command	**commands;
+	t_command	**commands;
 	int			num_cmds;
 };
 
 /* Core functions */
 
-int					execute_command_in_child(t_Command *cmd,
+int					execute_command_in_child(t_command *cmd,
 						int pipefd[2][2], int i, int num_cmds);
-int					execute_pipeline(t_Pipeline *pipeline);
+int					execute_pipeline(t_pipeline *pipeline);
 int					start_heredoc(const char *del);
 
 /* Helper functions */
@@ -77,9 +69,9 @@ char				*ft_getenv(char **envp, char *name);
 char				**get_environment(char **envp);
 char				*check_exec_binary(char *path, char *bin_name);
 int					is_builtin(char *bin_name);
-int					run_builtin(t_Command *cmd);
-void				setup_ipc(t_Command *cmd, int i, int pipefd[2][2],
-	int num_cmds);
+int					run_builtin(t_command *cmd);
+void				setup_ipc(t_command *cmd, int i, int pipefd[2][2],
+						int num_cmds);
 
 /* Error utility functions */
 

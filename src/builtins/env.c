@@ -6,13 +6,13 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:54:33 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 15:57:33 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:30:26 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execution.h"
 
-int	env_builtin(t_Command *env)
+int	env_builtin(t_command *env)
 {
 	int		i;
 

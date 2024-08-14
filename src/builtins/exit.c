@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:15:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/12 16:17:02 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:30:27 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static int	ft_is_numeric(char *s);
 static void	non_numeric(char *arg, int num);
 
-int	exit_builtin(t_Command *e)
+int	exit_builtin(t_command *e)
 {
 	int	ecode;
 

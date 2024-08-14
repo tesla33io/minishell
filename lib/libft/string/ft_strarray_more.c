@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 21:15:45 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/10 17:52:17 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 22:37:31 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,31 @@
 #include <stdlib.h>
 
 static int	dup_str(char **dest, char **src, int i, int j);
+
+char	**ft_strarray_alloc(int str_num)
+{
+	char	**str_array;
+
+	if (str_num < 0)
+		return (NULL);
+	str_array = gc_malloc((str_num + 1) * sizeof(*str_array));
+	if (!str_array)
+		return (NULL);
+	return (str_array);
+}
+
+void	ft_strarray_free(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i] != NULL)
+	{
+		gc_free_ptr((void **) &array[i]);
+		i++;
+	}
+	gc_free_ptr((void **) &array);
+}
 
 char	**ft_strarray_remove_by_value(char **array, char *str)
 {

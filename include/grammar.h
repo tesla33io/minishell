@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   grammar.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/14 21:51:13 by astavrop          #+#    #+#             */
+/*   Updated: 2024/08/14 21:51:41 by astavrop         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GRAMMAR_H
 # define GRAMMAR_H
 
@@ -6,7 +18,8 @@
 
 # define PIPE_SEQUENCE "command |command PIPE pipe_sequence |"
 
-# define COMMAND "simple_command |L_PARENTHESIS complete_command R_PARENTHESIS |"
+# define COMMAND "simple_command |L_PARENTHESIS complete_command \
+R_PARENTHESIS |"
 
 # define SIMPLE_COMMAND "STR |HEREDOC STR |APPEND STR |IN_REDIRECT STR \
 |OUT_REDIRECT STR |STR simple_command |HEREDOC STR simple_command |APPEND \
