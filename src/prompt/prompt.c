@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 22:34:13 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:29:31 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	render_prompt(t_shell_data *shd)
 {
 	char	*rlret;
 
-	rlret = readline("\033[32;1m🐈\033[0m ");
+	rlret = readline("PROMPT HERE: ");
 	if (!rlret)
 		exit_builtin(NULL);
 	if (ft_strncmp(rlret, "", 1) == 0 || only_whitspaces(rlret) == 1)
