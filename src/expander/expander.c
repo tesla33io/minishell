@@ -69,9 +69,13 @@ void	var_expand(t_leaf *leaf, t_Command *cmd)
 				continue;
 			value = get_value(variable, cmd->envpv);
 			leaf->terminal = ft_strjoin(ft_substr(leaf->terminal, 0, i),
-				leaf->terminal + i + 1 + ft_strlen(variable));
+				ft_substr(leaf->terminal + i + 1 + ft_strlen(variable), 0, ft_strlen(leaf->terminal + i + 1 + ft_strlen(variable))));
+			ft_dprintf(0, "this is leaf->terminal: %s\n", leaf->terminal);
 			if (value)
+			{
 				leaf->terminal = insert_var(leaf->terminal, value, i);
+				leaf->var = insert_var(leaf->var, ft_memset(gc_malloc(ft_strlen(value)), 'N', ft_strlen(value)), i);
+			}
 		}
 	}	
 }
