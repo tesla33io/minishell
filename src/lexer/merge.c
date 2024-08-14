@@ -34,6 +34,8 @@ void	remove_quotations(char *str)
 
 	dest = 0;
 	src = 0;
+	if (!contains_c(str, '\'') || !contains_c(str, '"'))
+		return ;
 	while (str[src])
 	{
 		if (!((str[src] == '"' || str[src] == '\'') && (src == 0 || src == (ft_strlen(str) - 1))))
@@ -67,13 +69,14 @@ void	merge_strings(t_lex *lexer)
 		while (travel && travel->next && travel->token == STR
 			&& travel->next->token == STR)
 		{
+			remove_quotations(travel->lexeme);
+			remove_quotations(travel->next->lexeme);
 			travel->lexeme = ft_strjoin(travel->lexeme, travel->next->lexeme);
 			travel->var = ft_strjoin(travel->var, travel->next->var);
 			travel->glob = ft_strjoin(travel->glob, travel->next->glob);
 			travel->next->token = TRASH;
 			take_out_trash(lexer->head);
 		}
-		remove_quotations(travel->lexeme);
 		travel = travel->next;
 	}
 }

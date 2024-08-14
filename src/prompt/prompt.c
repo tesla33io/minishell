@@ -26,7 +26,7 @@ int	render_prompt(t_shell_data *shd)
 {
 	char	*rlret;
 
-	rlret = readline("\033[32;1m₳\033[0m ");
+	rlret = readline("\033[32;1m🐈\033[0m ");
 	if (!rlret)
 		exit_builtin(NULL);
 	if (ft_strncmp(rlret, "", 1) == 0 || only_whitspaces(rlret) == 1)
