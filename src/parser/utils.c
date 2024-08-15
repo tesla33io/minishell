@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 01:08:00 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/01 22:54:14 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:09:32 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,47 +57,25 @@ char	*capitalize(char *str)
 
 t_tkntype	tok2int(char *symbol)
 {
-	int				i;
-	const char		*token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x",
+	int			i;
+	const char	*token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x",
 		"NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR",
-		"TRASH", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
-		"x", "x", "x", "x", [SSPACE] = "SSPACE", "x", [D_QUOTE] = "D_QUOTE",
-		"x", "x", "x", [AMPERSAND] = "AMPERSAND", [S_QUOTE] = "S_QUOTE",
-	[L_PARENTHESIS] = "L_PARENTHESIS", [R_PARENTHESIS] = "R_PARENTHESIS",
-		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
-		"x", "x", "x", "x", [IN_REDIRECT] = "IN_REDIRECT", "x",
-	[OUT_REDIRECT] = "OUT_REDIRECT", "x", "x", "x", "x", "x", "x", "x",
-		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
-		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
-		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
+		"TRASH", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
+		"x", "x", "x", [SSPACE] = "SSPACE", "x", [D_QUOTE] = "D_QUOTE", "x",
+		"x", "x", [AMPERSAND] = "AMPERSAND", [S_QUOTE] = "S_QUOTE",
+	[L_PARENTHESIS] = "L_PARENTHESIS",
+	[R_PARENTHESIS] = "R_PARENTHESIS", "x", "x", "x", "x", "x", "x",
 		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
-	[PIPE] = "PIPE"
-	};
+	[IN_REDIRECT] = "IN_REDIRECT", "x", [OUT_REDIRECT] = "OUT_REDIRECT",
+		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
+		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
+		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
+		"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x",
+		"x", "x", "x", "x", "x", "x", "x", "x", "x", [PIPE] = "PIPE"};
 
 	i = -1;
 	while (++i < 125)
 		if (!ft_strncmp(token_names[i], symbol, ft_strlen(token_names[i])))
 			return (i);
 	return (0);
-}
-
-int	count_words(char *s, char c)
-{
-	int	words;
-	int	in_word;
-
-	words = 0;
-	in_word = 0;
-	while (*s)
-	{
-		if (*s == c)
-			in_word = 0;
-		else if (!in_word)
-		{
-			words++;
-			in_word = 1;
-		}
-		s++;
-	}
-	return (words);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   merge.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 18:26:01 by ltreser           #+#    #+#             */
+/*   Updated: 2024/08/15 18:26:23 by ltreser          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 // find doubles of <, >, |, & and group them as &&, ||, <<, >>
@@ -38,7 +50,8 @@ void	remove_quotations(char *str)
 		return ;
 	while (str[src])
 	{
-		if (!((str[src] == '"' || str[src] == '\'') && (src == 0 || src == (ft_strlen(str) - 1))))
+		if (!((str[src] == '"' || str[src] == '\'') && (src == 0
+					|| src == (ft_strlen(str) - 1))))
 		{
 			ft_memmove(str + dest, str + src, 1);
 			dest++;

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 17:44:25 by ltreser           #+#    #+#             */
+/*   Updated: 2024/08/15 17:57:26 by ltreser          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
-//return stoken stream up until trash, move pointer for token stream
+// return stoken stream up until trash, move pointer for token stream
 t_token	*split_stream(t_token **token_stream)
 {
 	t_token	*travel;
@@ -26,99 +38,103 @@ t_token	*split_stream(t_token **token_stream)
 	return (ret);
 }
 
-int	terminal_located(t_token *token_stream, char *alternative)
+int	terminal_located(t_token *ts, char *alternative, int pos)
 {
-	int	position;
 	char	*symbol;
-	char 	*tmp;
-	t_token *travel;
+	char	*tmp;
+	t_token	*trvl;
 
-	position = 0;
 	if (!alternative)
-		return (position);
+		return (pos);
 	tmp = ft_strdup(alternative);
 	while (contains_c(tmp, ' '))
 	{
 		symbol = ft_chop(tmp, ' ');
-		travel = token_stream;
+		trvl = ts;
 		if (contains_terminal(symbol))
-			position = 0;
-		while (travel && contains_terminal(symbol) && ++position)
+			pos = 0;
+		while (trvl && contains_terminal(symbol) && ++pos)
 		{
-                        if (travel->token == tok2int(symbol) && (position > 1 || (position == 1 && travel == token_stream)))
-					break ;
-			travel = travel->next;
+			if (trvl->token == tok2int(symbol) && (pos > 1 || (pos == 1
+						&& trvl == ts)))
+				break ;
+			trvl = trvl->next;
 		}
-		if (!travel && contains_terminal(symbol))
+		if (!trvl && contains_terminal(symbol))
 			return (0);
 	}
-	return (position);
+	return (pos);
 }
 
-
-
-//helper function to find the correct alternative of a given production rule
+// helper function to find the correct alternative of a given production rule
 char	*match_alternative(t_token *token_stream, char **alternatives)
 {
 	if ((count_words(alternatives[1], ' ') > count_tokens(token_stream))
 		|| (!contains_non_terminal(alternatives[1])
 			&& count_words(alternatives[1], ' ') < count_tokens(token_stream)))
 		return (alternatives[0]);
-	if (!terminal_located(token_stream, alternatives[1]) && contains_terminal(alternatives[1]))
+	if (!terminal_located(token_stream, alternatives[1], 0)
+		&& contains_terminal(alternatives[1]))
 		return (alternatives[0]);
-	if (terminal_located(token_stream, alternatives[0]) && terminal_located(token_stream, alternatives[1]) > terminal_located(token_stream, alternatives[0]))
-	       return (alternatives[0]);
+	if (terminal_located(token_stream, alternatives[0], 0)
+		&& terminal_located(token_stream, alternatives[1],
+			0) > terminal_located(token_stream, alternatives[0], 0))
+		return (alternatives[0]);
 	return (alternatives[1]);
 }
 
 void	match_tokens(t_token *token_stream, char *alternative)
 {
-	char    *symbol;
-        char    *tmp;
-        t_token *travel;
-	int i;
-	
+	char	*symbol;
+	char	*tmp;
+	t_token	*travel;
+	int		i;
+
 	tmp = ft_strdup(alternative);
 	i = 0;
-        while (contains_c(tmp, ' '))
-        {
-                symbol = ft_chop(tmp, ' ');
-                travel = token_stream;
-                while (travel && contains_terminal(symbol))
-                {
-                        if (travel->token == tok2int(symbol) && (i || (!i && travel == token_stream)) && !travel->matched && ++travel->matched)
-                                        break ;
-                        travel = travel->next;
-                }
-	i++;
-        }
+	while (contains_c(tmp, ' '))
+	{
+		symbol = ft_chop(tmp, ' ');
+		travel = token_stream;
+		while (travel && contains_terminal(symbol))
+		{
+			if (travel->token == tok2int(symbol) && (i || (!i
+						&& travel == token_stream)) && !travel->matched
+				&& ++travel->matched)
+				break ;
+			travel = travel->next;
+		}
+		i++;
+	}
 }
 
-
-//main parser function
-//input for token stream is head of lexer, parent input is null at first
-void	ft_parse(t_shell_data *shell_data, char *production, t_leaf *parent,
-	t_token *token_stream)
+// main parser function
+// input for token stream is head of lexer, parent input is null at first
+void	ft_parse(t_sd *sd, char *production, t_leaf *parent,
+		t_token *token_stream)
 {
 	char	*alternative;
 	char	*symbol;
 
 	alternative = NULL;
-	if (shell_data->parse_fail || (!token_stream && ft_dprintf(2, "Syntax Error\n") && shell_data->parse_fail) || (!token_stream && !production))
+	if (sd->parse_fail || (!token_stream && ft_dprintf(2, "Syntax Error\n") 
+			&& sd->parse_fail) || (!token_stream && !production))
 		return ;
 	while (contains_c(production, '|'))
 	{
-		alternative = match_alternative(token_stream, (char *[]){alternative, ft_chop(production, '|')});
+		alternative = match_alternative(token_stream, (char *[]){alternative,
+				ft_chop(production, '|')});
 	}
-	if (!alternative && ft_dprintf(2, "Syntax Error near token %s\n", token_stream->lexeme) && (shell_data->parse_fail-- || 1))
+	if (!alternative && ft_dprintf(2, "Syntax Error near token %s\n",
+			token_stream->lexeme) && (sd->parse_fail-- || 1))
 		return ;
 	match_tokens(token_stream, alternative);
-	parent = terminal_to_leaf(shell_data->ast, parent, token_stream);
+	parent = terminal_to_leaf(sd->ast, parent, token_stream);
 	while (contains_c(alternative, ' '))
 	{
 		symbol = ft_chop(alternative, ' ');
 		if (contains_non_terminal(symbol))
-			ft_parse(shell_data, get_production(symbol), parent,
+			ft_parse(sd, get_production(symbol), parent,
 				split_stream(&token_stream));
 	}
 	return ;
