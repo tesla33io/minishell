@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 21:54:57 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:35:49 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ enum						e_tkntype
 	SSPACE = ' ',
 	TTAB = '\t',
 	NNEWLINE = '\n',
-	STR, // 11
+	STR,
 	HEREDOC,
 	APPEND,
 	AND,
