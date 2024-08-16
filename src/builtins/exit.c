@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:15:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 21:30:27 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:49:42 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "../../lib/libft/libft.h"
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 static int	ft_is_numeric(char *s);
 static void	non_numeric(char *arg, int num);
@@ -39,6 +42,7 @@ int	exit_builtin(t_command *e)
 	}
 	gc_free_gc(0);
 	gc_free_gc(5);
+	rl_clear_history();
 	exit(ecode);
 }
 
