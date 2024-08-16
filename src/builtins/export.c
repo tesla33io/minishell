@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 20:04:55 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 22:53:43 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 22:50:02 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ static int	check_nvi(char *str);
 int	export_builtin(t_command *exprt)
 {
 	int		i;
+	int		err;
 
 	if (!exprt)
 		return (builtin_failed(BUILTIN_FAILED, "export"));
 	i = 1;
+	err = 0;
 	gc_set_storage(5);
 	while (exprt->args[i])
 	{
@@ -34,6 +36,7 @@ int	export_builtin(t_command *exprt)
 				|| check_nvi(exprt->args[i])))
 		{
 			not_valid_identifier(exprt->args[i++]);
+			err |= 1;
 			continue ;
 		}
 		if (rm_existing(exprt->envpv, exprt->args[i]))
@@ -42,7 +45,7 @@ int	export_builtin(t_command *exprt)
 		i++;
 	}
 	gc_set_storage(0);
-	return (0);
+	return (err);
 }
 
 static int	rm_existing(char **envp, char *var)
