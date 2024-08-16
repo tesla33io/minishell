@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 21:34:33 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 23:41:18 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ int	execute_command_in_child(t_command *cmd, int pipefd[2][2],
 	int		exit_code;
 
 	reset_signals(SH_SIG_INT | SH_SIG_QUIT);
+	if (!cmd)
+		exit(1);
 	exit_code = 1;
 	setup_ipc(cmd, i, pipefd, num_cmds);
-	if (is_builtin(cmd->bin_name))
+	if (is_builtin(cmd->bin_name) && cmd->in_fd > -1 && cmd->out_fd > -1)
 		exit_code = run_builtin(cmd);
-	else
+	else if (cmd->in_fd > -1 && cmd->out_fd > -1)
 	{
 		bin = check_exec_binary(ft_getenv(cmd->envpv, "PATH"), cmd->bin_name);
 		close_extra_fds();
@@ -92,8 +94,8 @@ void	setup_ipc(t_command *cmd, int i, int pipefd[2][2], int num_cmds)
 		close(pipefd[i % 2][0]);
 	if (i < num_cmds - 1 && pipefd[i % 2][1] > 0)
 		close(pipefd[i % 2][1]);
-	if (cmd->in_fd != 0)
+	if (cmd->in_fd > 0)
 		close(cmd->in_fd);
-	if (cmd->out_fd != 1)
+	if (cmd->out_fd != 1 && cmd->out_fd >= 0)
 		close(cmd->out_fd);
 }
