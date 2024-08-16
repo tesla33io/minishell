@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:36:54 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/16 18:53:36 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:20:04 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	var_expand(t_leaf *leaf, t_command *cmd)
 			{
 				leaf->terminal = insert_var(leaf->terminal, val, i);
 				leaf->var = insert_var(leaf->var,
-						ft_memset(gc_malloc(ft_strlen(val)), 'N',
+						ft_memset(gc_malloc(ft_strlen(val) + 1), 'N',
 							ft_strlen(val)), i);
 			}
 		}
