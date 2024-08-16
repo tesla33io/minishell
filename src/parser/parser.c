@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:44:25 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/16 19:12:48 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 22:01:22 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	terminal_located(t_token *ts, char *alternative, int pos)
 	if (!alternative)
 		return (pos);
 	tmp = ft_strdup(alternative);
+	trvl = ts;
 	while (contains_c(tmp, ' '))
 	{
 		symbol = ft_chop(tmp, ' ');
-		trvl = ts;
 		if (contains_terminal(symbol))
 			pos = 0;
 		while (trvl && contains_terminal(symbol) && ++pos)
@@ -108,6 +108,7 @@ void	match_tokens(t_token *token_stream, char *alternative)
 	}
 }
 
+
 // main parser function
 // input for token stream is head of lexer, parent input is null at first
 void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
@@ -115,18 +116,15 @@ void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
 {
 	char	*alternative;
 	char	*symbol;
-
+	
 	alternative = NULL;
-	if (sd->parse_fail || (!token_stream && ft_dprintf(2, "Syntax Error\n")
-			&& sd->parse_fail) || (!token_stream && !production))
+	if (sd->parse_fail < 0 || (!token_stream && ft_dprintf(2, "Syntax Error\n") 
+			&& --sd->parse_fail) || (!token_stream && !production))
 		return ;
 	while (contains_c(production, '|'))
-	{
-		alternative = match_alternative(token_stream, (char *[]){alternative,
-				ft_chop(production, '|')});
-	}
-	if (!alternative && ft_dprintf(2, "Syntax Error near token %s\n",
-			token_stream->lexeme) && (sd->parse_fail-- || 1))
+		alternative = match_alternative(token_stream, (char *[]){alternative, ft_chop(production, '|')});
+	if (!alternative && ft_dprintf(2, "Syntax Error\n") 
+		&& (--sd->parse_fail || 1))
 		return ;
 	match_tokens(token_stream, alternative);
 	parent = terminal_to_leaf(sd->ast, parent, token_stream);
@@ -134,8 +132,7 @@ void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
 	{
 		symbol = ft_chop(alternative, ' ');
 		if (contains_non_terminal(symbol))
-			ft_parse(sd, get_production(symbol), parent,
-				split_stream(&token_stream));
+			ft_parse(sd, get_production(symbol), parent, split_stream(&token_stream));
 	}
 	return ;
 }

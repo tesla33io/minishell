@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/15 18:25:48 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/16 21:54:50 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,3 +112,4 @@ void	lexer(t_lex *lexer)
 	}
 	merge_tokens(lexer);
 }
+

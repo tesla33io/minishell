@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 21:51:13 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 21:51:41 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 21:50:25 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define COMMAND "simple_command |L_PARENTHESIS complete_command \
 R_PARENTHESIS |"
 
-# define SIMPLE_COMMAND "STR |HEREDOC STR |APPEND STR |IN_REDIRECT STR \
-|OUT_REDIRECT STR |STR simple_command |HEREDOC STR simple_command |APPEND \
+# define SIMPLE_COMMAND "STR |STR simple_command |HEREDOC STR |APPEND STR |IN_REDIRECT STR \
+|OUT_REDIRECT STR |HEREDOC STR simple_command |APPEND \
 STR simple_command |IN_REDIRECT STR simple_command |OUT_REDIRECT STR \
 simple_command |"
 
