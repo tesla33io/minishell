@@ -6,11 +6,11 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:40:44 by astavrop          #+#    #+#             */
-/*   Updated: 2024/01/17 16:48:11 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:31:17 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 #include <stdlib.h>
 
 static void	*free_all(char **array, int el)
@@ -20,7 +20,7 @@ static void	*free_all(char **array, int el)
 	i = 0;
 	while (i < el)
 	{
-		free(array[i]);
+		gc_free_ptr((void **) &array[i]);
 		i++;
 	}
 	free(array);
@@ -69,7 +69,7 @@ char	**ft_split(char const *s, char c)
 	int		j;
 
 	words = count_words(s, c);
-	r_array = (char **) malloc((words + 1) * sizeof(char *));
+	r_array = gc_malloc((words + 1) * sizeof(char *));
 	if (!r_array)
 		return (NULL);
 	i = 0;
@@ -77,7 +77,7 @@ char	**ft_split(char const *s, char c)
 	{
 		while (*s == c && *s)
 			s++;
-		r_array[i] = (char *)ft_calloc((count_letters(s, c) + 1), sizeof(char));
+		r_array[i] = gc_malloc((count_letters(s, c) + 1) * sizeof(char));
 		if (!r_array[i])
 			return (free_all(r_array, i));
 		j = 0;
