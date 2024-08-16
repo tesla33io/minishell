@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 22:33:34 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:02:32 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int ac, char *av[], char *envp[])
 	(void)av;
 	signal(SIGINT, sh_sigint_handler);
 	sigaction(SIGQUIT, &(struct sigaction){.sa_handler = SIG_IGN}, NULL);
-	gc_set_storage(5);
 	shd = dup_envp_and_stdfds(envp);
 	if (!shd)
 		return (1);
@@ -58,6 +57,7 @@ static t_shell_data	*dup_envp_and_stdfds(char **envp)
 {
 	t_shell_data	*shell_data;
 
+	gc_set_storage(5);
 	shell_data = gc_malloc(sizeof(t_shell_data));
 	shell_data->envpv = ft_strarray_alloc(ft_strarray_len(envp));
 	ft_strarray_dup(envp, shell_data->envpv);

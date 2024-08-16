@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:20:48 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 23:29:31 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:11:45 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,13 @@ int	render_prompt(t_shell_data *shd)
 	if (!rlret)
 		exit_builtin(NULL);
 	if (ft_strncmp(rlret, "", 1) == 0 || only_whitspaces(rlret) == 1)
+	{
+		gc_free_ptr((void **) &rlret);
 		return (-1);
-	shd->lexer->cmd_line = ft_strdup(rlret);
+	}
 	if (ft_strncmp(rlret, "", 1) != 0 && only_whitspaces(rlret) != 1)
 		add_history(rlret);
+	shd->lexer->cmd_line = ft_strdup(rlret);
 	if (rlret)
 		gc_free_ptr((void **) &rlret);
 	if (!shd->lexer->cmd_line)

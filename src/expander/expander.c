@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:36:54 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/15 18:39:03 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/16 18:53:36 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void	var_expand(t_leaf *leaf, t_command *cmd)
 			variable = var_name(leaf->terminal + i, leaf->var + i);
 			if (!variable && ++i)
 				continue ;
-			val = get_val(variable, cmd->envpv);
+			val = get_value(variable, cmd->envpv);
 			leaf->terminal = rem_varname(leaf, i, variable);
 			if (val)
 			{
-				leaf->terminal = insert_var(leaf->terminal, leaf->var, val, i);
+				leaf->terminal = insert_var(leaf->terminal, val, i);
 				leaf->var = insert_var(leaf->var,
 						ft_memset(gc_malloc(ft_strlen(val)), 'N',
 							ft_strlen(val)), i);

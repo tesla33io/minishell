@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:44:25 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/15 17:57:26 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/16 19:12:48 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,14 @@ void	match_tokens(t_token *token_stream, char *alternative)
 
 // main parser function
 // input for token stream is head of lexer, parent input is null at first
-void	ft_parse(t_sd *sd, char *production, t_leaf *parent,
+void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
 		t_token *token_stream)
 {
 	char	*alternative;
 	char	*symbol;
 
 	alternative = NULL;
-	if (sd->parse_fail || (!token_stream && ft_dprintf(2, "Syntax Error\n") 
+	if (sd->parse_fail || (!token_stream && ft_dprintf(2, "Syntax Error\n")
 			&& sd->parse_fail) || (!token_stream && !production))
 		return ;
 	while (contains_c(production, '|'))
