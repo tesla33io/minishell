@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:15:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/16 19:49:42 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 22:56:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	ft_is_numeric(char *s)
 {
 	while (*s)
 	{
-		if (!ft_isdigit(*s))
+		if (!ft_isdigit(*s) && *s != '+' && *s != '-')
 			return (0);
 		s++;
 	}
