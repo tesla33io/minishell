@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/16 23:41:18 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 00:16:46 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execute_command_in_child(t_command *cmd, int pipefd[2][2],
 		{
 			gc_free_gc(0);
 			gc_free_gc(5);
-			exit(127);
+			exit(set_last_exit_code(0, 'g'));
 		}
 		if (execve(bin, cmd->args, cmd->envpv) < 0)
 			exit(execve_fail());
