@@ -6,11 +6,11 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:19:52 by astavrop          #+#    #+#             */
-/*   Updated: 2023/11/25 17:49:48 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 22:54:15 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
 long	ft_atoi(const char *nptr)
 {
