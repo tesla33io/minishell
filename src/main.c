@@ -6,11 +6,12 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/16 19:02:32 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/16 22:32:02 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <readline/readline.h>
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -27,6 +28,7 @@ int	main(int ac, char *av[], char *envp[])
 	(void)av;
 	signal(SIGINT, sh_sigint_handler);
 	sigaction(SIGQUIT, &(struct sigaction){.sa_handler = SIG_IGN}, NULL);
+	rl_outstream = stderr;
 	shd = dup_envp_and_stdfds(envp);
 	if (!shd)
 		return (1);
