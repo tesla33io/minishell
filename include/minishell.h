@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/15 17:35:49 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 00:53:13 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void						get_token_data(t_token *tok, char *str, int len,
 								int backslash);
 enum e_tkntype				get_token(char c);
 int							special_char(char c);
-int							find_match(char *str, char c);
+int							find_match(char *str, char c, int *quote);
 void						merge_tokens(t_lex *lexer);
 void						group_tokens(t_lex *lexer);
 void						take_out_trash(t_token *head);

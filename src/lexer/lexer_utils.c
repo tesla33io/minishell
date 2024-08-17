@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:10:31 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/15 18:11:11 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 00:52:39 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // ft to find the matching character for an enclosed section, such as a
 // double quoted string, that starts with the first member of the pair
-int	find_match(char *str, char c)
+int	find_match(char *str, char c, int *quote)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ int	find_match(char *str, char c)
 		return (0);
 	while (str[i] && str[i] != c)
 		i++;
-	if (str[i] == c)
+	if (str[i] == c && ++(*quote))
 		return (i);
 	else
 		return (0);

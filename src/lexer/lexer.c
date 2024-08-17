@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/16 21:54:50 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 17:53:20 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 {
 	t_token	*travel;
 
+	if (!len)
+		return ;
 	if (backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"'))
 		len = len - backslash;
 	else
@@ -87,12 +89,12 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 void	lexer(t_lex *lexer)
 {
 	int	backslash;
+	int quote;
 
-	if (lexer->cmd_line[0] == 0)
-		return ;
 	while (lexer->cmd_line[lexer->end])
 	{
 		backslash = 0;
+		quote = 0;
 		lexer->start = lexer->end;
 		while (lexer->cmd_line[lexer->end]
 			&& !special_char(lexer->cmd_line[lexer->end]))
@@ -100,14 +102,14 @@ void	lexer(t_lex *lexer)
 		if (lexer->end == lexer->start && (lexer->cmd_line[lexer->end] == '"'
 				|| lexer->cmd_line[lexer->end] == '\''))
 			lexer->end += find_match(lexer->cmd_line + lexer->start,
-					lexer->cmd_line[lexer->end]) + 1;
+					lexer->cmd_line[lexer->end], &quote) + 1;
 		if (lexer->end && lexer->cmd_line[lexer->end - 1] == '\\'
 			&& ++backslash)
 			lexer->end++;
 		if (!(lexer->end - lexer->start))
 			lexer->end++;
-		append_token(lexer, (lexer->cmd_line + lexer->start), (lexer->end
-				- lexer->start), backslash);
+		append_token(lexer, (lexer->cmd_line + lexer->start + quote), (lexer->end
+				- (lexer->start + (quote * 2))), backslash);
 		lexer->tkn_count++;
 	}
 	merge_tokens(lexer);
