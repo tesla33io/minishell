@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 21:41:08 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 22:01:56 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../lib/libft/libft.h"
+# include "../lib/ft_printf/includes/ft_printf.h"
 # include "execution.h"
 # include "grammar.h"
 # include <curses.h>
