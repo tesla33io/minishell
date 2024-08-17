@@ -33,6 +33,7 @@ nm -u minishell \
 	| grep --colour=auto -v unlink \
 	| grep --colour=auto -v execve \
 	| grep --colour=auto -v dup2 \
+	| grep --colour=auto -v dup \
 	| grep --colour=auto -v pipe \
 	| grep --colour=auto -v opendir \
 	| grep --colour=auto -v closedir \
