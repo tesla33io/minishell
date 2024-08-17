@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 21:28:42 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 21:41:08 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/ioctl.h>
@@ -119,7 +119,8 @@ void						init(t_shell_data *shell_data);
 void						init_lexer(t_shell_data *shell_data);
 void						lexer(t_lex *lexer);
 void						append_token(t_lex *lexer, char *str, int len);
-void						get_token_data(t_lex *lexer, t_token *tok, char *str, int len);
+void						get_token_data(t_lex *lexer, t_token *tok,
+								char *str, int len);
 enum e_tkntype				get_token(char c);
 int							special_char(char c);
 int							find_match(char *str, char c, t_lex *lexer);

@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 21:33:06 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 21:46:29 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 // see if any character is a one character token
 int	special_char(char c)
 {
-	return (c == AMPERSAND || c == PIPE 
-		|| c == D_QUOTE || c == S_QUOTE
+	return (c == AMPERSAND || c == PIPE || c == D_QUOTE || c == S_QUOTE
 		|| c == OUT_REDIRECT || c == IN_REDIRECT || c == SSPACE || c == TTAB
 		|| c == NNEWLINE);
 }
@@ -51,7 +50,8 @@ void	get_token_data(t_lex *lexer, t_token *tok, char *str, int len)
 		return ;
 	tok->next = NULL;
 	tok->token = get_token(str[0]);
-	ft_strlcpy(tok->lexeme, str + lexer->backslash + lexer->quote, len + 1 - (2 * lexer->quote));
+	ft_strlcpy(tok->lexeme, str + lexer->backslash + lexer->quote, len + 1 - (2
+			* lexer->quote));
 	tok->matched = 0;
 	tok->var = NULL;
 }
@@ -60,9 +60,8 @@ void	append_token(t_lex *lexer, char *str, int len)
 {
 	t_token	*travel;
 
-	if (!len)
-		return ;
-	if (lexer->backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"'))
+	if (lexer->backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str
+			+ 1 == '"'))
 		len = len - lexer->backslash;
 	else
 		lexer->backslash = 0;
@@ -86,31 +85,6 @@ void	append_token(t_lex *lexer, char *str, int len)
 	}
 }
 
-void	print_tokens(t_lex *lexer)
-{
-	int		i;
-	t_token	*travel;
-
-	i = 0;
-	const char *token_names[] = {
-		"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR",
-			"HEREDOC", "APPEND", "AND", "OR", "TRASH",
-			[AMPERSAND] = "AMPERSAND", [PIPE] = "PIPE",
-			[L_PARENTHESIS] = "L_PARENTHESIS",
-			[R_PARENTHESIS] = "R_PARENTHESIS", [D_QUOTE] = "D_QUOTE",
-			[S_QUOTE] = "S_QUOTE", [OUT_REDIRECT] = "OUT_REDIRECT",
-			[IN_REDIRECT] = "IN_REDIRECT", [SSPACE] = "SSPACE",
-	};
-	travel = lexer->head;
-	while (travel)
-	{
-		printf("token %d = %s : %s\n", i, token_names[travel->token],
-			travel->lexeme);
-		travel = travel->next;
-		i++;
-	}
-}
-
 void	lexer(t_lex *l)
 {
 	while (l->cmd_line[l->end])
@@ -128,7 +102,8 @@ void	lexer(t_lex *l)
 			l->end++;
 		if (!(l->end - l->start))
 			l->end++;
-		append_token(l, (l->cmd_line + l->start), (l->end - l->start));
+		if (l->end - l->start)
+			append_token(l, (l->cmd_line + l->start), (l->end - l->start));
 		l->tkn_count++;
 	}
 	merge_tokens(l);
