@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:29:20 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 23:10:03 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:50:04 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ void	*gc_malloc(size_t size)
 
 	ret = malloc(size);
 	if (!ret)
+	{
 		ft_putstr_fd("Error (gc_malloc): memory allocation failed.\n", 2);
+		return (NULL);
+	}
 	gc = gc_get_storage(-1);
 	if (!gc || !*gc)
 		return (NULL);
