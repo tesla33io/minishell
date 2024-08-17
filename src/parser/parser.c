@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:44:25 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 22:02:17 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 22:15:28 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	terminal_located(t_token *ts, char *alternative, int pos, int prev_pos)
 // helper function to find the correct alternative of a given production rule
 char	*match_alternative(t_token *token_stream, char **alternatives)
 {
+	if (token_stream->lexeme && token_stream->lexeme[0] == '|')
+		return (alternatives[0]);
 	if ((count_words(alternatives[1], ' ') > count_tokens(token_stream))
 		|| (!contains_non_terminal(alternatives[1])
 			&& count_words(alternatives[1], ' ') < count_tokens(token_stream)))
