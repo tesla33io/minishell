@@ -6,14 +6,13 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 20:08:46 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 20:41:31 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../lib/ft_printf/includes/ft_printf.h"
 # include "../lib/libft/libft.h"
 # include "execution.h"
 # include "grammar.h"

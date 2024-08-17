@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 19:17:09 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 20:08:28 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 21:05:45 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ t_leaf	*handle_first_redir(t_leaf *next, t_command *cmd)
 		if (handle_in_redirect(&next, cmd) != 2)
 			return (next->left);
 	}
+	else
+		return (next);
 	return (NULL);
 }

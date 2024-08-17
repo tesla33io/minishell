@@ -6,7 +6,7 @@
 #    By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/08/17 19:25:24 by astavrop         ###   ########.fr        #
+#    Updated: 2024/08/17 20:46:52 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,10 @@ CFLAGS			:= -Wall -Werror -Wextra
 
 
 # Libraries to be linked (if any)
-LIBS			:= -L./lib/libft/ -lft
-LIBS			+= -L./lib/ft_printf/ -lftprintf
-LIBS			+= -lreadline
+LIBS			:= -L./lib/libft/ -lft -lreadline
 
 # Include directories
 INCLUDES		:= -Iinclude/ -Ilib/libft/
-INCLUDES		+= -Ilib/ft_printf/includes/
 
 # Target executable
 TARGET			:= minishell

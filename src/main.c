@@ -6,11 +6,12 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:28:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/16 22:32:02 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 21:12:33 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include "libft.h"
 #include <readline/readline.h>
 #include <signal.h>
 #include <stdio.h>

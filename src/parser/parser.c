@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:44:25 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 19:18:36 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 20:41:44 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
 	char	*symbol;
 
 	alternative = NULL;
-	if (sd->parse_fail < 0 || (!token_stream && ft_dprintf(2, "Syntax Error\n")
+	if (sd->parse_fail < 0 || (!token_stream && dprintf(2, "Syntax Error\n")
 			&& --sd->parse_fail) || (!token_stream && !production))
 		return ;
 	while (contains_c(production, '|'))
 		alternative = match_alternative(token_stream, (char *[]){alternative,
 				ft_chop(production, '|')});
-	if (!alternative && ft_dprintf(2, "Syntax Error\n") && (--sd->parse_fail
+	if (!alternative && dprintf(2, "Syntax Error\n") && (--sd->parse_fail
 			|| 1))
 		return ;
 	match_tokens(token_stream, alternative);

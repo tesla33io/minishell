@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 17:52:46 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 21:38:51 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 20:33:49 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ t_pipeline	*extract_pipeline(t_leaf *pl_root, t_shell_data *shd)
 	if (!pl->commands)
 		return (NULL);
 	i = 0;
+	cur = get_pipe_cmd(pl_root, i);
 	while (i < pl->num_cmds && cur != NULL)
 	{
-		cur = get_pipe_cmd(pl_root, i);
 		if (cur->token == STR || cur->token == IN_REDIRECT
 			|| cur->token == OUT_REDIRECT || cur->token == APPEND
 			|| cur->token == HEREDOC)
 			pl->commands[i] = extract_command(cur, shd);
 		i++;
+		cur = get_pipe_cmd(pl_root, i);
 	}
 	return (pl);
 }
