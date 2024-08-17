@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:10:31 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 00:52:39 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 18:48:25 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,13 @@ void	set_varflag(t_lex *lexer)
 	{
 		if (travel->token == STR || travel->token == D_QUOTE)
 		{
-			len = ft_strlen(travel->lexeme) + 1 - 2
-				* (travel->token == D_QUOTE);
+			len = ft_strlen(travel->lexeme) + 1;
 			travel->var = ft_memset(gc_malloc(len), 'Y', len);
 			travel->var[len - 1] = '\0';
 		}
 		else
 		{
-			len = ft_strlen(travel->lexeme) + 1 - 2
-				* (travel->token == S_QUOTE);
+			len = ft_strlen(travel->lexeme) + 1;
 			travel->var = ft_memset(gc_malloc(len), 'N', len);
 			travel->var[len - 1] = '\0';
 		}
@@ -117,8 +115,7 @@ void	set_globflag(t_lex *lexer)
 		}
 		else
 		{
-			len = ft_strlen(travel->lexeme) + 1 - 2 * (travel->token == S_QUOTE
-					|| travel->token == D_QUOTE);
+			len = ft_strlen(travel->lexeme) + 1;
 			travel->glob = ft_memset(gc_malloc(len), 'N', len);
 			travel->glob[len - 1] = '\0';
 		}
