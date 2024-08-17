@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 21:18:11 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 21:33:06 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 // see if any character is a one character token
 int	special_char(char c)
 {
-	return (c == AMPERSAND || c == PIPE || c == L_PARENTHESIS
-		|| c == R_PARENTHESIS || c == D_QUOTE || c == S_QUOTE
+	return (c == AMPERSAND || c == PIPE 
+		|| c == D_QUOTE || c == S_QUOTE
 		|| c == OUT_REDIRECT || c == IN_REDIRECT || c == SSPACE || c == TTAB
 		|| c == NNEWLINE);
 }
