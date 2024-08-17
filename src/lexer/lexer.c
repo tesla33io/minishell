@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 19:24:35 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 21:18:11 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,28 @@ t_tkntype	get_token(char c)
 }
 
 // fill in the token data with lexeme and token
-void	get_token_data(t_token *tok, char *str, int len, int backslash)
+void	get_token_data(t_lex *lexer, t_token *tok, char *str, int len)
 {
 	tok->lexeme = gc_malloc((len + 1) * sizeof(char));
 	if (!tok->lexeme)
 		return ;
 	tok->next = NULL;
-	ft_strlcpy(tok->lexeme, str + backslash, len + 1);
 	tok->token = get_token(str[0]);
+	ft_strlcpy(tok->lexeme, str + lexer->backslash + lexer->quote, len + 1 - (2 * lexer->quote));
 	tok->matched = 0;
 	tok->var = NULL;
 }
 
-void	append_token(t_lex *lexer, char *str, int len, int backslash)
+void	append_token(t_lex *lexer, char *str, int len)
 {
 	t_token	*travel;
 
 	if (!len)
 		return ;
-	if ((backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"'))
-		|| (backslash && backslash--))
-		len = len - backslash;
+	if (lexer->backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"'))
+		len = len - lexer->backslash;
+	else
+		lexer->backslash = 0;
 	if (lexer->head)
 	{
 		lexer->tail = gc_malloc(sizeof(*lexer->tail));
@@ -74,39 +75,60 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 		while (travel->next)
 			travel = travel->next;
 		travel->next = lexer->tail;
-		get_token_data(lexer->tail, str, len, backslash);
+		get_token_data(lexer, lexer->tail, str, len);
 	}
 	else
 	{
 		lexer->head = gc_malloc(sizeof(*lexer->head));
 		if (!lexer->head)
 			return ;
-		get_token_data(lexer->head, str, len, backslash);
+		get_token_data(lexer, lexer->head, str, len);
+	}
+}
+
+void	print_tokens(t_lex *lexer)
+{
+	int		i;
+	t_token	*travel;
+
+	i = 0;
+	const char *token_names[] = {
+		"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR",
+			"HEREDOC", "APPEND", "AND", "OR", "TRASH",
+			[AMPERSAND] = "AMPERSAND", [PIPE] = "PIPE",
+			[L_PARENTHESIS] = "L_PARENTHESIS",
+			[R_PARENTHESIS] = "R_PARENTHESIS", [D_QUOTE] = "D_QUOTE",
+			[S_QUOTE] = "S_QUOTE", [OUT_REDIRECT] = "OUT_REDIRECT",
+			[IN_REDIRECT] = "IN_REDIRECT", [SSPACE] = "SSPACE",
+	};
+	travel = lexer->head;
+	while (travel)
+	{
+		printf("token %d = %s : %s\n", i, token_names[travel->token],
+			travel->lexeme);
+		travel = travel->next;
+		i++;
 	}
 }
 
 void	lexer(t_lex *l)
 {
-	int	bs;
-	int	quote;
-
 	while (l->cmd_line[l->end])
 	{
-		bs = 0;
-		quote = 0;
+		l->backslash = 0;
+		l->quote = 0;
 		l->start = l->end;
 		while (l->cmd_line[l->end] && !special_char(l->cmd_line[l->end]))
 			l->end++;
 		if (l->end == l->start && (l->cmd_line[l->end] == '"'
 				|| l->cmd_line[l->end] == '\''))
-			l->end += find_match(l->cmd_line + l->start, l->cmd_line[l->end],
-					&quote) + 1;
-		if (l->end && l->cmd_line[l->end - 1] == '\\' && ++bs)
+			l->end += find_match(l->cmd_line + l->start, l->cmd_line[l->end], l)
+				+ 1;
+		if (l->end && l->cmd_line[l->end - 1] == '\\' && ++l->backslash)
 			l->end++;
 		if (!(l->end - l->start))
 			l->end++;
-		append_token(l, (l->cmd_line + l->start + quote), (l->end - (l->start
-					+ (quote * 2))), bs);
+		append_token(l, (l->cmd_line + l->start), (l->end - l->start));
 		l->tkn_count++;
 	}
 	merge_tokens(l);
