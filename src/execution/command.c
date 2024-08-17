@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:07:14 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 21:04:15 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 22:17:41 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+static int	free_all(void);
+
 int	execute_command_in_child(t_command *cmd, int pipefd[2][2],
 		int i, int num_cmds)
 {
@@ -25,7 +27,7 @@ int	execute_command_in_child(t_command *cmd, int pipefd[2][2],
 	int		exit_code;
 
 	reset_signals(SH_SIG_INT | SH_SIG_QUIT);
-	if (!cmd && (gc_free_gc(0), 1) && (gc_free_gc(5), 1) && close_extra_fds())
+	if (!cmd && free_all())
 		exit(1);
 	exit_code = 1;
 	setup_ipc(cmd, i, pipefd, num_cmds);
@@ -44,7 +46,7 @@ int	execute_command_in_child(t_command *cmd, int pipefd[2][2],
 		if (execve(bin, cmd->args, cmd->envpv) < 0)
 			exit(execve_fail());
 	}
-	exit(exit_code);
+	(free_all(), exit(exit_code));
 	return (1);
 }
 
@@ -99,4 +101,12 @@ void	setup_ipc(t_command *cmd, int i, int pipefd[2][2], int num_cmds)
 		close(cmd->in_fd);
 	if (cmd->out_fd != 1 && cmd->out_fd >= 0)
 		close(cmd->out_fd);
+}
+
+static int	free_all(void)
+{
+	gc_free_gc(0);
+	gc_free_gc(5);
+	close_extra_fds();
+	return (1);
 }
