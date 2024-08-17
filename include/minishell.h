@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 19:25:03 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 20:08:46 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,9 @@ t_pipeline					*extract_pipeline(t_leaf *pl_root,
 								t_shell_data *shd);
 int							is_single_cmd(t_leaf *node);
 int							is_parenthesis(t_leaf *ar);
+int							handle_out_redirect(t_leaf **next, t_command *cmd);
+int							handle_in_redirect(t_leaf **next, t_command *cmd);
+t_leaf						*handle_first_redir(t_leaf *next, t_command *cmd);
 void						set_varflag(t_lex *lexer);
 void						set_globflag(t_lex *lexer);
 void						reset_variables(int *pos, int *prev_pos);

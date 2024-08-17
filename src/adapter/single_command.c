@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:00:07 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 21:26:48 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 20:09:38 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include <stdlib.h>
 
 static t_command	*init_command(t_shell_data *shd);
-static int			handle_out_redirect(t_leaf **next, t_command *cmd);
-static int			handle_in_redirect(t_leaf **next, t_command *cmd);
 
 t_command	*extract_command(t_leaf *cmd_root, t_shell_data *shd)
 {
@@ -28,19 +26,11 @@ t_command	*extract_command(t_leaf *cmd_root, t_shell_data *shd)
 
 	cmd = init_command(shd);
 	cmd->args = ft_strarray_alloc(0);
-	next = cmd_root;
 	if (!cmd)
 		return (NULL);
-	if (next->token == OUT_REDIRECT || next->token == APPEND)
-	{
-		handle_out_redirect(&next, cmd);
-		next = next->left;
-	}
-	else if (next->token == IN_REDIRECT || next->token == HEREDOC)
-	{
-		handle_in_redirect(&next, cmd);
-		next = next->left;
-	}
+	next = handle_first_redir(cmd_root, cmd);
+	if (!next)
+		return (NULL);
 	if (next && next->token == 0)
 		return (NULL);
 	extract_args(next, cmd);
@@ -69,7 +59,7 @@ static t_command	*init_command(t_shell_data *shd)
 	return (cmd);
 }
 
-static int	handle_out_redirect(t_leaf **n, t_command *c)
+int	handle_out_redirect(t_leaf **n, t_command *c)
 {
 	bool	append;
 
@@ -90,7 +80,7 @@ static int	handle_out_redirect(t_leaf **n, t_command *c)
 	return (0);
 }
 
-static int	handle_in_redirect(t_leaf **next, t_command *cmd)
+int	handle_in_redirect(t_leaf **next, t_command *cmd)
 {
 	bool	heredoc;
 
