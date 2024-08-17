@@ -5,6 +5,8 @@ mini_test_hell
 .obsidian/
 dox.conf
 .vscode/
+.cache/
+compile_commands.json
 
 # Prerequisites
 *.d
