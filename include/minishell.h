@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 00:53:13 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 18:27:40 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,15 @@
 
 # include "../lib/ft_printf/includes/ft_printf.h"
 # include "../lib/libft/libft.h"
-# include "grammar.h"
 # include "execution.h"
-
+# include "grammar.h"
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/ioctl.h>
@@ -131,9 +130,8 @@ void						take_out_trash(t_token *head);
 void						merge_strings(t_lex *lexer);
 int							contains_c(char *str, char c);
 char						*ft_chop(char *str, char c);
-void						ft_parse(t_shell_data *shell_data,
-								char *production, t_leaf *parent,
-								t_token *token_stream);
+void						ft_parse(t_shell_data *shell_data, char *production,
+								t_leaf *parent, t_token *token_stream);
 int							is_upper(char c);
 int							is_lower(char c);
 void						print_tokens(t_lex *lexer);
@@ -159,6 +157,7 @@ t_pipeline					*extract_pipeline(t_leaf *pl_root,
 								t_shell_data *shd);
 void						set_varflag(t_lex *lexer);
 void						set_globflag(t_lex *lexer);
+void						reset_variables(int *pos, int *prev_pos);
 
 /* Signals */
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
-
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:44:25 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 17:53:36 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 18:34:05 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ t_token	*split_stream(t_token **token_stream)
 	return (ret);
 }
 
-int	terminal_located(t_token *ts, char *alternative, int pos)
+int	terminal_located(t_token *ts, char *alternative, int pos, int prev_pos)
 {
 	char	*symbol;
 	char	*tmp;
 	t_token	*trvl;
 
 	if (!alternative)
-		return (pos);
+		return (0);
 	tmp = ft_strdup(alternative);
 	trvl = ts;
 	while (contains_c(tmp, ' '))
 	{
 		symbol = ft_chop(tmp, ' ');
 		if (contains_terminal(symbol))
-			pos = 0;
+			reset_variables(&pos, &prev_pos);
 		while (trvl && contains_terminal(symbol) && ++pos)
 		{
 			if (trvl->token == tok2int(symbol) && (pos > 1 || (pos == 1
-						&& trvl == ts)))
+						&& trvl == ts)) && pos > prev_pos)
 				break ;
 			trvl = trvl->next;
 		}
@@ -73,12 +73,12 @@ char	*match_alternative(t_token *token_stream, char **alternatives)
 		|| (!contains_non_terminal(alternatives[1])
 			&& count_words(alternatives[1], ' ') < count_tokens(token_stream)))
 		return (alternatives[0]);
-	if (!terminal_located(token_stream, alternatives[1], 0)
+	if (!terminal_located(token_stream, alternatives[1], 0, 0)
 		&& contains_terminal(alternatives[1]))
 		return (alternatives[0]);
-	if (terminal_located(token_stream, alternatives[0], 0)
+	if (terminal_located(token_stream, alternatives[0], 0, 0)
 		&& terminal_located(token_stream, alternatives[1],
-			0) > terminal_located(token_stream, alternatives[0], 0))
+			0, 0) > terminal_located(token_stream, alternatives[0], 0, 0))
 		return (alternatives[0]);
 	return (alternatives[1]);
 }
@@ -108,7 +108,6 @@ void	match_tokens(t_token *token_stream, char *alternative)
 	}
 }
 
-
 // main parser function
 // input for token stream is head of lexer, parent input is null at first
 void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
@@ -116,7 +115,7 @@ void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
 {
 	char	*alternative;
 	char	*symbol;
-	
+
 	alternative = NULL;
 	if (sd->parse_fail < 0 || (!token_stream && ft_dprintf(2, "Syntax Error\n") 
 			&& --sd->parse_fail) || (!token_stream && !production))

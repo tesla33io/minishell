@@ -6,7 +6,7 @@
 #    By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/08/16 21:57:24 by ltreser          ###   ########.fr        #
+#    Updated: 2024/08/17 18:27:05 by ltreser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ SRC_FILES		+= lexer/merge.c
 SRC_FILES		+= parser/parser.c
 SRC_FILES		+= parser/parser_utils.c
 SRC_FILES		+= parser/parser_utils2.c
+SRC_FILES		+= parser/parser_utils3.c
 SRC_FILES		+= parser/utils.c
 
 SRC_FILES		+= expander/expander.c
