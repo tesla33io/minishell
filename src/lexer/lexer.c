@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 19:17:00 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 19:24:35 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 
 	if (!len)
 		return ;
-	if (backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"')
-		|| backslash--)
+	if ((backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"'))
+		|| (backslash && backslash--))
 		len = len - backslash;
 	if (lexer->head)
 	{
