@@ -6,10 +6,11 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 00:17:36 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 21:40:56 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #define _POSIX_C_SOURCE 200809L
 #include "../../include/execution.h"
 
@@ -72,6 +73,12 @@ char	*check_exec_binary(char *path, char *bin_name)
 
 static int	check_if_path_to_bin(char *bin_name)
 {
+	if (!bin_name)
+	{
+		ft_putendl_fd("minishell: no command specified", 2);
+		set_last_exit_code(1, 's');
+		return (1);
+	}
 	return ((ft_strncmp(bin_name, "../", 3) == 0
 			|| ft_strncmp(bin_name, "./", 2) == 0
 			|| ft_strncmp(bin_name, "/", 1) == 0)
