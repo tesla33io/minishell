@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 17:44:25 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 18:34:05 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 19:18:36 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ char	*match_alternative(t_token *token_stream, char **alternatives)
 		&& contains_terminal(alternatives[1]))
 		return (alternatives[0]);
 	if (terminal_located(token_stream, alternatives[0], 0, 0)
-		&& terminal_located(token_stream, alternatives[1],
-			0, 0) > terminal_located(token_stream, alternatives[0], 0, 0))
+		&& terminal_located(token_stream, alternatives[1], 0,
+			0) > terminal_located(token_stream, alternatives[0], 0, 0))
 		return (alternatives[0]);
 	return (alternatives[1]);
 }
@@ -117,13 +117,14 @@ void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
 	char	*symbol;
 
 	alternative = NULL;
-	if (sd->parse_fail < 0 || (!token_stream && ft_dprintf(2, "Syntax Error\n") 
+	if (sd->parse_fail < 0 || (!token_stream && ft_dprintf(2, "Syntax Error\n")
 			&& --sd->parse_fail) || (!token_stream && !production))
 		return ;
 	while (contains_c(production, '|'))
-		alternative = match_alternative(token_stream, (char *[]){alternative, ft_chop(production, '|')});
-	if (!alternative && ft_dprintf(2, "Syntax Error\n") 
-		&& (--sd->parse_fail || 1))
+		alternative = match_alternative(token_stream, (char *[]){alternative,
+				ft_chop(production, '|')});
+	if (!alternative && ft_dprintf(2, "Syntax Error\n") && (--sd->parse_fail
+			|| 1))
 		return ;
 	match_tokens(token_stream, alternative);
 	parent = terminal_to_leaf(sd->ast, parent, token_stream);
@@ -131,7 +132,8 @@ void	ft_parse(t_shell_data *sd, char *production, t_leaf *parent,
 	{
 		symbol = ft_chop(alternative, ' ');
 		if (contains_non_terminal(symbol))
-			ft_parse(sd, get_production(symbol), parent, split_stream(&token_stream));
+			ft_parse(sd, get_production(symbol), parent,
+				split_stream(&token_stream));
 	}
 	return ;
 }

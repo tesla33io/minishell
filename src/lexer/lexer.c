@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 19:05:41 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 17:53:20 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 19:17:00 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 
 	if (!len)
 		return ;
-	if (backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"'))
+	if (backslash && (*str + 1 == '$' || *str + 1 == '\\' || *str + 1 == '"')
+		|| backslash--)
 		len = len - backslash;
-	else
-		backslash = 0;
 	if (lexer->head)
 	{
 		lexer->tail = gc_malloc(sizeof(*lexer->tail));
@@ -86,32 +85,29 @@ void	append_token(t_lex *lexer, char *str, int len, int backslash)
 	}
 }
 
-void	lexer(t_lex *lexer)
+void	lexer(t_lex *l)
 {
-	int	backslash;
-	int quote;
+	int	bs;
+	int	quote;
 
-	while (lexer->cmd_line[lexer->end])
+	while (l->cmd_line[l->end])
 	{
-		backslash = 0;
+		bs = 0;
 		quote = 0;
-		lexer->start = lexer->end;
-		while (lexer->cmd_line[lexer->end]
-			&& !special_char(lexer->cmd_line[lexer->end]))
-			lexer->end++;
-		if (lexer->end == lexer->start && (lexer->cmd_line[lexer->end] == '"'
-				|| lexer->cmd_line[lexer->end] == '\''))
-			lexer->end += find_match(lexer->cmd_line + lexer->start,
-					lexer->cmd_line[lexer->end], &quote) + 1;
-		if (lexer->end && lexer->cmd_line[lexer->end - 1] == '\\'
-			&& ++backslash)
-			lexer->end++;
-		if (!(lexer->end - lexer->start))
-			lexer->end++;
-		append_token(lexer, (lexer->cmd_line + lexer->start + quote), (lexer->end
-				- (lexer->start + (quote * 2))), backslash);
-		lexer->tkn_count++;
+		l->start = l->end;
+		while (l->cmd_line[l->end] && !special_char(l->cmd_line[l->end]))
+			l->end++;
+		if (l->end == l->start && (l->cmd_line[l->end] == '"'
+				|| l->cmd_line[l->end] == '\''))
+			l->end += find_match(l->cmd_line + l->start, l->cmd_line[l->end],
+					&quote) + 1;
+		if (l->end && l->cmd_line[l->end - 1] == '\\' && ++bs)
+			l->end++;
+		if (!(l->end - l->start))
+			l->end++;
+		append_token(l, (l->cmd_line + l->start + quote), (l->end - (l->start
+					+ (quote * 2))), bs);
+		l->tkn_count++;
 	}
-	merge_tokens(lexer);
+	merge_tokens(l);
 }
-

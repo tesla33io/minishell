@@ -6,7 +6,7 @@
 /*   By: ltreser <ltreser@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 18:26:01 by ltreser           #+#    #+#             */
-/*   Updated: 2024/08/17 00:24:17 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 19:18:12 by ltreser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,6 @@ void	group_tokens(t_lex *lexer)
 		trvl = trvl->next;
 	}
 }
-/*
-void	remove_quotations(char *str)
-{
-	int i;
-	//int	dest;
-	//int	src;
-
-	//dest = 0;
-	//src = 0;
-	i = 0;
-	if (!contains_c(str, '\'') || !contains_c(str, '"'))
-		return ;
-	while (str[i] && (str[i] == '\t' || str[i] == ' ')
-	while (str[src])
-	{
-		if (!((str[src] == '"' || str[src] == '\'') && (src == 0
-					|| src == (ft_strlen(str) - 1))))
-		{
-			ft_memmove(str + dest, str + src, 1);
-			dest++;
-		}
-		src++;
-	}
-	while (str[dest])
-	{
-		ft_bzero(str + dest, 1);
-		dest++;
-	}
-}*/
 
 void	merge_strings(t_lex *lexer)
 {
@@ -107,33 +78,6 @@ void	remove_spaces(t_lex *lexer)
 		travel = travel->next;
 	}
 	take_out_trash(lexer->head);
-}
-
-void	print_tokens(t_lex *lexer)
-{
-	int i;
-
-	i = 0;
-	const char* token_names[] = {"x", "x", "x", "x", "x", "x", "x", "x", "NNEWLINE", "TTAB", "x", "STR", "HEREDOC", "APPEND", "AND", "OR", "TRASH",
-	[AMPERSAND] = "AMPERSAND",
-	[PIPE] = "PIPE",
-	[L_PARENTHESIS] = "L_PARENTHESIS",
-	[R_PARENTHESIS] = "R_PARENTHESIS",
-	[D_QUOTE] = "D_QUOTE",
-	[S_QUOTE] = "S_QUOTE",
-	[OUT_REDIRECT] = "OUT_REDIRECT",
-	[IN_REDIRECT] = "IN_REDIRECT",
-	[SSPACE] = "SSPACE",
-};
-        t_token *travel;
-
-    	travel = lexer->head;
-        while (travel)
-        {
-                printf("token %d = %s : %s\n", i, token_names[travel->token], travel->lexeme);
-                travel = travel->next;
-		i++;
-        }
 }
 
 // optimizing tokenstream for parser
