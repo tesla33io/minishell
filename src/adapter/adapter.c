@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:20:01 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/14 21:38:50 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/17 19:30:06 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,21 @@ void	adapt(t_leaf *ar, t_shell_data *shd)
 {
 	t_pipeline	*pl;
 
-	if (ar->token == STR || ar->token == OUT_REDIRECT
-		|| ar->token == IN_REDIRECT || ar->token == APPEND
-		|| ar->token == HEREDOC)
+	if (is_single_cmd(ar) || is_parenthesis(ar) == 1)
 		set_last_exit_code(handle_command(ar, shd), 's');
-	else if (ar->token == PIPE)
+	else if (ar->token == PIPE || is_parenthesis(ar) == 2)
 	{
 		pl = extract_pipeline(ar, shd);
 		if (pl)
 			execute_pipeline(pl);
 	}
-	else if (ar->token == AND)
+	else if (ar->token == AND || is_parenthesis(ar) == 3)
 	{
 		adapt(ar->left, shd);
 		if (set_last_exit_code(0, 'g') == 0)
 			adapt(ar->right, shd);
 	}
-	else if (ar->token == OR)
+	else if (ar->token == OR || is_parenthesis(ar) == 4)
 	{
 		adapt(ar->left, shd);
 		if (set_last_exit_code(0, 'g') != 0)

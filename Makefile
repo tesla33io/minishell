@@ -6,7 +6,7 @@
 #    By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/08/17 18:27:05 by ltreser          ###   ########.fr        #
+#    Updated: 2024/08/17 19:25:24 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRC_FILES		+= utils/misc.c
 SRC_FILES		+= adapter/adapter.c
 SRC_FILES		+= adapter/single_command.c
 SRC_FILES		+= adapter/pipeline.c
+SRC_FILES		+= adapter/adapter_utils.c
 
 SRC_FILES		+= signals/sh_signals.c
 

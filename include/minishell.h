@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:27:59 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 18:27:40 by ltreser          ###   ########.fr       */
+/*   Updated: 2024/08/17 19:25:03 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/ioctl.h>
@@ -155,6 +155,8 @@ t_command					*extract_command(t_leaf *cmd_root,
 void						extract_args(t_leaf *next, t_command *cmd);
 t_pipeline					*extract_pipeline(t_leaf *pl_root,
 								t_shell_data *shd);
+int							is_single_cmd(t_leaf *node);
+int							is_parenthesis(t_leaf *ar);
 void						set_varflag(t_lex *lexer);
 void						set_globflag(t_lex *lexer);
 void						reset_variables(int *pos, int *prev_pos);
