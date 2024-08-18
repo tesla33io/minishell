@@ -6,7 +6,7 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 20:04:55 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/16 22:50:02 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:44:52 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,17 @@ static int	check_nvi(char *str)
 	i = 0;
 	if (str[i] >= '0' && str[i] <= '9')
 		return (1);
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
 		if ((str[i] >= 'A' && str[i] <= 'Z')
 			|| (str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= '0' && str[i] <= '9') || str[i] == '\''
-			|| str[i] == '_' || str[i] == '=' || str[i] == '\"')
+			|| (str[i] >= '0' && str[i] <= '9')
+			|| str[i] == '_')
 			i++;
 		else
 			return (1);
 	}
-	if (str[i - 1] == '=')
+	if (!str[i + 1])
 		return (1);
 	return (0);
 }
