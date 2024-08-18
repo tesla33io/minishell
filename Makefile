@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ltreser <ltreser@student.42.fr>            +#+  +:+       +#+         #
+#    By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/17 17:41:15 by astavrop          #+#    #+#              #
-#    Updated: 2024/08/17 22:01:20 by astavrop         ###   ########.fr        #
+#    Updated: 2024/08/18 15:51:51 by astavrop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

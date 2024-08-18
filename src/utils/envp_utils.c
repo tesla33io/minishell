@@ -6,11 +6,11 @@
 /*   By: astavrop <astavrop@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:42:30 by astavrop          #+#    #+#             */
-/*   Updated: 2024/08/17 21:40:56 by astavrop         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:57:31 by astavrop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../lib/libft/libft.h"
 #define _POSIX_C_SOURCE 200809L
 #include "../../include/execution.h"
 
